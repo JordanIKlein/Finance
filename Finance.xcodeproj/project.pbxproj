@@ -9,12 +9,18 @@
 /* Begin PBXBuildFile section */
 		FC224F732569FD9D00BC12CC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC224F722569FD9D00BC12CC /* AppDelegate.swift */; };
 		FC224F752569FD9D00BC12CC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC224F742569FD9D00BC12CC /* SceneDelegate.swift */; };
-		FC224F772569FD9D00BC12CC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC224F762569FD9D00BC12CC /* ViewController.swift */; };
 		FC224F7A2569FD9D00BC12CC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC224F782569FD9D00BC12CC /* Main.storyboard */; };
 		FC224F7C2569FD9E00BC12CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC224F7B2569FD9E00BC12CC /* Assets.xcassets */; };
 		FC224F7F2569FD9E00BC12CC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC224F7D2569FD9E00BC12CC /* LaunchScreen.storyboard */; };
 		FC224F8A2569FD9F00BC12CC /* FinanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC224F892569FD9F00BC12CC /* FinanceTests.swift */; };
 		FC224F952569FD9F00BC12CC /* FinanceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC224F942569FD9F00BC12CC /* FinanceUITests.swift */; };
+		FC224FA72569FDCA00BC12CC /* TimeValueMoney.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC224FA62569FDCA00BC12CC /* TimeValueMoney.swift */; };
+		FC224FAF2569FDE300BC12CC /* Simple Interest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC224FAE2569FDE300BC12CC /* Simple Interest.swift */; };
+		FC224FB42569FDF800BC12CC /* Compound Interest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC224FB32569FDF800BC12CC /* Compound Interest.swift */; };
+		FC224FBA2569FE0D00BC12CC /* Amortization.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC224FB92569FE0D00BC12CC /* Amortization.swift */; };
+		FC224FBF2569FE2400BC12CC /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC224FBE2569FE2400BC12CC /* MainMenu.swift */; };
+		FCFAAD96256D8E39004A2FD0 /* TVM.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCFAAD95256D8E39004A2FD0 /* TVM.storyboard */; };
+		FCFAADA2256D8F36004A2FD0 /* CompoundInt.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCFAADA1256D8F36004A2FD0 /* CompoundInt.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,7 +44,6 @@
 		FC224F6F2569FD9D00BC12CC /* Finance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Finance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC224F722569FD9D00BC12CC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC224F742569FD9D00BC12CC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		FC224F762569FD9D00BC12CC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		FC224F792569FD9D00BC12CC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FC224F7B2569FD9E00BC12CC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FC224F7E2569FD9E00BC12CC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +54,13 @@
 		FC224F902569FD9F00BC12CC /* FinanceUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FinanceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC224F942569FD9F00BC12CC /* FinanceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinanceUITests.swift; sourceTree = "<group>"; };
 		FC224F962569FD9F00BC12CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FC224FA62569FDCA00BC12CC /* TimeValueMoney.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeValueMoney.swift; sourceTree = "<group>"; };
+		FC224FAE2569FDE300BC12CC /* Simple Interest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Simple Interest.swift"; sourceTree = "<group>"; };
+		FC224FB32569FDF800BC12CC /* Compound Interest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Compound Interest.swift"; sourceTree = "<group>"; };
+		FC224FB92569FE0D00BC12CC /* Amortization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Amortization.swift; sourceTree = "<group>"; };
+		FC224FBE2569FE2400BC12CC /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
+		FCFAAD95256D8E39004A2FD0 /* TVM.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TVM.storyboard; sourceTree = "<group>"; };
+		FCFAADA1256D8F36004A2FD0 /* CompoundInt.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CompoundInt.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,10 +111,10 @@
 		FC224F712569FD9D00BC12CC /* Finance */ = {
 			isa = PBXGroup;
 			children = (
+				FCFAAD9A256D8E3F004A2FD0 /* Storyboards */,
 				FC224F722569FD9D00BC12CC /* AppDelegate.swift */,
 				FC224F742569FD9D00BC12CC /* SceneDelegate.swift */,
-				FC224F762569FD9D00BC12CC /* ViewController.swift */,
-				FC224F782569FD9D00BC12CC /* Main.storyboard */,
+				FC224FA52569FDAE00BC12CC /* Scenes */,
 				FC224F7B2569FD9E00BC12CC /* Assets.xcassets */,
 				FC224F7D2569FD9E00BC12CC /* LaunchScreen.storyboard */,
 				FC224F802569FD9E00BC12CC /* Info.plist */,
@@ -126,6 +138,28 @@
 				FC224F962569FD9F00BC12CC /* Info.plist */,
 			);
 			path = FinanceUITests;
+			sourceTree = "<group>";
+		};
+		FC224FA52569FDAE00BC12CC /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				FC224FBE2569FE2400BC12CC /* MainMenu.swift */,
+				FC224FAE2569FDE300BC12CC /* Simple Interest.swift */,
+				FC224FB32569FDF800BC12CC /* Compound Interest.swift */,
+				FC224FA62569FDCA00BC12CC /* TimeValueMoney.swift */,
+				FC224FB92569FE0D00BC12CC /* Amortization.swift */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		FCFAAD9A256D8E3F004A2FD0 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				FC224F782569FD9D00BC12CC /* Main.storyboard */,
+				FCFAAD95256D8E39004A2FD0 /* TVM.storyboard */,
+				FCFAADA1256D8F36004A2FD0 /* CompoundInt.storyboard */,
+			);
+			path = Storyboards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,6 +265,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FCFAADA2256D8F36004A2FD0 /* CompoundInt.storyboard in Resources */,
+				FCFAAD96256D8E39004A2FD0 /* TVM.storyboard in Resources */,
 				FC224F7F2569FD9E00BC12CC /* LaunchScreen.storyboard in Resources */,
 				FC224F7C2569FD9E00BC12CC /* Assets.xcassets in Resources */,
 				FC224F7A2569FD9D00BC12CC /* Main.storyboard in Resources */,
@@ -258,9 +294,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FC224F772569FD9D00BC12CC /* ViewController.swift in Sources */,
+				FC224FAF2569FDE300BC12CC /* Simple Interest.swift in Sources */,
 				FC224F732569FD9D00BC12CC /* AppDelegate.swift in Sources */,
 				FC224F752569FD9D00BC12CC /* SceneDelegate.swift in Sources */,
+				FC224FBF2569FE2400BC12CC /* MainMenu.swift in Sources */,
+				FC224FA72569FDCA00BC12CC /* TimeValueMoney.swift in Sources */,
+				FC224FBA2569FE0D00BC12CC /* Amortization.swift in Sources */,
+				FC224FB42569FDF800BC12CC /* Compound Interest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
