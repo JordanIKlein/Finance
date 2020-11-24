@@ -9,22 +9,22 @@ import Foundation
 import UIKit
 
 class SimpleInt: UIViewController{
-    let backgroundShape = CAShapeLayer()
     override func viewDidLoad() {
         super.viewDidLoad()
-        background()
+        addingBackgroundShapes() // adding black background and top shape
     }
-    func background(){
+    
+    func addingBackgroundShapes(){
         view.backgroundColor = UIColor.black
         let path = UIBezierPath()
-        path.move(to: CGPoint(x:0,y:0))
-        path.addLine(to: CGPoint(x:view.bounds.maxX, y:0))
-        path.addLine(to: CGPoint(x:view.bounds.maxX, y:90))
-        path.addLine(to: CGPoint(x:0, y:155))
+        path.move(to: CGPoint(x:0,y:view.bounds.maxY))
+        path.addLine(to: CGPoint(x:view.bounds.maxX, y:view.bounds.maxY ))
+        path.addLine(to: CGPoint(x:view.bounds.maxX, y:view.bounds.maxY - 125))
+        path.addLine(to: CGPoint(x:0, y:view.bounds.maxY - 175))
         
-        backgroundShape.path = path.cgPath
-        backgroundShape.zPosition = 1
-        backgroundShape.fillColor = UIColor(named: "SpecialGreen")?.cgColor
-        view.layer.addSublayer(backgroundShape)
+        topTri.path = path.cgPath
+        topTri.zPosition = 1
+        topTri.fillColor = UIColor(named: "SpecialGreen")?.cgColor
+        view.layer.addSublayer(topTri)
     }
 }

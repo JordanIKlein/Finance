@@ -15,13 +15,13 @@ let simpleIntbtn = UIButton()
 let compoundIntbtn = UIButton()
 let settingsbtn = UIButton()
 let tvmbtn = UIButton()
-
+let topTri = CAShapeLayer()
 
 class MainMenu: UIViewController {
     
     var shapeTimer: Timer?
     let oval = CAShapeLayer()
-    let topTri = CAShapeLayer()
+    
     
     
     override func viewDidLoad() {
@@ -71,7 +71,7 @@ class MainMenu: UIViewController {
     func createLabel(){
         //Creating Label
         let questionLbl = UILabel()
-        questionLbl.frame = CGRect(x: 20, y: 70, width: 200, height: 40)
+        questionLbl.frame = CGRect(x: 35, y: 70, width: 200, height: 40)
         questionLbl.text = "Calculate."
         questionLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
         questionLbl.textColor = UIColor.black
@@ -86,23 +86,70 @@ class MainMenu: UIViewController {
         let newStoryBoard : UIStoryboard = UIStoryboard(name: "TVM", bundle:nil)
         let VC = newStoryBoard.instantiateViewController(withIdentifier: "TVM")
         VC.modalPresentationStyle = .fullScreen
-        self.present(VC, animated: true, completion: nil)
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromRight
+        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+        view.window?.layer.add(transition, forKey: kCATransition)
+        self.present(VC, animated: false, completion: nil)
     }
     @objc func settingsPressed(_ sender: UIButton){
         sender.touchIn()
         sender.touchOut()
+        //Create Settings Storyboard
+        let newStoryBoard : UIStoryboard = UIStoryboard(name: "Settings", bundle:nil)
+        let VC = newStoryBoard.instantiateViewController(withIdentifier: "Settings")
+        VC.modalPresentationStyle = .fullScreen
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromRight
+        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+        view.window?.layer.add(transition, forKey: kCATransition)
+        self.present(VC, animated: true, completion: nil)
     }
     @objc func simpleIntPressed(_ sender: UIButton){
         sender.touchIn()
         sender.touchOut()
+        let newStoryBoard : UIStoryboard = UIStoryboard(name: "SimpleInt", bundle:nil)
+        let VC = newStoryBoard.instantiateViewController(withIdentifier: "SimpleInt")
+        VC.modalPresentationStyle = .fullScreen
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromRight
+        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+        view.window?.layer.add(transition, forKey: kCATransition)
+        self.present(VC, animated: true, completion: nil)
     }
     @objc func compoundIntPressed(_ sender: UIButton){
         sender.touchIn()
         sender.touchOut()
+        let newStoryBoard : UIStoryboard = UIStoryboard(name: "CompoundInt", bundle:nil)
+        let VC = newStoryBoard.instantiateViewController(withIdentifier: "CompoundInt")
+        VC.modalPresentationStyle = .fullScreen
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromRight
+        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+        view.window?.layer.add(transition, forKey: kCATransition)
+        self.present(VC, animated: true, completion: nil)
     }
     @objc func amortPressed(_ sender: UIButton){
         sender.touchIn()
         sender.touchOut()
+        let newStoryBoard : UIStoryboard = UIStoryboard(name: "Amortization", bundle:nil)
+        let VC = newStoryBoard.instantiateViewController(withIdentifier: "Amortization")
+        VC.modalPresentationStyle = .fullScreen
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromRight
+        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+        view.window?.layer.add(transition, forKey: kCATransition)
+        self.present(VC, animated: true, completion: nil)
     }
     func buttons(){
         // Creating Buttons

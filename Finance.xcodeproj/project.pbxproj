@@ -21,6 +21,10 @@
 		FC224FBF2569FE2400BC12CC /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC224FBE2569FE2400BC12CC /* MainMenu.swift */; };
 		FCFAAD96256D8E39004A2FD0 /* TVM.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCFAAD95256D8E39004A2FD0 /* TVM.storyboard */; };
 		FCFAADA2256D8F36004A2FD0 /* CompoundInt.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCFAADA1256D8F36004A2FD0 /* CompoundInt.storyboard */; };
+		FCFAADA7256D8F82004A2FD0 /* SimpleInt.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCFAADA6256D8F82004A2FD0 /* SimpleInt.storyboard */; };
+		FCFAADAC256D8F97004A2FD0 /* Amortization.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCFAADAB256D8F97004A2FD0 /* Amortization.storyboard */; };
+		FCFAADB4256D9385004A2FD0 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCFAADB3256D9385004A2FD0 /* Settings.storyboard */; };
+		FCFAADB9256D939F004A2FD0 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCFAADB8256D939F004A2FD0 /* Settings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +65,10 @@
 		FC224FBE2569FE2400BC12CC /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		FCFAAD95256D8E39004A2FD0 /* TVM.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TVM.storyboard; sourceTree = "<group>"; };
 		FCFAADA1256D8F36004A2FD0 /* CompoundInt.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CompoundInt.storyboard; sourceTree = "<group>"; };
+		FCFAADA6256D8F82004A2FD0 /* SimpleInt.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SimpleInt.storyboard; sourceTree = "<group>"; };
+		FCFAADAB256D8F97004A2FD0 /* Amortization.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Amortization.storyboard; sourceTree = "<group>"; };
+		FCFAADB3256D9385004A2FD0 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
+		FCFAADB8256D939F004A2FD0 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,10 +152,11 @@
 			isa = PBXGroup;
 			children = (
 				FC224FBE2569FE2400BC12CC /* MainMenu.swift */,
+				FC224FA62569FDCA00BC12CC /* TimeValueMoney.swift */,
 				FC224FAE2569FDE300BC12CC /* Simple Interest.swift */,
 				FC224FB32569FDF800BC12CC /* Compound Interest.swift */,
-				FC224FA62569FDCA00BC12CC /* TimeValueMoney.swift */,
 				FC224FB92569FE0D00BC12CC /* Amortization.swift */,
+				FCFAADB8256D939F004A2FD0 /* Settings.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -156,7 +165,10 @@
 			isa = PBXGroup;
 			children = (
 				FC224F782569FD9D00BC12CC /* Main.storyboard */,
+				FCFAADB3256D9385004A2FD0 /* Settings.storyboard */,
 				FCFAAD95256D8E39004A2FD0 /* TVM.storyboard */,
+				FCFAADA6256D8F82004A2FD0 /* SimpleInt.storyboard */,
+				FCFAADAB256D8F97004A2FD0 /* Amortization.storyboard */,
 				FCFAADA1256D8F36004A2FD0 /* CompoundInt.storyboard */,
 			);
 			path = Storyboards;
@@ -265,8 +277,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FCFAADA7256D8F82004A2FD0 /* SimpleInt.storyboard in Resources */,
 				FCFAADA2256D8F36004A2FD0 /* CompoundInt.storyboard in Resources */,
 				FCFAAD96256D8E39004A2FD0 /* TVM.storyboard in Resources */,
+				FCFAADB4256D9385004A2FD0 /* Settings.storyboard in Resources */,
+				FCFAADAC256D8F97004A2FD0 /* Amortization.storyboard in Resources */,
 				FC224F7F2569FD9E00BC12CC /* LaunchScreen.storyboard in Resources */,
 				FC224F7C2569FD9E00BC12CC /* Assets.xcassets in Resources */,
 				FC224F7A2569FD9D00BC12CC /* Main.storyboard in Resources */,
@@ -296,6 +311,7 @@
 			files = (
 				FC224FAF2569FDE300BC12CC /* Simple Interest.swift in Sources */,
 				FC224F732569FD9D00BC12CC /* AppDelegate.swift in Sources */,
+				FCFAADB9256D939F004A2FD0 /* Settings.swift in Sources */,
 				FC224F752569FD9D00BC12CC /* SceneDelegate.swift in Sources */,
 				FC224FBF2569FE2400BC12CC /* MainMenu.swift in Sources */,
 				FC224FA72569FDCA00BC12CC /* TimeValueMoney.swift in Sources */,
