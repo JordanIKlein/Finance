@@ -1,28 +1,25 @@
 //
-//  TVM.swift
+//  Settings.swift
 //  Finance
 //
-//  Created by Jordan Klein on 11/21/20.
+//  Created by Jordan Klein on 11/24/20.
 //
 
 import Foundation
 import UIKit
 
-let backbtn = UIButton()
-
-class TVM: UIViewController, UIGestureRecognizerDelegate {
+class Settings: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         addingBackgroundShapes() // adding black background and top shape
-        gestures()//Gestures
+        gestures()
         createLabel()
     }
-
     func createLabel(){
         //Creating Label
         let questionLbl = UILabel()
-        questionLbl.frame = CGRect(x: 35, y: 70, width: 250, height: 40)
-        questionLbl.text = "Time Value Money."
+        questionLbl.frame = CGRect(x: 35, y: 70, width: 200, height: 40)
+        questionLbl.text = "Settings."
         questionLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
         questionLbl.textColor = UIColor.black
         questionLbl.layer.zPosition = 2
@@ -43,8 +40,6 @@ class TVM: UIViewController, UIGestureRecognizerDelegate {
         backbtn.addTarget(self, action: #selector(back), for: .touchUpInside)
         self.view.addSubview(backbtn)
     }
-    
-    
     func gestures(){
         let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
             edgePan.edges = .left

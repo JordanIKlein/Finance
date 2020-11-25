@@ -22,8 +22,6 @@ class MainMenu: UIViewController {
     var shapeTimer: Timer?
     let oval = CAShapeLayer()
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         addingBackgroundShapes() //Adding the top triangle/rect
@@ -32,9 +30,14 @@ class MainMenu: UIViewController {
         createLabel() // Adding the 'Calculate'
         buttons() // Adding the buttons
     }
+    override func viewWillAppear(_ animated: Bool) {
+        addingBackgroundShapes()
+        buttons()
+    }
     //Creating a timer which will spawn in multiple shapes
     func addingBackgroundShapes(){
         view.backgroundColor = UIColor.black
+        
         let path = UIBezierPath()
         path.move(to: CGPoint(x:0,y:0))
         path.addLine(to: CGPoint(x:view.bounds.maxX, y:view.bounds.minY))
@@ -81,8 +84,7 @@ class MainMenu: UIViewController {
 
     
     @objc func tvmPressed(_ sender: UIButton){
-        sender.touchIn()
-        sender.touchOut()
+        sender.shake()
         let newStoryBoard : UIStoryboard = UIStoryboard(name: "TVM", bundle:nil)
         let VC = newStoryBoard.instantiateViewController(withIdentifier: "TVM")
         VC.modalPresentationStyle = .fullScreen
@@ -91,13 +93,11 @@ class MainMenu: UIViewController {
         transition.type = CATransitionType.push
         transition.subtype = CATransitionSubtype.fromRight
         transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window?.layer.add(transition, forKey: kCATransition)
+        self.view.window?.layer.add(transition, forKey: kCATransition)
         self.present(VC, animated: false, completion: nil)
     }
     @objc func settingsPressed(_ sender: UIButton){
-        sender.touchIn()
-        sender.touchOut()
-        //Create Settings Storyboard
+        sender.shake()
         let newStoryBoard : UIStoryboard = UIStoryboard(name: "Settings", bundle:nil)
         let VC = newStoryBoard.instantiateViewController(withIdentifier: "Settings")
         VC.modalPresentationStyle = .fullScreen
@@ -106,12 +106,11 @@ class MainMenu: UIViewController {
         transition.type = CATransitionType.push
         transition.subtype = CATransitionSubtype.fromRight
         transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window?.layer.add(transition, forKey: kCATransition)
-        self.present(VC, animated: true, completion: nil)
+        self.view.window?.layer.add(transition, forKey: kCATransition)
+        self.present(VC, animated: false, completion: nil)
     }
     @objc func simpleIntPressed(_ sender: UIButton){
-        sender.touchIn()
-        sender.touchOut()
+        sender.shake()
         let newStoryBoard : UIStoryboard = UIStoryboard(name: "SimpleInt", bundle:nil)
         let VC = newStoryBoard.instantiateViewController(withIdentifier: "SimpleInt")
         VC.modalPresentationStyle = .fullScreen
@@ -120,12 +119,11 @@ class MainMenu: UIViewController {
         transition.type = CATransitionType.push
         transition.subtype = CATransitionSubtype.fromRight
         transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window?.layer.add(transition, forKey: kCATransition)
-        self.present(VC, animated: true, completion: nil)
+        self.view.window?.layer.add(transition, forKey: kCATransition)
+        self.present(VC, animated: false, completion: nil)
     }
     @objc func compoundIntPressed(_ sender: UIButton){
-        sender.touchIn()
-        sender.touchOut()
+        sender.shake()
         let newStoryBoard : UIStoryboard = UIStoryboard(name: "CompoundInt", bundle:nil)
         let VC = newStoryBoard.instantiateViewController(withIdentifier: "CompoundInt")
         VC.modalPresentationStyle = .fullScreen
@@ -134,12 +132,12 @@ class MainMenu: UIViewController {
         transition.type = CATransitionType.push
         transition.subtype = CATransitionSubtype.fromRight
         transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window?.layer.add(transition, forKey: kCATransition)
-        self.present(VC, animated: true, completion: nil)
+        self.view.window?.layer.add(transition, forKey: kCATransition)
+        self.present(VC, animated: false, completion: nil)
+        
     }
     @objc func amortPressed(_ sender: UIButton){
-        sender.touchIn()
-        sender.touchOut()
+        sender.shake()
         let newStoryBoard : UIStoryboard = UIStoryboard(name: "Amortization", bundle:nil)
         let VC = newStoryBoard.instantiateViewController(withIdentifier: "Amortization")
         VC.modalPresentationStyle = .fullScreen
@@ -148,14 +146,13 @@ class MainMenu: UIViewController {
         transition.type = CATransitionType.push
         transition.subtype = CATransitionSubtype.fromRight
         transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window?.layer.add(transition, forKey: kCATransition)
-        self.present(VC, animated: true, completion: nil)
+        self.view.window?.layer.add(transition, forKey: kCATransition)
+        self.present(VC, animated: false, completion: nil)
     }
     func buttons(){
         // Creating Buttons
             
         //TVM Button
-        
         tvmbtn.frame = CGRect(x: view.bounds.size.width/2 - 100, y: view.bounds.size.height/2 + 200, width: 200, height: 50)
         tvmbtn.setTitle("TVM", for: .normal)
         tvmbtn.backgroundColor = UIColor(named: "SpecialGreen")
@@ -165,10 +162,10 @@ class MainMenu: UIViewController {
         tvmbtn.layer.zPosition = 2
         tvmbtn.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 15)
         tvmbtn.addTarget(self, action: #selector(tvmPressed), for: .touchUpInside)
+        tvmbtn.pulsate()
         self.view.addSubview(tvmbtn)
 
         //Amortization Button
-        
         amortbtn.frame = CGRect(x: view.bounds.size.width/2 - 100, y: tvmbtn.frame.origin.y - 125, width: 200, height: 50)
         amortbtn.setTitle("Amortization", for: .normal)
         
@@ -179,6 +176,7 @@ class MainMenu: UIViewController {
         amortbtn.layer.zPosition = 2
         amortbtn.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 15)
         amortbtn.addTarget(self, action: #selector(amortPressed), for: .touchUpInside)
+        amortbtn.pulsate()
         self.view.addSubview(amortbtn)
         //Simple Interest Button
         
@@ -191,6 +189,7 @@ class MainMenu: UIViewController {
         simpleIntbtn.layer.zPosition = 2
         simpleIntbtn.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 15)
         simpleIntbtn.addTarget(self, action: #selector(simpleIntPressed), for: .touchUpInside)
+        simpleIntbtn.pulsate()
         self.view.addSubview(simpleIntbtn)
         
         //Compound Interest Button
@@ -204,6 +203,7 @@ class MainMenu: UIViewController {
         compoundIntbtn.layer.zPosition = 2
         compoundIntbtn.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 15)
         compoundIntbtn.addTarget(self, action: #selector(compoundIntPressed), for: .touchUpInside)
+        compoundIntbtn.pulsate()
         self.view.addSubview(compoundIntbtn)
         
         // Creating Icon
@@ -213,20 +213,15 @@ class MainMenu: UIViewController {
         
         settingsbtn.backgroundColor = .clear
         settingsbtn.layer.borderWidth = 0
-        settingsbtn.frame = CGRect(x: view.bounds.size.width - 60, y: 60, width: 50, height: 50)
+        settingsbtn.frame = CGRect(x: view.bounds.size.width - 70, y: 60, width: 50, height: 50)
         settingsbtn.tintColor = UIColor.gray
         settingsbtn.setImage(settingsImage, for: .normal)
         settingsbtn.layer.zPosition = 2
         settingsbtn.addTarget(self, action: #selector(settingsPressed), for: .touchUpInside)
-        settingsbtn.tag = 5
+        settingsbtn.rotate()
         self.view.addSubview(settingsbtn)
     }
-        
-    func tvmView(){
-        let newViewController = TVM()
-        self.navigationController?.pushViewController(newViewController, animated: true)
-        newViewController.modalPresentationStyle = .fullScreen
-    }
+    
     
 
 } // END OF CLASS
@@ -243,17 +238,23 @@ extension UIButton{
         pulse.damping = 1.0
         layer.add(pulse, forKey: nil)
     }
-    func touchIn(){
-        UIView.animate(withDuration: 0.1, delay: 0, options: [.allowUserInteraction,.curveEaseIn], animations: {
-            self.transform = .init(scaleX: 0.9, y: 0.9)
-        }, completion: nil)
+    func stopButtonAnimation(){
+        layer.removeAllAnimations()
+        layer.transform = CATransform3DIdentity
     }
-    func touchOut(){
-        UIView.animate(withDuration: 0.1, delay: 0.1, options: [.allowUserInteraction,.curveEaseOut], animations: {
-            self.transform = .identity
-        }, completion: nil)
+    func shake(){
         let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .rigid)
         impactFeedbackgenerator.prepare()
         impactFeedbackgenerator.impactOccurred()
     }
+    func rotate(){
+        let spring = CASpringAnimation(keyPath: "transform.rotation")
+        spring.damping = 10.0
+        spring.fromValue = 3.0 * CGFloat(Double.pi)
+        spring.toValue = 4.0 * CGFloat(Double.pi)
+        spring.repeatCount = .infinity
+        spring.autoreverses = true
+        layer.add(spring, forKey: "rotation")
+    }
+
 }
