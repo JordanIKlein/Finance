@@ -26,7 +26,7 @@ class MainMenu: UIViewController {
         super.viewDidLoad()
         addingBackgroundShapes() //Adding the top triangle/rect
         spawnShape() // Need to have the rect spawn before 4 seconds occur
-        shapeTimer = Timer.scheduledTimer(timeInterval: 4, target: self, selector: #selector(spawnShape), userInfo: nil, repeats: true) // Timer to continue the shapes forever
+        shapeTimer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(spawnShape), userInfo: nil, repeats: true) // Timer to continue the shapes forever
         createLabel() // Adding the 'Calculate'
         buttons() // Adding the buttons
     }
@@ -64,7 +64,7 @@ class MainMenu: UIViewController {
         animation.toValue = CGPoint(x: oval.position.x, y: view.bounds.size.height )
         oval.opacity = 0.35
 
-        animation.duration = 4
+        animation.duration = 2.5
         oval.add(animation, forKey: "basic animation")
         oval.zPosition = 0
         view.layer.addSublayer(oval)
@@ -151,10 +151,9 @@ class MainMenu: UIViewController {
     }
     func buttons(){
         // Creating Buttons
-            
         //TVM Button
         tvmbtn.frame = CGRect(x: view.bounds.size.width/2 - 100, y: view.bounds.size.height/2 + 200, width: 200, height: 50)
-        tvmbtn.setTitle("TVM", for: .normal)
+        tvmbtn.setTitle("Time Value Money", for: .normal)
         tvmbtn.backgroundColor = UIColor(named: "SpecialGreen")
         tvmbtn.layer.borderColor = UIColor.darkGray.cgColor
         tvmbtn.layer.borderWidth = 1
@@ -167,7 +166,7 @@ class MainMenu: UIViewController {
 
         //Amortization Button
         amortbtn.frame = CGRect(x: view.bounds.size.width/2 - 100, y: tvmbtn.frame.origin.y - 125, width: 200, height: 50)
-        amortbtn.setTitle("Amortization", for: .normal)
+        amortbtn.setTitle("Amortized Loans", for: .normal)
         
         amortbtn.backgroundColor = UIColor(named: "SpecialGreen")
         amortbtn.layer.borderColor = UIColor.darkGray.cgColor
@@ -243,7 +242,7 @@ extension UIButton{
         layer.transform = CATransform3DIdentity
     }
     func shake(){
-        let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .rigid)
+        let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .heavy)
         impactFeedbackgenerator.prepare()
         impactFeedbackgenerator.impactOccurred()
     }

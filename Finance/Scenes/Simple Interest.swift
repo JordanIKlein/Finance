@@ -16,8 +16,9 @@ let ratetxtBox = UITextField()
 let timetxtBox = UITextField()
 // Final result label Simple
 let calcLbl = UILabel()
+let intlbl = UILabel()
 
-class SimpleInt: UIViewController{
+class SimpleInt: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         addingBackgroundShapes() // adding black background and top shape
@@ -26,6 +27,10 @@ class SimpleInt: UIViewController{
         labels() //Labels
         textBoxes() // Creating the textboxes
         calculateButton() // Creating the calculate button
+        
+        pritxtBox.delegate = self
+        ratetxtBox.delegate = self
+        timetxtBox.delegate = self
     }
     func createLabel(){
         //Creating Label
@@ -109,7 +114,7 @@ class SimpleInt: UIViewController{
         //Rate Label
         let rateLbl = UILabel()
         rateLbl.frame = CGRect(x: 35, y: 280, width: 250, height: 40)
-        rateLbl.text = "Rate"
+        rateLbl.text = "Rate %"
         rateLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
         rateLbl.textColor = UIColor.white
         rateLbl.layer.zPosition = 2
@@ -117,7 +122,7 @@ class SimpleInt: UIViewController{
         //Time Label
         let timeLbl = UILabel()
         timeLbl.frame = CGRect(x: 35, y: 360, width: 250, height: 40)
-        timeLbl.text = "Time"
+        timeLbl.text = "Time (T)"
         timeLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
         timeLbl.textColor = UIColor.white
         timeLbl.layer.zPosition = 2
@@ -126,12 +131,27 @@ class SimpleInt: UIViewController{
     }
     //Function for adding text boxes
     func textBoxes(){
+        // Creating Done within the tool keyboard
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        doneToolbar.barStyle = UIBarStyle.black
+
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(firstRes))
+
+        let items = NSMutableArray()
+        items.add(flexSpace)
+        items.add(done)
+
+        doneToolbar.items = items as? [UIBarButtonItem]
+        doneToolbar.sizeToFit()
         // Principal Amount
         
         pritxtBox.frame = CGRect(x: 35, y: 240, width: 200, height: 40)
         pritxtBox.borderStyle = UITextField.BorderStyle.bezel
         pritxtBox.backgroundColor = UIColor.white
         pritxtBox.textColor = UIColor.black
+        pritxtBox.keyboardType = .decimalPad
+        pritxtBox.inputAccessoryView = doneToolbar
         self.view.addSubview(pritxtBox)
         //Rate Amount
         
@@ -139,6 +159,8 @@ class SimpleInt: UIViewController{
         ratetxtBox.borderStyle = UITextField.BorderStyle.bezel
         ratetxtBox.backgroundColor = UIColor.white
         ratetxtBox.textColor = UIColor.black
+        ratetxtBox.keyboardType = .decimalPad
+        ratetxtBox.inputAccessoryView = doneToolbar
         self.view.addSubview(ratetxtBox)
         // time amount
         
@@ -146,8 +168,17 @@ class SimpleInt: UIViewController{
         timetxtBox.borderStyle = UITextField.BorderStyle.bezel
         timetxtBox.backgroundColor = UIColor.white
         timetxtBox.textColor = UIColor.black
+        timetxtBox.keyboardType = .decimalPad
+        timetxtBox.inputAccessoryView = doneToolbar
         self.view.addSubview(timetxtBox)
     }
+    
+    @objc func firstRes(){
+        pritxtBox.resignFirstResponder()
+        ratetxtBox.resignFirstResponder()
+        timetxtBox.resignFirstResponder()
+    }
+    
     func calculateButton() {
         
         calc.frame = CGRect(x: 175, y: 400, width: 200, height: 40)
@@ -161,28 +192,70 @@ class SimpleInt: UIViewController{
         calc.addTarget(self, action: #selector(calculation), for: .touchUpInside)
         self.view.addSubview(calc)
     }
-    func dropdown(){
-        // add dropdown
-        
-    }
+    
     //Calculation objc
     @objc func calculation(){
-        
         calcLbl.text = ""
-        // if month/year is not selected bring error message!
-        // Validation Here
-        
-        //Continue through
-        let principal = Double(pritxtBox.text!)!
-        let rate = Double(ratetxtBox.text!)! / 100
-        let time = Double(timetxtBox.text!)!
-        let endCalc = principal * rate * time
-        calcLbl.frame = CGRect(x: 35, y: 440, width: 100, height: 40)
-        calcLbl.text = "\(round(100.0 * endCalc) / 100.0)"
-        calcLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-        calcLbl.textColor = UIColor.white
-        calcLbl.layer.zPosition = 2
-        self.view.addSubview(calcLbl)
+        pritxtBox.resignFirstResponder()
+        ratetxtBox.resignFirstResponder()
+        timetxtBox.resignFirstResponder()
+        if pritxtBox.hasText == false || ratetxtBox.hasText == false || timetxtBox.hasText == false {
+            // Alert. you need to input all fields
+            let alert = UIAlertController(title: "Missing Fields", message: "Remember to fill in all the fields!", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        } else {
+                let principal = Double(pritxtBox.text!)!
+                let rate = Double(ratetxtBox.text!)! / 100
+                let time = Double(timetxtBox.text!)!
+                let endCalc = principal * (1 + (rate * time))
+
+                // Create Total Amount Label
+                let totalAMTLbl = UILabel()
+                totalAMTLbl.frame = CGRect(x: 35, y: 440, width: 300, height: 40)
+                totalAMTLbl.text = "Total Amount:"
+                totalAMTLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+                totalAMTLbl.textColor = UIColor.white
+                totalAMTLbl.layer.zPosition = 2
+                view.addSubview(totalAMTLbl)
+
+                // Returns Total Principal with Interest
+                calcLbl.frame = CGRect(x: 35, y: 480, width: 300, height: 40)
+                calcLbl.text = "$\(round(100.0 * (endCalc+principal)) / 100.0)"
+                calcLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+                calcLbl.textColor = UIColor.white
+                calcLbl.layer.zPosition = 2
+                self.view.addSubview(calcLbl)
+
+                // Create Total Interest Amount Label
+                let totalIntAMTLbl = UILabel()
+                totalIntAMTLbl.frame = CGRect(x: 35, y: 520, width: 300, height: 40)
+                totalIntAMTLbl.text = "Total Interest:"
+                totalIntAMTLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+                totalIntAMTLbl.textColor = UIColor.white
+                totalIntAMTLbl.layer.zPosition = 2
+                view.addSubview(totalIntAMTLbl)
+
+                // Returns Total Interest
+                intlbl.frame = CGRect(x: 35, y: 560, width: 300, height: 40)
+                intlbl.text = "$\(round(100.0 * endCalc) / 100.0)"
+                intlbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+                intlbl.textColor = UIColor.white
+                intlbl.layer.zPosition = 2
+                self.view.addSubview(intlbl)
+            }
+
     }
-    
-}
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+
+        let newString = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+        let arrayOfString = newString.components(separatedBy: ".")
+
+        if arrayOfString.count > 2 { // limiting how many decimals can exist
+            return false
+        }
+        return true
+    }
+} // End of Class
+            
+            
