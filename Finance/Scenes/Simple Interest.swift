@@ -21,6 +21,7 @@ let intlbl = UILabel()
 class SimpleInt: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         addingBackgroundShapes() // adding black background and top shape
         gestures()
         createLabel() // Header and Back Button
@@ -32,6 +33,8 @@ class SimpleInt: UIViewController, UITextFieldDelegate {
         ratetxtBox.delegate = self
         timetxtBox.delegate = self
     }
+    @IBOutlet weak var ContentView: UIView!
+    
     func createLabel(){
         //Creating Label
         let questionLbl = UILabel()
@@ -40,7 +43,7 @@ class SimpleInt: UIViewController, UITextFieldDelegate {
         questionLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
         questionLbl.textColor = UIColor.black
         questionLbl.layer.zPosition = 2
-        view.addSubview(questionLbl)
+        self.view.addSubview(questionLbl)
         
         //Icon for Back
         
@@ -71,7 +74,7 @@ class SimpleInt: UIViewController, UITextFieldDelegate {
         transition.subtype = CATransitionSubtype.fromLeft
         transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
         view.window?.layer.add(transition, forKey: kCATransition)
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: false, completion: nil)
     }
     @objc func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
         if recognizer.state == .recognized {
@@ -87,7 +90,7 @@ class SimpleInt: UIViewController, UITextFieldDelegate {
         
     }
     func addingBackgroundShapes(){
-        view.backgroundColor = UIColor.black
+        view.backgroundColor = UIColor(named: "SpecialGreen")
         let path = UIBezierPath()
         path.move(to: CGPoint(x:0,y:0))
         path.addLine(to: CGPoint(x:view.bounds.maxX, y:view.bounds.minY))
@@ -97,7 +100,7 @@ class SimpleInt: UIViewController, UITextFieldDelegate {
         topTri.path = path.cgPath
         topTri.zPosition = 1
         topTri.fillColor = UIColor(named: "SpecialGreen")?.cgColor
-        view.layer.addSublayer(topTri)
+        self.view.layer.addSublayer(topTri)
     }
     
     
@@ -110,7 +113,7 @@ class SimpleInt: UIViewController, UITextFieldDelegate {
         principalLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
         principalLbl.textColor = UIColor.white
         principalLbl.layer.zPosition = 2
-        self.view.addSubview(principalLbl)
+        self.ContentView.addSubview(principalLbl)
         //Rate Label
         let rateLbl = UILabel()
         rateLbl.frame = CGRect(x: 35, y: 280, width: 250, height: 40)
@@ -118,7 +121,7 @@ class SimpleInt: UIViewController, UITextFieldDelegate {
         rateLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
         rateLbl.textColor = UIColor.white
         rateLbl.layer.zPosition = 2
-        self.view.addSubview(rateLbl)
+        self.ContentView.addSubview(rateLbl)
         //Time Label
         let timeLbl = UILabel()
         timeLbl.frame = CGRect(x: 35, y: 360, width: 250, height: 40)
@@ -126,7 +129,7 @@ class SimpleInt: UIViewController, UITextFieldDelegate {
         timeLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
         timeLbl.textColor = UIColor.white
         timeLbl.layer.zPosition = 2
-        self.view.addSubview(timeLbl)
+        self.ContentView.addSubview(timeLbl)
         
     }
     //Function for adding text boxes
@@ -152,7 +155,7 @@ class SimpleInt: UIViewController, UITextFieldDelegate {
         pritxtBox.textColor = UIColor.black
         pritxtBox.keyboardType = .decimalPad
         pritxtBox.inputAccessoryView = doneToolbar
-        self.view.addSubview(pritxtBox)
+        self.ContentView.addSubview(pritxtBox)
         //Rate Amount
         
         ratetxtBox.frame = CGRect(x: 35, y: 320, width: 100, height: 40)
@@ -161,7 +164,7 @@ class SimpleInt: UIViewController, UITextFieldDelegate {
         ratetxtBox.textColor = UIColor.black
         ratetxtBox.keyboardType = .decimalPad
         ratetxtBox.inputAccessoryView = doneToolbar
-        self.view.addSubview(ratetxtBox)
+        self.ContentView.addSubview(ratetxtBox)
         // time amount
         
         timetxtBox.frame = CGRect(x: 35, y: 400, width: 100, height: 40)
@@ -170,7 +173,7 @@ class SimpleInt: UIViewController, UITextFieldDelegate {
         timetxtBox.textColor = UIColor.black
         timetxtBox.keyboardType = .decimalPad
         timetxtBox.inputAccessoryView = doneToolbar
-        self.view.addSubview(timetxtBox)
+        self.ContentView.addSubview(timetxtBox)
     }
     
     @objc func firstRes(){
@@ -181,7 +184,7 @@ class SimpleInt: UIViewController, UITextFieldDelegate {
     
     func calculateButton() {
         
-        calc.frame = CGRect(x: 175, y: 400, width: 200, height: 40)
+        calc.frame = CGRect(x: 150, y: 400, width: 200, height: 40)
         calc.setTitle("Calculate", for: .normal)
         calc.backgroundColor = UIColor(named: "SpecialGreen")
         calc.layer.borderColor = UIColor.darkGray.cgColor
@@ -190,7 +193,7 @@ class SimpleInt: UIViewController, UITextFieldDelegate {
         calc.layer.zPosition = 2
         calc.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
         calc.addTarget(self, action: #selector(calculation), for: .touchUpInside)
-        self.view.addSubview(calc)
+        self.ContentView.addSubview(calc)
     }
     
     //Calculation objc
@@ -217,7 +220,7 @@ class SimpleInt: UIViewController, UITextFieldDelegate {
                 totalAMTLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
                 totalAMTLbl.textColor = UIColor.white
                 totalAMTLbl.layer.zPosition = 2
-                view.addSubview(totalAMTLbl)
+                self.ContentView.addSubview(totalAMTLbl)
 
                 // Returns Total Principal with Interest
                 calcLbl.frame = CGRect(x: 35, y: 480, width: 300, height: 40)
@@ -225,7 +228,7 @@ class SimpleInt: UIViewController, UITextFieldDelegate {
                 calcLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
                 calcLbl.textColor = UIColor.white
                 calcLbl.layer.zPosition = 2
-                self.view.addSubview(calcLbl)
+                self.ContentView.addSubview(calcLbl)
 
                 // Create Total Interest Amount Label
                 let totalIntAMTLbl = UILabel()
@@ -234,7 +237,7 @@ class SimpleInt: UIViewController, UITextFieldDelegate {
                 totalIntAMTLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
                 totalIntAMTLbl.textColor = UIColor.white
                 totalIntAMTLbl.layer.zPosition = 2
-                view.addSubview(totalIntAMTLbl)
+                self.ContentView.addSubview(totalIntAMTLbl)
 
                 // Returns Total Interest
                 intlbl.frame = CGRect(x: 35, y: 560, width: 300, height: 40)
@@ -242,7 +245,7 @@ class SimpleInt: UIViewController, UITextFieldDelegate {
                 intlbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
                 intlbl.textColor = UIColor.white
                 intlbl.layer.zPosition = 2
-                self.view.addSubview(intlbl)
+                self.ContentView.addSubview(intlbl)
             }
 
     }
