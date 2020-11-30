@@ -10,8 +10,6 @@ import UIKit
 
 let backbtn = UIButton()
 
-
-
 // UI Fields for TVM
 let lookingFor = UITextField()
 let TVMnumbertxtbox = UITextField() // Number of compounding periods
@@ -23,9 +21,11 @@ let TVMFVtxtbox = UITextField() // Future Value
 //UI Labels
 let rateLbl = UILabel()
 let numberLbl = UILabel()
-let timeLbl = UILabel()
 let presentValueLbl = UILabel()
 let finalValueLbl = UILabel()
+
+// Final Totals
+let futureValue = UILabel()
 
 class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
     
@@ -60,7 +60,7 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
         //Creating Label
         let questionLbl = UILabel()
         questionLbl.frame = CGRect(x: 35, y: 70, width: 250, height: 40)
-        questionLbl.text = "Time Value Money."
+        questionLbl.text = "Lump Sum TVM"
         questionLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
         questionLbl.textColor = UIColor.black
         questionLbl.layer.zPosition = 2
@@ -177,10 +177,10 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
         TVMFVtxtbox.removeFromSuperview()
         TVMPVtxtbox.removeFromSuperview()
         rateLbl.removeFromSuperview()
-        timeLbl.removeFromSuperview()
         numberLbl.removeFromSuperview()
         presentValueLbl.removeFromSuperview()
         finalValueLbl.removeFromSuperview()
+        futureValue.removeFromSuperview()
         
         //Looking for PV
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 40))
@@ -234,34 +234,16 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
         TVMnumbertxtbox.tintColor = UIColor.clear
         TVMnumbertxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
         self.view.addSubview(TVMnumbertxtbox)
-        //Time Label
-        timeLbl.frame = CGRect(x: 35, y: 400, width: 250, height: 40)
-        timeLbl.text = "Time (T)"
-        timeLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-        timeLbl.textColor = UIColor.white
-        timeLbl.layer.zPosition = 2
-        self.view.addSubview(timeLbl)
-        //Time periods Field
-        TVMtimetxtbox.frame = CGRect(x: 35, y: 440, width: 250, height: 40)
-        TVMtimetxtbox.borderStyle = UITextField.BorderStyle.bezel
-        TVMtimetxtbox.backgroundColor = UIColor.white
-        TVMtimetxtbox.textColor = UIColor.black
-        TVMtimetxtbox.keyboardType = .decimalPad
-        TVMtimetxtbox.inputAccessoryView = doneToolbar
-        TVMtimetxtbox.textAlignment = .center
-        TVMtimetxtbox.tintColor = UIColor.clear
-        TVMtimetxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        self.view.addSubview(TVMtimetxtbox)
         //FV Label
         
-        finalValueLbl.frame = CGRect(x: 35, y: 480, width: 250, height: 40)
+        finalValueLbl.frame = CGRect(x: 35, y: 400, width: 250, height: 40)
         finalValueLbl.text = "Future Value"
         finalValueLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
         finalValueLbl.textColor = UIColor.white
         finalValueLbl.layer.zPosition = 2
         self.view.addSubview(finalValueLbl)
         //Future Value Field
-        TVMFVtxtbox.frame = CGRect(x: 35, y: 520, width: 250, height: 40)
+        TVMFVtxtbox.frame = CGRect(x: 35, y: 440, width: 250, height: 40)
         TVMFVtxtbox.borderStyle = UITextField.BorderStyle.bezel
         TVMFVtxtbox.backgroundColor = UIColor.white
         TVMFVtxtbox.textColor = UIColor.black
@@ -274,7 +256,7 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
         // PV Label
         
         // Calculation Button
-        calc.frame = CGRect(x: 35, y: 570, width: 250, height: 40)
+        calc.frame = CGRect(x: 35, y: 490, width: 250, height: 40)
         calc.setTitle("Calculate", for: .normal)
         calc.backgroundColor = UIColor(named: "SpecialGreen")
         calc.layer.borderColor = UIColor.darkGray.cgColor
@@ -287,7 +269,43 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
     }
     @objc func PVcalculation(){
         //Calculating PV
-        
+        if TVMFVtxtbox.hasText == false || TVMratetxtbox.hasText == false || TVMnumbertxtbox.hasText == false {
+            // Alert. you need to input all fields
+            let alert = UIAlertController(title: "Missing Fields", message: "Remember to fill in all the fields!", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            // Calculation passes through validation
+            let finalValue = Double(TVMFVtxtbox.text!)!
+            let rate = Double(TVMratetxtbox.text!)! / 100
+            let number = Double(TVMnumbertxtbox.text!)!
+            print("Present Value: \(finalValue)")
+            print("Rate: \(rate)")
+            print("Number: \(number)")
+            // Lump sum formula is PV  =  FV / (1 + i)^n
+            let firstCalc = (1 + rate)
+            print(firstCalc)
+            let secondCalc = pow(firstCalc, number)
+            print(secondCalc)
+            let finalCalc = finalValue / secondCalc
+            print(finalCalc)
+            
+            //Add Future Value Label
+            presentValueLbl.frame = CGRect(x: 35, y: 530, width: 250, height: 40)
+            presentValueLbl.text = "Future Value"
+            presentValueLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+            presentValueLbl.textColor = UIColor.white
+            presentValueLbl.layer.zPosition = 2
+            self.view.addSubview(presentValueLbl)
+            //Add Future Value Label Amount
+            let presentValueAnswer = UILabel()
+            presentValueAnswer.frame = CGRect(x: 35, y: 570, width: 250, height: 40)
+            presentValueAnswer.text = "$\(round(100.0 * finalCalc) / 100.0)"
+            presentValueAnswer.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+            presentValueAnswer.textColor = UIColor.white
+            presentValueAnswer.layer.zPosition = 2
+            self.view.addSubview(presentValueAnswer)
+        }
     }
     func FutureValue(){
         // Looking for FV
@@ -298,10 +316,10 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
         TVMFVtxtbox.removeFromSuperview()
         TVMPVtxtbox.removeFromSuperview()
         rateLbl.removeFromSuperview()
-        timeLbl.removeFromSuperview()
         numberLbl.removeFromSuperview()
         presentValueLbl.removeFromSuperview()
         finalValueLbl.removeFromSuperview()
+        futureValue.removeFromSuperview()
         
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
         doneToolbar.barStyle = UIBarStyle.black
@@ -317,14 +335,12 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
         doneToolbar.sizeToFit()
         
         //Rate Label
-        
         rateLbl.frame = CGRect(x: 35, y: 240, width: 250, height: 40)
         rateLbl.text = "Rate %"
         rateLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
         rateLbl.textColor = UIColor.white
         rateLbl.layer.zPosition = 2
         self.view.addSubview(rateLbl)
-        
         //Rate Field
         TVMratetxtbox.frame = CGRect(x: 35, y: 280, width: 250, height: 40)
         TVMratetxtbox.borderStyle = UITextField.BorderStyle.bezel
@@ -337,7 +353,6 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
         TVMratetxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
         self.view.addSubview(TVMratetxtbox)
         //Number Label
-        
         numberLbl.frame = CGRect(x: 35, y: 320, width: 250, height: 40)
         numberLbl.text = "Number"
         numberLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
@@ -355,35 +370,17 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
         TVMnumbertxtbox.tintColor = UIColor.clear
         TVMnumbertxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
         self.view.addSubview(TVMnumbertxtbox)
-        //Time Label
-        
-        timeLbl.frame = CGRect(x: 35, y: 400, width: 250, height: 40)
-        timeLbl.text = "Time (T)"
-        timeLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-        timeLbl.textColor = UIColor.white
-        timeLbl.layer.zPosition = 2
-        self.view.addSubview(timeLbl)
-        //Time periods Field
-        TVMtimetxtbox.frame = CGRect(x: 35, y: 440, width: 250, height: 40)
-        TVMtimetxtbox.borderStyle = UITextField.BorderStyle.bezel
-        TVMtimetxtbox.backgroundColor = UIColor.white
-        TVMtimetxtbox.textColor = UIColor.black
-        TVMtimetxtbox.keyboardType = .decimalPad
-        TVMtimetxtbox.inputAccessoryView = doneToolbar
-        TVMtimetxtbox.textAlignment = .center
-        TVMtimetxtbox.tintColor = UIColor.clear
-        TVMtimetxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        self.view.addSubview(TVMtimetxtbox)
-        //FV Label
-        finalValueLbl.frame = CGRect(x: 35, y: 480, width: 250, height: 40)
-        finalValueLbl.text = "Present Value"
-        finalValueLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-        finalValueLbl.textColor = UIColor.white
-        finalValueLbl.layer.zPosition = 2
-        self.view.addSubview(finalValueLbl)
+
+        //PV Label
+        presentValueLbl.frame = CGRect(x: 35, y: 400, width: 250, height: 40)
+        presentValueLbl.text = "Present Value"
+        presentValueLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+        presentValueLbl.textColor = UIColor.white
+        presentValueLbl.layer.zPosition = 2
+        self.view.addSubview(presentValueLbl)
         
         //Present Value Field
-        TVMPVtxtbox.frame = CGRect(x: 35, y: 520, width: 250, height: 40)
+        TVMPVtxtbox.frame = CGRect(x: 35, y: 440, width: 250, height: 40)
         TVMPVtxtbox.borderStyle = UITextField.BorderStyle.bezel
         TVMPVtxtbox.backgroundColor = UIColor.white
         TVMPVtxtbox.textColor = UIColor.black
@@ -395,7 +392,7 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
         self.view.addSubview(TVMPVtxtbox)
         
         // Calculation Button
-        calc.frame = CGRect(x: 35, y: 570, width: 250, height: 40)
+        calc.frame = CGRect(x: 35, y: 490, width: 250, height: 40)
         calc.setTitle("Calculate", for: .normal)
         calc.backgroundColor = UIColor(named: "SpecialGreen")
         calc.layer.borderColor = UIColor.darkGray.cgColor
@@ -408,14 +405,44 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
     }
     @objc func FVcalculation(){
         //Calculating FV
-        //Formula is FV = PV * [1 + (i/n)]^(n * t)
-        
         //if statement to check through each field (ensuring they are not negative)
-        
-        let presentValue = Double(TVMPVtxtbox.text!)!
-        let rate = Double(TVMratetxtbox.text!)!
-        let time = Double(TVMtimetxtbox.text!)!
-        let number = Double(TVMnumbertxtbox.text!)!
+        if TVMPVtxtbox.hasText == false || TVMratetxtbox.hasText == false || TVMnumbertxtbox.hasText == false {
+            // Alert. you need to input all fields
+            let alert = UIAlertController(title: "Missing Fields", message: "Remember to fill in all the fields!", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            // Calculation passes through validation
+            let presentValue = Double(TVMPVtxtbox.text!)!
+            let rate = Double(TVMratetxtbox.text!)! / 100
+            let number = Double(TVMnumbertxtbox.text!)!
+            print("Present Value: \(presentValue)")
+            print("Rate: \(rate)")
+            print("Number: \(number)")
+            //Formula is FV  =  PV x (1 + i)^n
+            let firstCalc = (1 + rate)
+            print(firstCalc)
+            let secondCalc = pow(firstCalc, number)
+            print(secondCalc)
+            let finalCalc = presentValue * secondCalc
+            print(finalCalc)
+            
+            //Add Future Value Label
+            finalValueLbl.frame = CGRect(x: 35, y: 530, width: 250, height: 40)
+            finalValueLbl.text = "Future Value"
+            finalValueLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+            finalValueLbl.textColor = UIColor.white
+            finalValueLbl.layer.zPosition = 2
+            self.view.addSubview(finalValueLbl)
+            //Add Future Value Label Amount
+            
+            futureValue.frame = CGRect(x: 35, y: 570, width: 250, height: 40)
+            futureValue.text = "$\(round(100.0 * finalCalc) / 100.0)"
+            futureValue.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+            futureValue.textColor = UIColor.white
+            futureValue.layer.zPosition = 2
+            self.view.addSubview(futureValue)
+        }
     }
     func RateValue(){
         // Looking for Rate
@@ -426,10 +453,10 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
         TVMFVtxtbox.removeFromSuperview()
         TVMPVtxtbox.removeFromSuperview()
         rateLbl.removeFromSuperview()
-        timeLbl.removeFromSuperview()
         numberLbl.removeFromSuperview()
         presentValueLbl.removeFromSuperview()
         finalValueLbl.removeFromSuperview()
+        futureValue.removeFromSuperview()
         
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
         doneToolbar.barStyle = UIBarStyle.black
@@ -462,26 +489,8 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
         TVMnumbertxtbox.tintColor = UIColor.clear
         TVMnumbertxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
         self.view.addSubview(TVMnumbertxtbox)
-        //Time Label
-        timeLbl.frame = CGRect(x: 35, y: 320, width: 250, height: 40)
-        timeLbl.text = "Time (T)"
-        timeLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-        timeLbl.textColor = UIColor.white
-        timeLbl.layer.zPosition = 2
-        self.view.addSubview(timeLbl)
-        //Time periods Field
-        TVMtimetxtbox.frame = CGRect(x: 35, y: 360, width: 250, height: 40)
-        TVMtimetxtbox.borderStyle = UITextField.BorderStyle.bezel
-        TVMtimetxtbox.backgroundColor = UIColor.white
-        TVMtimetxtbox.textColor = UIColor.black
-        TVMtimetxtbox.keyboardType = .decimalPad
-        TVMtimetxtbox.inputAccessoryView = doneToolbar
-        TVMtimetxtbox.textAlignment = .center
-        TVMtimetxtbox.tintColor = UIColor.clear
-        TVMtimetxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        self.view.addSubview(TVMtimetxtbox)
         //FV Label
-        presentValueLbl.frame = CGRect(x: 35, y: 400, width: 250, height: 40)
+        presentValueLbl.frame = CGRect(x: 35, y: 320, width: 250, height: 40)
         presentValueLbl.text = "Present Value"
         presentValueLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
         presentValueLbl.textColor = UIColor.white
@@ -489,7 +498,7 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
         self.view.addSubview(presentValueLbl)
         
         //Present Value Field
-        TVMPVtxtbox.frame = CGRect(x: 35, y: 440, width: 250, height: 40)
+        TVMPVtxtbox.frame = CGRect(x: 35, y: 360, width: 250, height: 40)
         TVMPVtxtbox.borderStyle = UITextField.BorderStyle.bezel
         TVMPVtxtbox.backgroundColor = UIColor.white
         TVMPVtxtbox.textColor = UIColor.black
@@ -501,14 +510,14 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
         self.view.addSubview(TVMPVtxtbox)
         //FV Label
         
-        finalValueLbl.frame = CGRect(x: 35, y: 480, width: 250, height: 40)
+        finalValueLbl.frame = CGRect(x: 35, y: 400, width: 250, height: 40)
         finalValueLbl.text = "Future Value"
         finalValueLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
         finalValueLbl.textColor = UIColor.white
         finalValueLbl.layer.zPosition = 2
         self.view.addSubview(finalValueLbl)
         //Future Value Field
-        TVMFVtxtbox.frame = CGRect(x: 35, y: 520, width: 250, height: 40)
+        TVMFVtxtbox.frame = CGRect(x: 35, y: 440, width: 250, height: 40)
         TVMFVtxtbox.borderStyle = UITextField.BorderStyle.bezel
         TVMFVtxtbox.backgroundColor = UIColor.white
         TVMFVtxtbox.textColor = UIColor.black
@@ -520,7 +529,7 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
         self.view.addSubview(TVMFVtxtbox)
         
         // Calculation Button
-        calc.frame = CGRect(x: 35, y: 570, width: 250, height: 40)
+        calc.frame = CGRect(x: 35, y: 490, width: 250, height: 40)
         calc.setTitle("Calculate", for: .normal)
         calc.backgroundColor = UIColor(named: "SpecialGreen")
         calc.layer.borderColor = UIColor.darkGray.cgColor
@@ -532,8 +541,45 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
         self.view.addSubview(calc)
     }
     @objc func Ratecalculation(){
-        //Calculating PV
-        
+        //Calculating Rate
+        //if statement to check through each field (ensuring they are not negative)
+        if TVMPVtxtbox.hasText == false || TVMFVtxtbox.hasText == false ||  TVMnumbertxtbox.hasText == false {
+            // Alert. you need to input all fields
+            let alert = UIAlertController(title: "Missing Fields", message: "Remember to fill in all the fields!", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            // Calculation passes through validation
+            let presentValue = Double(TVMPVtxtbox.text!)!
+            let finalValue = Double(TVMFVtxtbox.text!)!
+            let number = Double(TVMnumbertxtbox.text!)!
+            
+            print("Present Value: \(presentValue)")
+            print("Final Value: \(finalValue)")
+            print("Number: \(number)")
+            // Formula  i = (FV/ PV)^(1 / N) -1
+            let firstCalc = (finalValue/presentValue)
+            print(firstCalc)
+            let secondCalc = pow(firstCalc, 1/number)
+            print(secondCalc)
+            let finalCalc = (secondCalc - 1) * 100
+            print(finalCalc)
+            
+            //Add Future Value Label
+            finalValueLbl.frame = CGRect(x: 35, y: 540, width: 250, height: 40)
+            finalValueLbl.text = "Rate:"
+            finalValueLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+            finalValueLbl.textColor = UIColor.white
+            finalValueLbl.layer.zPosition = 2
+            self.view.addSubview(finalValueLbl)
+            //Add Future Value Label Amount
+            futureValue.frame = CGRect(x: 35, y: 590, width: 250, height: 40)
+            futureValue.text = "\(round(100.0 * finalCalc) / 100.0)%"
+            futureValue.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+            futureValue.textColor = UIColor.white
+            futureValue.layer.zPosition = 2
+            self.view.addSubview(futureValue)
+        }
     }
     func NumberofPeriodValue(){
         // Looking for Number of Periods
@@ -543,11 +589,10 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
         TVMFVtxtbox.removeFromSuperview()
         TVMPVtxtbox.removeFromSuperview()
         rateLbl.removeFromSuperview()
-        timeLbl.removeFromSuperview()
         numberLbl.removeFromSuperview()
         presentValueLbl.removeFromSuperview()
         finalValueLbl.removeFromSuperview()
-        
+        futureValue.removeFromSuperview()
         
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
         doneToolbar.barStyle = UIBarStyle.black
@@ -562,7 +607,7 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
         doneToolbar.items = items as? [UIBarButtonItem]
         doneToolbar.sizeToFit()
         
-        // Should have 4 fields
+        // Should have 3 fields
         
         //FV Label
         rateLbl.frame = CGRect(x: 35, y: 240, width: 250, height: 40)
@@ -583,26 +628,8 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
         TVMratetxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
         self.view.addSubview(TVMratetxtbox)
 
-        //Time Label
-        timeLbl.frame = CGRect(x: 35, y: 320, width: 250, height: 40)
-        timeLbl.text = "Time (T)"
-        timeLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-        timeLbl.textColor = UIColor.white
-        timeLbl.layer.zPosition = 2
-        self.view.addSubview(timeLbl)
-        //Time periods Field
-        TVMtimetxtbox.frame = CGRect(x: 35, y: 360, width: 250, height: 40)
-        TVMtimetxtbox.borderStyle = UITextField.BorderStyle.bezel
-        TVMtimetxtbox.backgroundColor = UIColor.white
-        TVMtimetxtbox.textColor = UIColor.black
-        TVMtimetxtbox.keyboardType = .decimalPad
-        TVMtimetxtbox.inputAccessoryView = doneToolbar
-        TVMtimetxtbox.textAlignment = .center
-        TVMtimetxtbox.tintColor = UIColor.clear
-        TVMtimetxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        self.view.addSubview(TVMtimetxtbox)
         //PV Label
-        presentValueLbl.frame = CGRect(x: 35, y: 400, width: 250, height: 40)
+        presentValueLbl.frame = CGRect(x: 35, y: 320, width: 250, height: 40)
         presentValueLbl.text = "Present Value"
         presentValueLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
         presentValueLbl.textColor = UIColor.white
@@ -610,7 +637,7 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
         self.view.addSubview(presentValueLbl)
         
         //Present Value Field
-        TVMPVtxtbox.frame = CGRect(x: 35, y: 440, width: 250, height: 40)
+        TVMPVtxtbox.frame = CGRect(x: 35, y: 360, width: 250, height: 40)
         TVMPVtxtbox.borderStyle = UITextField.BorderStyle.bezel
         TVMPVtxtbox.backgroundColor = UIColor.white
         TVMPVtxtbox.textColor = UIColor.black
@@ -622,7 +649,7 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
         self.view.addSubview(TVMPVtxtbox)
         
         //FV Label
-        finalValueLbl.frame = CGRect(x: 35, y: 480, width: 250, height: 40)
+        finalValueLbl.frame = CGRect(x: 35, y: 400, width: 250, height: 40)
         finalValueLbl.text = "Future Value"
         finalValueLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
         finalValueLbl.textColor = UIColor.white
@@ -630,7 +657,7 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
         self.view.addSubview(finalValueLbl)
         
         //Present Value Field
-        TVMFVtxtbox.frame = CGRect(x: 35, y: 520, width: 250, height: 40)
+        TVMFVtxtbox.frame = CGRect(x: 35, y: 440, width: 250, height: 40)
         TVMFVtxtbox.borderStyle = UITextField.BorderStyle.bezel
         TVMFVtxtbox.backgroundColor = UIColor.white
         TVMFVtxtbox.textColor = UIColor.black
@@ -642,7 +669,7 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
         self.view.addSubview(TVMFVtxtbox)
         
         // Calculation Button
-        calc.frame = CGRect(x: 35, y: 570, width: 250, height: 40) // hieght extra 10
+        calc.frame = CGRect(x: 35, y: 490, width: 250, height: 40) // hieght extra 10
         calc.setTitle("Calculate", for: .normal)
         calc.backgroundColor = UIColor(named: "SpecialGreen")
         calc.layer.borderColor = UIColor.darkGray.cgColor
@@ -655,30 +682,46 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
     }
     @objc func Periodcalculation(){
         //Calculating Periods
-        
-    }
-    // Mathematical Formulas
-    
-    class func pmt(rate : Double, nper : Double, pv : Double, fv : Double = 0, type : Double = 0) -> Double {
-        return ((-pv * pvif(rate: rate, nper: nper) - fv) / ((1.0 + rate * type) * fvifa(rate: rate, nper: nper)))
-    }
-    
-    class func pow1pm1(x : Double, y : Double) -> Double {
-        return (x <= -1) ? pow((1 + x), y) - 1 : exp(y * log(1.0 + x)) - 1
-    }
-    
-    class func pow1p(x : Double, y : Double) -> Double {
-        return (abs(x) > 0.5) ? pow((1 + x), y) : exp(y * log(1.0 + x))
-    }
-    
-    class func pvif(rate : Double, nper : Double) -> Double {
-        return pow1p(x: rate, y: nper)
-    }
-    
-    class func fvifa(rate : Double, nper : Double) -> Double {
-        return (rate == 0) ? nper : pow1pm1(x: rate, y: nper) / rate
+        if TVMPVtxtbox.hasText == false || TVMFVtxtbox.hasText == false ||  TVMratetxtbox.hasText == false {
+            // Alert. you need to input all fields
+            let alert = UIAlertController(title: "Missing Fields", message: "Remember to fill in all the fields!", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            // Calculation passes through validation
+            let presentValue = Double(TVMPVtxtbox.text!)!
+            let finalValue = Double(TVMFVtxtbox.text!)!
+            let rate = Double(TVMratetxtbox.text!)! / 100
+            
+            print("Present Value: \(presentValue)")
+            print("Final Value: \(finalValue)")
+            print("Rate: \(rate)")
+            // Formula  Number = LN(FV / PV) / LN(1 + i)
+            let firstCalc = log((presentValue/finalValue))
+            print(firstCalc)
+            let secondCalc = log(1+rate)
+            print(secondCalc)
+            let finalCalc = firstCalc/secondCalc
+            print(finalCalc)
+            
+            //Add Future Value Label
+            finalValueLbl.frame = CGRect(x: 35, y: 540, width: 250, height: 40)
+            finalValueLbl.text = "Number of Periods:"
+            finalValueLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+            finalValueLbl.textColor = UIColor.white
+            finalValueLbl.layer.zPosition = 2
+            self.view.addSubview(finalValueLbl)
+            //Add Future Value Label Amount
+            futureValue.frame = CGRect(x: 35, y: 590, width: 250, height: 40)
+            futureValue.text = "\(round(100.0 * abs(finalCalc)) / 100.0)"
+            futureValue.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+            futureValue.textColor = UIColor.white
+            futureValue.layer.zPosition = 2
+            self.view.addSubview(futureValue)
+        }
     }
 }
+
 extension TVM: UIPickerViewDelegate, UIPickerViewDataSource{
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -713,16 +756,47 @@ extension TVM: UIPickerViewDelegate, UIPickerViewDataSource{
             print("Remove Everything")
             // Nothing selected so remove views
             TVMnumbertxtbox.removeFromSuperview()
-            TVMtimetxtbox.removeFromSuperview()
             TVMratetxtbox.removeFromSuperview()
             TVMFVtxtbox.removeFromSuperview()
             TVMPVtxtbox.removeFromSuperview()
             rateLbl.removeFromSuperview()
-            timeLbl.removeFromSuperview()
             numberLbl.removeFromSuperview()
             presentValueLbl.removeFromSuperview()
             finalValueLbl.removeFromSuperview()
             calc.removeFromSuperview()
+            futureValue.removeFromSuperview()
         }
+    } // end of picker view change
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+
+        let newString = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+        let arrayOfString = newString.components(separatedBy: ".")
+
+        if arrayOfString.count > 2 { // limiting how many decimals can exist
+            return false
+        }
+        return true
     }
-}
+} // of TVM Class
+
+
+// Extra Math Formulas
+//class func pmt(rate : Double, nper : Double, pv : Double, fv : Double = 0, type : Double = 0) -> Double {
+//    return ((-pv * pvif(rate: rate, nper: nper) - fv) / ((1.0 + rate * type) * fvifa(rate: rate, nper: nper)))
+//}
+//
+//class func pow1pm1(x : Double, y : Double) -> Double {
+//    return (x <= -1) ? pow((1 + x), y) - 1 : exp(y * log(1.0 + x)) - 1
+//}
+//
+//class func pow1p(x : Double, y : Double) -> Double {
+//    return (abs(x) > 0.5) ? pow((1 + x), y) : exp(y * log(1.0 + x))
+//}
+//
+//class func pvif(rate : Double, nper : Double) -> Double {
+//    return pow1p(x: rate, y: nper)
+//}
+//
+//class func fvifa(rate : Double, nper : Double) -> Double {
+//    return (rate == 0) ? nper : pow1pm1(x: rate, y: nper) / rate
+//}

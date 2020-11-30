@@ -153,7 +153,7 @@ class MainMenu: UIViewController {
         // Creating Buttons
         //TVM Button
         tvmbtn.frame = CGRect(x: view.bounds.size.width/2 - 100, y: view.bounds.size.height/2 + 200, width: 200, height: 50)
-        tvmbtn.setTitle("Time Value Money", for: .normal)
+        tvmbtn.setTitle("Lump Sum TVM", for: .normal)
         tvmbtn.backgroundColor = UIColor(named: "SpecialGreen")
         tvmbtn.layer.borderColor = UIColor.darkGray.cgColor
         tvmbtn.layer.borderWidth = 1
