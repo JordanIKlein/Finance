@@ -15,7 +15,10 @@ let simpleIntbtn = UIButton()
 let compoundIntbtn = UIButton()
 let settingsbtn = UIButton()
 let tvmbtn = UIButton()
+let intOnlyLoan = UIButton()
 let topTri = CAShapeLayer()
+
+let help = UIButton()
 
 class MainMenu: UIViewController {
     
@@ -34,6 +37,10 @@ class MainMenu: UIViewController {
         addingBackgroundShapes()
         buttons()
     }
+    
+    
+    @IBOutlet weak var ContentView: UIView!
+    
     //Creating a timer which will spawn in multiple shapes
     func addingBackgroundShapes(){
         view.backgroundColor = UIColor.black
@@ -68,7 +75,6 @@ class MainMenu: UIViewController {
         oval.add(animation, forKey: "basic animation")
         oval.zPosition = 0
         view.layer.addSublayer(oval)
-    
     }
     
     func createLabel(){
@@ -81,8 +87,20 @@ class MainMenu: UIViewController {
         questionLbl.layer.zPosition = 2
         view.addSubview(questionLbl)
     }
-
     
+    @objc func IOPressed(_ sender: UIButton){
+        sender.shake()
+        let newStoryBoard : UIStoryboard = UIStoryboard(name: "InterestOnlyLoan", bundle:nil)
+        let VC = newStoryBoard.instantiateViewController(withIdentifier: "InterestOnlyLoan")
+        VC.modalPresentationStyle = .fullScreen
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromRight
+        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+        self.view.window?.layer.add(transition, forKey: kCATransition)
+        self.present(VC, animated: false, completion: nil)
+    }
     @objc func tvmPressed(_ sender: UIButton){
         sender.shake()
         let newStoryBoard : UIStoryboard = UIStoryboard(name: "TVM", bundle:nil)
@@ -151,59 +169,84 @@ class MainMenu: UIViewController {
     }
     func buttons(){
         // Creating Buttons
+        // Interest-Only Loans
+        intOnlyLoan.frame = CGRect(x: view.bounds.size.width/2 - 125, y: compoundIntbtn.frame.origin.y - 125, width: 250, height: 52)
+        intOnlyLoan.setTitle("Interest-Only Loan", for: .normal)
+        intOnlyLoan.backgroundColor = UIColor(named: "SpecialGreen")
+        intOnlyLoan.layer.borderColor = UIColor.darkGray.cgColor
+        intOnlyLoan.layer.borderWidth = 1
+        intOnlyLoan.layer.cornerRadius = 5.0
+        intOnlyLoan.layer.zPosition = 2
+        intOnlyLoan.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        intOnlyLoan.addTarget(self, action: #selector(IOPressed), for: .touchUpInside)
+        intOnlyLoan.pulsate()
+        self.ContentView.addSubview(intOnlyLoan)
+
         //TVM Button
-        tvmbtn.frame = CGRect(x: view.bounds.size.width/2 - 100, y: view.bounds.size.height/2 + 200, width: 200, height: 50)
-        tvmbtn.setTitle("Lump Sum TVM", for: .normal)
+        tvmbtn.frame = CGRect(x: view.bounds.size.width/2 - 125, y: view.bounds.size.height/2 + 625, width: 250, height: 52)
+        tvmbtn.setTitle("Lump Sum Annuity", for: .normal)
         tvmbtn.backgroundColor = UIColor(named: "SpecialGreen")
         tvmbtn.layer.borderColor = UIColor.darkGray.cgColor
         tvmbtn.layer.borderWidth = 1
         tvmbtn.layer.cornerRadius = 5.0
         tvmbtn.layer.zPosition = 2
-        tvmbtn.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 15)
+        tvmbtn.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
         tvmbtn.addTarget(self, action: #selector(tvmPressed), for: .touchUpInside)
         tvmbtn.pulsate()
-        self.view.addSubview(tvmbtn)
-
+        self.ContentView.addSubview(tvmbtn)
+        
+        //Help Button
+        help.frame = CGRect(x: view.bounds.size.width/2 - 125, y: intOnlyLoan.frame.origin.y - 125, width: 250, height: 52)
+        help.setTitle("Help", for: .normal)
+        help.backgroundColor = UIColor(named: "SpecialGreen")
+        help.layer.borderColor = UIColor.darkGray.cgColor
+        help.layer.borderWidth = 1
+        help.layer.cornerRadius = 5.0
+        help.layer.zPosition = 2
+        help.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        help.addTarget(self, action: #selector(IOPressed), for: .touchUpInside)
+        help.pulsate()
+        self.ContentView.addSubview(help)
+        
         //Amortization Button
-        amortbtn.frame = CGRect(x: view.bounds.size.width/2 - 100, y: tvmbtn.frame.origin.y - 125, width: 200, height: 50)
-        amortbtn.setTitle("Amortized Loans", for: .normal)
+        amortbtn.frame = CGRect(x: view.bounds.size.width/2 - 125, y: tvmbtn.frame.origin.y - 125, width: 250, height: 52)
+        amortbtn.setTitle("Amortized Loan", for: .normal)
         
         amortbtn.backgroundColor = UIColor(named: "SpecialGreen")
         amortbtn.layer.borderColor = UIColor.darkGray.cgColor
         amortbtn.layer.borderWidth = 1
         amortbtn.layer.cornerRadius = 5.0
         amortbtn.layer.zPosition = 2
-        amortbtn.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 15)
+        amortbtn.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
         amortbtn.addTarget(self, action: #selector(amortPressed), for: .touchUpInside)
         amortbtn.pulsate()
-        self.view.addSubview(amortbtn)
+        self.ContentView.addSubview(amortbtn)
         //Simple Interest Button
         
-        simpleIntbtn.frame = CGRect(x: view.bounds.size.width/2 - 100, y: amortbtn.frame.origin.y - 125, width: 200, height: 50)
+        simpleIntbtn.frame = CGRect(x: view.bounds.size.width/2 - 125, y: amortbtn.frame.origin.y - 125, width: 250, height: 52)
         simpleIntbtn.setTitle("Simple Interest", for: .normal)
         simpleIntbtn.backgroundColor = UIColor(named: "SpecialGreen")
         simpleIntbtn.layer.borderColor = UIColor.darkGray.cgColor
         simpleIntbtn.layer.borderWidth = 1
         simpleIntbtn.layer.cornerRadius = 5.0
         simpleIntbtn.layer.zPosition = 2
-        simpleIntbtn.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 15)
+        simpleIntbtn.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
         simpleIntbtn.addTarget(self, action: #selector(simpleIntPressed), for: .touchUpInside)
         simpleIntbtn.pulsate()
-        self.view.addSubview(simpleIntbtn)
+        self.ContentView.addSubview(simpleIntbtn)
         
         //Compound Interest Button
-        
-        compoundIntbtn.frame = CGRect(x: view.bounds.size.width/2 - 100, y: simpleIntbtn.frame.origin.y - 125, width: 200, height: 50)
+        compoundIntbtn.frame = CGRect(x: view.bounds.size.width/2 - 125, y: simpleIntbtn.frame.origin.y - 125, width: 250, height: 52)
         compoundIntbtn.setTitle("Compound Interest", for: .normal)
         compoundIntbtn.backgroundColor = UIColor(named: "SpecialGreen")
         compoundIntbtn.layer.borderColor = UIColor.darkGray.cgColor
         compoundIntbtn.layer.borderWidth = 1
         compoundIntbtn.layer.cornerRadius = 5.0
         compoundIntbtn.layer.zPosition = 2
-        compoundIntbtn.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 15)
+        compoundIntbtn.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
         compoundIntbtn.addTarget(self, action: #selector(compoundIntPressed), for: .touchUpInside)
         compoundIntbtn.pulsate()
-        self.view.addSubview(compoundIntbtn)
+        self.ContentView.addSubview(compoundIntbtn)
         
         // Creating Icon
         let settingConfiguration = UIImage.SymbolConfiguration(pointSize: 55, weight: .black)

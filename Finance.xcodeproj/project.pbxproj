@@ -25,6 +25,10 @@
 		FCFAADAC256D8F97004A2FD0 /* Amortization.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCFAADAB256D8F97004A2FD0 /* Amortization.storyboard */; };
 		FCFAADB4256D9385004A2FD0 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCFAADB3256D9385004A2FD0 /* Settings.storyboard */; };
 		FCFAADB9256D939F004A2FD0 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCFAADB8256D939F004A2FD0 /* Settings.swift */; };
+		FCFAADD72575C9CC004A2FD0 /* AnnuityDue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCFAADD62575C9CC004A2FD0 /* AnnuityDue.swift */; };
+		FCFAADDC2575CBE2004A2FD0 /* InterestOnlyLoan.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCFAADDB2575CBE2004A2FD0 /* InterestOnlyLoan.swift */; };
+		FCFAADE12575CBF5004A2FD0 /* OrdinaryAnnuity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCFAADE02575CBF5004A2FD0 /* OrdinaryAnnuity.swift */; };
+		FCFAADF32575D2F8004A2FD0 /* InterestOnlyLoan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCFAADF22575D2F7004A2FD0 /* InterestOnlyLoan.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +73,10 @@
 		FCFAADAB256D8F97004A2FD0 /* Amortization.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Amortization.storyboard; sourceTree = "<group>"; };
 		FCFAADB3256D9385004A2FD0 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		FCFAADB8256D939F004A2FD0 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		FCFAADD62575C9CC004A2FD0 /* AnnuityDue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnuityDue.swift; sourceTree = "<group>"; };
+		FCFAADDB2575CBE2004A2FD0 /* InterestOnlyLoan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestOnlyLoan.swift; sourceTree = "<group>"; };
+		FCFAADE02575CBF5004A2FD0 /* OrdinaryAnnuity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdinaryAnnuity.swift; sourceTree = "<group>"; };
+		FCFAADF22575D2F7004A2FD0 /* InterestOnlyLoan.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = InterestOnlyLoan.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,12 +159,10 @@
 		FC224FA52569FDAE00BC12CC /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				FC224FBE2569FE2400BC12CC /* MainMenu.swift */,
-				FC224FA62569FDCA00BC12CC /* TimeValueMoney.swift */,
-				FC224FAE2569FDE300BC12CC /* Simple Interest.swift */,
-				FC224FB32569FDF800BC12CC /* Compound Interest.swift */,
-				FC224FB92569FE0D00BC12CC /* Amortization.swift */,
-				FCFAADB8256D939F004A2FD0 /* Settings.swift */,
+				FCFAADEB2575CC52004A2FD0 /* Other */,
+				FCFAADEA2575CC43004A2FD0 /* Loans */,
+				FCFAADE92575CC18004A2FD0 /* Interest */,
+				FCFAADE52575CBFD004A2FD0 /* TVMs */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -170,8 +176,46 @@
 				FCFAADA6256D8F82004A2FD0 /* SimpleInt.storyboard */,
 				FCFAADAB256D8F97004A2FD0 /* Amortization.storyboard */,
 				FCFAADA1256D8F36004A2FD0 /* CompoundInt.storyboard */,
+				FCFAADF22575D2F7004A2FD0 /* InterestOnlyLoan.storyboard */,
 			);
 			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		FCFAADE52575CBFD004A2FD0 /* TVMs */ = {
+			isa = PBXGroup;
+			children = (
+				FC224FA62569FDCA00BC12CC /* TimeValueMoney.swift */,
+				FCFAADD62575C9CC004A2FD0 /* AnnuityDue.swift */,
+				FCFAADE02575CBF5004A2FD0 /* OrdinaryAnnuity.swift */,
+			);
+			path = TVMs;
+			sourceTree = "<group>";
+		};
+		FCFAADE92575CC18004A2FD0 /* Interest */ = {
+			isa = PBXGroup;
+			children = (
+				FC224FAE2569FDE300BC12CC /* Simple Interest.swift */,
+				FC224FB32569FDF800BC12CC /* Compound Interest.swift */,
+			);
+			path = Interest;
+			sourceTree = "<group>";
+		};
+		FCFAADEA2575CC43004A2FD0 /* Loans */ = {
+			isa = PBXGroup;
+			children = (
+				FC224FB92569FE0D00BC12CC /* Amortization.swift */,
+				FCFAADDB2575CBE2004A2FD0 /* InterestOnlyLoan.swift */,
+			);
+			path = Loans;
+			sourceTree = "<group>";
+		};
+		FCFAADEB2575CC52004A2FD0 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				FC224FBE2569FE2400BC12CC /* MainMenu.swift */,
+				FCFAADB8256D939F004A2FD0 /* Settings.swift */,
+			);
+			path = Other;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,6 +325,7 @@
 				FCFAADA2256D8F36004A2FD0 /* CompoundInt.storyboard in Resources */,
 				FCFAAD96256D8E39004A2FD0 /* TVM.storyboard in Resources */,
 				FCFAADB4256D9385004A2FD0 /* Settings.storyboard in Resources */,
+				FCFAADF32575D2F8004A2FD0 /* InterestOnlyLoan.storyboard in Resources */,
 				FCFAADAC256D8F97004A2FD0 /* Amortization.storyboard in Resources */,
 				FC224F7F2569FD9E00BC12CC /* LaunchScreen.storyboard in Resources */,
 				FC224F7C2569FD9E00BC12CC /* Assets.xcassets in Resources */,
@@ -310,12 +355,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC224FAF2569FDE300BC12CC /* Simple Interest.swift in Sources */,
+				FCFAADD72575C9CC004A2FD0 /* AnnuityDue.swift in Sources */,
 				FC224F732569FD9D00BC12CC /* AppDelegate.swift in Sources */,
 				FCFAADB9256D939F004A2FD0 /* Settings.swift in Sources */,
 				FC224F752569FD9D00BC12CC /* SceneDelegate.swift in Sources */,
+				FCFAADDC2575CBE2004A2FD0 /* InterestOnlyLoan.swift in Sources */,
 				FC224FBF2569FE2400BC12CC /* MainMenu.swift in Sources */,
 				FC224FA72569FDCA00BC12CC /* TimeValueMoney.swift in Sources */,
 				FC224FBA2569FE0D00BC12CC /* Amortization.swift in Sources */,
+				FCFAADE12575CBF5004A2FD0 /* OrdinaryAnnuity.swift in Sources */,
 				FC224FB42569FDF800BC12CC /* Compound Interest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -499,7 +547,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = JordanKlein.Finance;
+				PRODUCT_BUNDLE_IDENTIFIER = com.JordanKlein.Finance;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -518,7 +566,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = JordanKlein.Finance;
+				PRODUCT_BUNDLE_IDENTIFIER = com.JordanKlein.Finance;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
