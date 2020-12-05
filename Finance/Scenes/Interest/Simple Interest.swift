@@ -213,12 +213,12 @@ class SimpleInt: UIViewController, UITextFieldDelegate {
                 let principal = Double(pritxtBox.text!)!
                 let rate = Double(ratetxtBox.text!)! / 100
                 let time = Double(timetxtBox.text!)!
-                let endCalc = principal * (1 + (rate * time))
+                let endCalc = principal * rate * time
 
                 // Create Total Amount Label
                 let totalAMTLbl = UILabel()
                 totalAMTLbl.frame = CGRect(x: 35, y: 440, width: 300, height: 40)
-                totalAMTLbl.text = "Total Amount:"
+                totalAMTLbl.text = "Interest:"
                 totalAMTLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
                 totalAMTLbl.textColor = UIColor.white
                 totalAMTLbl.layer.zPosition = 2
@@ -226,7 +226,7 @@ class SimpleInt: UIViewController, UITextFieldDelegate {
 
                 // Returns Total Principal with Interest
                 calcLbl.frame = CGRect(x: 35, y: 480, width: 300, height: 40)
-                calcLbl.text = "\(currencyDefault)\(round(100.0 * (endCalc+principal)) / 100.0)"
+                calcLbl.text = "\(currencyDefault)\(round(100.0 * (endCalc)) / 100.0)"
                 calcLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
                 calcLbl.textColor = UIColor.white
                 calcLbl.layer.zPosition = 2
@@ -235,7 +235,7 @@ class SimpleInt: UIViewController, UITextFieldDelegate {
                 // Create Total Interest Amount Label
                 let totalIntAMTLbl = UILabel()
                 totalIntAMTLbl.frame = CGRect(x: 35, y: 520, width: 300, height: 40)
-                totalIntAMTLbl.text = "Total Interest:"
+                totalIntAMTLbl.text = "Total Amount:"
                 totalIntAMTLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
                 totalIntAMTLbl.textColor = UIColor.white
                 totalIntAMTLbl.layer.zPosition = 2
@@ -243,7 +243,7 @@ class SimpleInt: UIViewController, UITextFieldDelegate {
 
                 // Returns Total Interest
                 intlbl.frame = CGRect(x: 35, y: 560, width: 300, height: 40)
-                intlbl.text = "\(currencyDefault)\(round(100.0 * endCalc) / 100.0)"
+                intlbl.text = "\(currencyDefault)\(round(100.0 * (endCalc+principal)) / 100.0)"
                 intlbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
                 intlbl.textColor = UIColor.white
                 intlbl.layer.zPosition = 2

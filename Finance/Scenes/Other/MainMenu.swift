@@ -19,32 +19,39 @@ let intOnlyLoan = UIButton()
 let topTri = CAShapeLayer()
 
 let help = UIButton()
+let annuityDue = UIButton()
+let ordinaryAnnuity = UIButton()
 
 class MainMenu: UIViewController {
+    @IBOutlet weak var ContentView: UIView!
     
     var shapeTimer: Timer?
     let oval = CAShapeLayer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        createLabel()
+        buttons() //Help and Settings
         addingBackgroundShapes() //Adding the top triangle/rect
-        spawnShape() // Need to have the rect spawn before 4 seconds occur
-        shapeTimer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(spawnShape), userInfo: nil, repeats: true) // Timer to continue the shapes forever
-        createLabel() // Adding the 'Calculate'
-        buttons() // Adding the buttons
+        addingAnnuities()// annuities
+        addingLoans()// loans
+        addingInterest()// interest
     }
     override func viewWillAppear(_ animated: Bool) {
+        self.view.addSubview(settingsbtn)
         addingBackgroundShapes()
-        buttons()
+        buttons() //Help and Settings
+        addingAnnuities()// annuities
+        addingLoans()// loans
+        addingInterest()// interest
     }
     
-    
-    @IBOutlet weak var ContentView: UIView!
+
     
     //Creating a timer which will spawn in multiple shapes
     func addingBackgroundShapes(){
-        view.backgroundColor = UIColor.black
-        
+        self.view.backgroundColor = UIColor(named: "SpecialGreen")
+        self.ContentView.backgroundColor = UIColor.black
         let path = UIBezierPath()
         path.move(to: CGPoint(x:0,y:0))
         path.addLine(to: CGPoint(x:view.bounds.maxX, y:view.bounds.minY))
@@ -54,29 +61,31 @@ class MainMenu: UIViewController {
         topTri.path = path.cgPath
         topTri.zPosition = 1
         topTri.fillColor = UIColor(named: "SpecialGreen")?.cgColor
-        view.layer.addSublayer(topTri)
+        self.view.layer.addSublayer(topTri)
     }
-    @objc func spawnShape(){
-        
-        let ovalPositionX = arc4random_uniform(270)
-        let ovalPositionY = view.bounds.size.height/100
-        
-        oval.path = UIBezierPath(roundedRect: CGRect(x: CGFloat(ovalPositionX), y: ovalPositionY, width: 35, height: 80), cornerRadius: 25).cgPath
-        
-        oval.fillColor = UIColor(named: "SpecialGreen")?.cgColor
-        
-        let animation = CABasicAnimation(keyPath: "position")
-        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-        animation.fromValue = oval.position
-        animation.toValue = CGPoint(x: oval.position.x, y: view.bounds.size.height )
-        oval.opacity = 0.35
-
-        animation.duration = 2.5
-        oval.add(animation, forKey: "basic animation")
-        oval.zPosition = 0
-        view.layer.addSublayer(oval)
-    }
-    
+//    @objc func spawnShape(){
+//
+//        let ovalPositionX = arc4random_uniform(270)
+//        let ovalPositionY = view.bounds.size.height/100
+//
+//        oval.path = UIBezierPath(roundedRect: CGRect(x: CGFloat(ovalPositionX), y: ovalPositionY, width: 35, height: 80), cornerRadius: 25).cgPath
+//
+//        oval.fillColor = UIColor(named: "SpecialGreen")?.cgColor
+//
+//        let animation = CABasicAnimation(keyPath: "position")
+//        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+//        animation.fromValue = oval.position
+//        animation.toValue = CGPoint(x: oval.position.x, y: ContentView.bounds.size.height + 100 )
+//        oval.opacity = 0.35
+//
+//        animation.duration = 2.5
+//        oval.add(animation, forKey: "basic animation")
+//        oval.zPosition = 0
+//        self.view.layer.addSublayer(oval)
+//    }
+    //        spawnShape() // Need to have the rect spawn before 4 seconds occur
+    //        shapeTimer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(spawnShape), userInfo: nil, repeats: true) // Timer to continue the shapes forever
+           // createLabel() // Adding the 'Calculate'
     func createLabel(){
         //Creating Label
         let questionLbl = UILabel()
@@ -88,6 +97,133 @@ class MainMenu: UIViewController {
         view.addSubview(questionLbl)
     }
     
+    func buttons(){
+        //Help Button
+        help.frame = CGRect(x: view.bounds.size.width/2 - 125, y: view.bounds.size.height/2 + 625, width: 250, height: 52)
+        help.setTitle("Help", for: .normal)
+        help.backgroundColor = UIColor(named: "SpecialGreen")
+        help.layer.borderColor = UIColor.darkGray.cgColor
+        help.layer.borderWidth = 1
+        help.layer.cornerRadius = 5.0
+        help.layer.zPosition = 3
+        help.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        help.addTarget(self, action: #selector(IOPressed), for: .touchUpInside)
+        help.pulsate()
+        self.ContentView.addSubview(help)
+        // Creating Icon
+        let settingConfiguration = UIImage.SymbolConfiguration(pointSize: 55, weight: .black)
+        let settingsImage = UIImage(systemName: "gear", withConfiguration: settingConfiguration)
+        //Settings Button
+        settingsbtn.backgroundColor = .clear
+        settingsbtn.layer.borderWidth = 0
+        settingsbtn.frame = CGRect(x: view.bounds.size.width - 70, y: 60, width: 50, height: 50)
+        settingsbtn.tintColor = UIColor.gray
+        settingsbtn.setImage(settingsImage, for: .normal)
+        settingsbtn.layer.zPosition = 3
+        settingsbtn.addTarget(self, action: #selector(settingsPressed), for: .touchUpInside)
+        settingsbtn.rotate()
+    }
+    
+    func addingAnnuities(){
+        // Adding the subviews after declaration
+        //Annuity Due Button
+        annuityDue.frame = CGRect(x: view.bounds.size.width/2 - 125, y: help.frame.origin.y - 125, width: 250, height: 52)
+        annuityDue.setTitle("Annuity Due", for: .normal)
+        annuityDue.backgroundColor = UIColor(named: "SpecialGreen")
+        annuityDue.layer.borderColor = UIColor.darkGray.cgColor
+        annuityDue.layer.borderWidth = 1
+        annuityDue.layer.cornerRadius = 5.0
+        annuityDue.layer.zPosition = 3
+        annuityDue.tintColor = UIColor(named: "SpecialGreen")
+        annuityDue.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        annuityDue.addTarget(self, action: #selector(AnnuityDuePressed), for: .touchUpInside)
+        annuityDue.pulsate()
+        self.ContentView.addSubview(annuityDue)
+        //Annuity Due Button
+        ordinaryAnnuity.frame = CGRect(x: view.bounds.size.width/2 - 125, y: annuityDue.frame.origin.y - 125, width: 250, height: 52)
+        ordinaryAnnuity.setTitle("Ordinary Annuity", for: .normal)
+        ordinaryAnnuity.backgroundColor = UIColor(named: "SpecialGreen")
+        ordinaryAnnuity.layer.borderColor = UIColor.darkGray.cgColor
+        ordinaryAnnuity.layer.borderWidth = 1
+        ordinaryAnnuity.layer.cornerRadius = 5.0
+        ordinaryAnnuity.layer.zPosition = 3
+        ordinaryAnnuity.tintColor = UIColor(named: "SpecialGreen")
+        ordinaryAnnuity.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        ordinaryAnnuity.addTarget(self, action: #selector(ordinaryAPressed), for: .touchUpInside)
+        ordinaryAnnuity.pulsate()
+        self.ContentView.addSubview(ordinaryAnnuity)
+        
+        //TVM Button
+        tvmbtn.frame = CGRect(x: view.bounds.size.width/2 - 125, y: ordinaryAnnuity.frame.origin.y - 125, width: 250, height: 52)
+        tvmbtn.setTitle("Lump Sum Annuity", for: .normal)
+        tvmbtn.backgroundColor = UIColor(named: "SpecialGreen")
+        tvmbtn.layer.borderColor = UIColor.darkGray.cgColor
+        tvmbtn.layer.borderWidth = 1
+        tvmbtn.layer.cornerRadius = 5.0
+        tvmbtn.layer.zPosition = 3
+        tvmbtn.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        tvmbtn.addTarget(self, action: #selector(tvmPressed), for: .touchUpInside)
+        tvmbtn.pulsate()
+        self.ContentView.addSubview(tvmbtn)
+        
+        
+    }
+    func addingLoans(){
+        // Interest-Only Loans
+        intOnlyLoan.frame = CGRect(x: view.bounds.size.width/2 - 125, y: amortbtn.frame.origin.y - 125, width: 250, height: 52)
+        intOnlyLoan.setTitle("Interest-Only Loan", for: .normal)
+        intOnlyLoan.backgroundColor = UIColor(named: "SpecialGreen")
+        intOnlyLoan.layer.borderColor = UIColor.darkGray.cgColor
+        intOnlyLoan.layer.borderWidth = 1
+        intOnlyLoan.layer.cornerRadius = 5.0
+        intOnlyLoan.layer.zPosition = 3
+        intOnlyLoan.tintColor = UIColor.black
+        intOnlyLoan.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        intOnlyLoan.addTarget(self, action: #selector(IOPressed), for: .touchUpInside)
+        intOnlyLoan.pulsate()
+        self.ContentView.addSubview(intOnlyLoan)
+        
+        //Amortization Button
+        amortbtn.frame = CGRect(x: view.bounds.size.width/2 - 125, y: tvmbtn.frame.origin.y - 125, width: 250, height: 52)
+        amortbtn.setTitle("Amortized Loan", for: .normal)
+        
+        amortbtn.backgroundColor = UIColor(named: "SpecialGreen")
+        amortbtn.layer.borderColor = UIColor.darkGray.cgColor
+        amortbtn.layer.borderWidth = 1
+        amortbtn.layer.cornerRadius = 5.0
+        amortbtn.layer.zPosition = 3
+        amortbtn.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        amortbtn.addTarget(self, action: #selector(amortPressed), for: .touchUpInside)
+        amortbtn.pulsate()
+        self.ContentView.addSubview(amortbtn)
+    }
+    func addingInterest(){ // run after adding loans
+        //Compound Interest Button
+        compoundIntbtn.frame = CGRect(x: view.bounds.size.width/2 - 125, y: intOnlyLoan.frame.origin.y - 125, width: 250, height: 52)
+        compoundIntbtn.setTitle("Compound Interest", for: .normal)
+        compoundIntbtn.backgroundColor = UIColor(named: "SpecialGreen")
+        compoundIntbtn.layer.borderColor = UIColor.darkGray.cgColor
+        compoundIntbtn.layer.borderWidth = 1
+        compoundIntbtn.layer.cornerRadius = 5.0
+        compoundIntbtn.layer.zPosition = 3
+        compoundIntbtn.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        compoundIntbtn.addTarget(self, action: #selector(compoundIntPressed), for: .touchUpInside)
+        compoundIntbtn.pulsate()
+        
+        self.ContentView.addSubview(compoundIntbtn)
+        //Simple Interest Button
+        simpleIntbtn.frame = CGRect(x: view.bounds.size.width/2 - 125, y: compoundIntbtn.frame.origin.y - 125, width: 250, height: 52)
+        simpleIntbtn.setTitle("Simple Interest", for: .normal)
+        simpleIntbtn.backgroundColor = UIColor(named: "SpecialGreen")
+        simpleIntbtn.layer.borderColor = UIColor.darkGray.cgColor
+        simpleIntbtn.layer.borderWidth = 1
+        simpleIntbtn.layer.cornerRadius = 5.0
+        simpleIntbtn.layer.zPosition = 3
+        simpleIntbtn.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        simpleIntbtn.addTarget(self, action: #selector(simpleIntPressed), for: .touchUpInside)
+        simpleIntbtn.pulsate()
+        self.ContentView.addSubview(simpleIntbtn)
+    }
     @objc func IOPressed(_ sender: UIButton){
         sender.shake()
         let newStoryBoard : UIStoryboard = UIStoryboard(name: "InterestOnlyLoan", bundle:nil)
@@ -167,104 +303,32 @@ class MainMenu: UIViewController {
         self.view.window?.layer.add(transition, forKey: kCATransition)
         self.present(VC, animated: false, completion: nil)
     }
-    func buttons(){
-        // Creating Buttons
-        // Interest-Only Loans
-        intOnlyLoan.frame = CGRect(x: view.bounds.size.width/2 - 125, y: compoundIntbtn.frame.origin.y - 125, width: 250, height: 52)
-        intOnlyLoan.setTitle("Interest-Only Loan", for: .normal)
-        intOnlyLoan.backgroundColor = UIColor(named: "SpecialGreen")
-        intOnlyLoan.layer.borderColor = UIColor.darkGray.cgColor
-        intOnlyLoan.layer.borderWidth = 1
-        intOnlyLoan.layer.cornerRadius = 5.0
-        intOnlyLoan.layer.zPosition = 2
-        intOnlyLoan.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        intOnlyLoan.addTarget(self, action: #selector(IOPressed), for: .touchUpInside)
-        intOnlyLoan.pulsate()
-        self.ContentView.addSubview(intOnlyLoan)
-
-        //TVM Button
-        tvmbtn.frame = CGRect(x: view.bounds.size.width/2 - 125, y: view.bounds.size.height/2 + 625, width: 250, height: 52)
-        tvmbtn.setTitle("Lump Sum Annuity", for: .normal)
-        tvmbtn.backgroundColor = UIColor(named: "SpecialGreen")
-        tvmbtn.layer.borderColor = UIColor.darkGray.cgColor
-        tvmbtn.layer.borderWidth = 1
-        tvmbtn.layer.cornerRadius = 5.0
-        tvmbtn.layer.zPosition = 2
-        tvmbtn.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        tvmbtn.addTarget(self, action: #selector(tvmPressed), for: .touchUpInside)
-        tvmbtn.pulsate()
-        self.ContentView.addSubview(tvmbtn)
-        
-        //Help Button
-        help.frame = CGRect(x: view.bounds.size.width/2 - 125, y: intOnlyLoan.frame.origin.y - 125, width: 250, height: 52)
-        help.setTitle("Help", for: .normal)
-        help.backgroundColor = UIColor(named: "SpecialGreen")
-        help.layer.borderColor = UIColor.darkGray.cgColor
-        help.layer.borderWidth = 1
-        help.layer.cornerRadius = 5.0
-        help.layer.zPosition = 2
-        help.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        help.addTarget(self, action: #selector(IOPressed), for: .touchUpInside)
-        help.pulsate()
-        self.ContentView.addSubview(help)
-        
-        //Amortization Button
-        amortbtn.frame = CGRect(x: view.bounds.size.width/2 - 125, y: tvmbtn.frame.origin.y - 125, width: 250, height: 52)
-        amortbtn.setTitle("Amortized Loan", for: .normal)
-        
-        amortbtn.backgroundColor = UIColor(named: "SpecialGreen")
-        amortbtn.layer.borderColor = UIColor.darkGray.cgColor
-        amortbtn.layer.borderWidth = 1
-        amortbtn.layer.cornerRadius = 5.0
-        amortbtn.layer.zPosition = 2
-        amortbtn.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        amortbtn.addTarget(self, action: #selector(amortPressed), for: .touchUpInside)
-        amortbtn.pulsate()
-        self.ContentView.addSubview(amortbtn)
-        //Simple Interest Button
-        
-        simpleIntbtn.frame = CGRect(x: view.bounds.size.width/2 - 125, y: amortbtn.frame.origin.y - 125, width: 250, height: 52)
-        simpleIntbtn.setTitle("Simple Interest", for: .normal)
-        simpleIntbtn.backgroundColor = UIColor(named: "SpecialGreen")
-        simpleIntbtn.layer.borderColor = UIColor.darkGray.cgColor
-        simpleIntbtn.layer.borderWidth = 1
-        simpleIntbtn.layer.cornerRadius = 5.0
-        simpleIntbtn.layer.zPosition = 2
-        simpleIntbtn.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        simpleIntbtn.addTarget(self, action: #selector(simpleIntPressed), for: .touchUpInside)
-        simpleIntbtn.pulsate()
-        self.ContentView.addSubview(simpleIntbtn)
-        
-        //Compound Interest Button
-        compoundIntbtn.frame = CGRect(x: view.bounds.size.width/2 - 125, y: simpleIntbtn.frame.origin.y - 125, width: 250, height: 52)
-        compoundIntbtn.setTitle("Compound Interest", for: .normal)
-        compoundIntbtn.backgroundColor = UIColor(named: "SpecialGreen")
-        compoundIntbtn.layer.borderColor = UIColor.darkGray.cgColor
-        compoundIntbtn.layer.borderWidth = 1
-        compoundIntbtn.layer.cornerRadius = 5.0
-        compoundIntbtn.layer.zPosition = 2
-        compoundIntbtn.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        compoundIntbtn.addTarget(self, action: #selector(compoundIntPressed), for: .touchUpInside)
-        compoundIntbtn.pulsate()
-        self.ContentView.addSubview(compoundIntbtn)
-        
-        // Creating Icon
-        let settingConfiguration = UIImage.SymbolConfiguration(pointSize: 55, weight: .black)
-        let settingsImage = UIImage(systemName: "gear", withConfiguration: settingConfiguration)
-        //Settings Button
-        
-        settingsbtn.backgroundColor = .clear
-        settingsbtn.layer.borderWidth = 0
-        settingsbtn.frame = CGRect(x: view.bounds.size.width - 70, y: 60, width: 50, height: 50)
-        settingsbtn.tintColor = UIColor.gray
-        settingsbtn.setImage(settingsImage, for: .normal)
-        settingsbtn.layer.zPosition = 2
-        settingsbtn.addTarget(self, action: #selector(settingsPressed), for: .touchUpInside)
-        settingsbtn.rotate()
-        self.view.addSubview(settingsbtn)
+    @objc func ordinaryAPressed(_ sender: UIButton){
+        sender.shake()
+        let newStoryBoard : UIStoryboard = UIStoryboard(name: "OrdinaryAnnuity", bundle:nil)
+        let VC = newStoryBoard.instantiateViewController(withIdentifier: "OrdinaryAnnuity")
+        VC.modalPresentationStyle = .fullScreen
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromRight
+        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+        self.view.window?.layer.add(transition, forKey: kCATransition)
+        self.present(VC, animated: false, completion: nil)
     }
-    
-    
+    @objc func AnnuityDuePressed(_ sender: UIButton){
+        sender.shake()
+        let newStoryBoard : UIStoryboard = UIStoryboard(name: "OrdinaryAnnuity", bundle:nil)
+        let VC = newStoryBoard.instantiateViewController(withIdentifier: "OrdinaryAnnuity")
+        VC.modalPresentationStyle = .fullScreen
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromRight
+        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+        self.view.window?.layer.add(transition, forKey: kCATransition)
+        self.present(VC, animated: false, completion: nil)
+    }
 
 } // END OF CLASS
 

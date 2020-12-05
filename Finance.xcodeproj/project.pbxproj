@@ -19,6 +19,10 @@
 		FC224FB42569FDF800BC12CC /* Compound Interest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC224FB32569FDF800BC12CC /* Compound Interest.swift */; };
 		FC224FBA2569FE0D00BC12CC /* Amortization.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC224FB92569FE0D00BC12CC /* Amortization.swift */; };
 		FC224FBF2569FE2400BC12CC /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC224FBE2569FE2400BC12CC /* MainMenu.swift */; };
+		FC44284E257AE59A00F04818 /* AnnuityDue.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC44284D257AE59A00F04818 /* AnnuityDue.storyboard */; };
+		FC442856257AE5AE00F04818 /* OrdinaryAnnuity.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC442855257AE5AE00F04818 /* OrdinaryAnnuity.storyboard */; };
+		FC44285E257B04FF00F04818 /* Help.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC44285D257B04FF00F04818 /* Help.storyboard */; };
+		FC442866257B051B00F04818 /* Help.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC442865257B051B00F04818 /* Help.swift */; };
 		FCFAAD96256D8E39004A2FD0 /* TVM.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCFAAD95256D8E39004A2FD0 /* TVM.storyboard */; };
 		FCFAADA2256D8F36004A2FD0 /* CompoundInt.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCFAADA1256D8F36004A2FD0 /* CompoundInt.storyboard */; };
 		FCFAADA7256D8F82004A2FD0 /* SimpleInt.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCFAADA6256D8F82004A2FD0 /* SimpleInt.storyboard */; };
@@ -67,6 +71,10 @@
 		FC224FB32569FDF800BC12CC /* Compound Interest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Compound Interest.swift"; sourceTree = "<group>"; };
 		FC224FB92569FE0D00BC12CC /* Amortization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Amortization.swift; sourceTree = "<group>"; };
 		FC224FBE2569FE2400BC12CC /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
+		FC44284D257AE59A00F04818 /* AnnuityDue.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AnnuityDue.storyboard; sourceTree = "<group>"; };
+		FC442855257AE5AE00F04818 /* OrdinaryAnnuity.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OrdinaryAnnuity.storyboard; sourceTree = "<group>"; };
+		FC44285D257B04FF00F04818 /* Help.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Help.storyboard; sourceTree = "<group>"; };
+		FC442865257B051B00F04818 /* Help.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Help.swift; sourceTree = "<group>"; };
 		FCFAAD95256D8E39004A2FD0 /* TVM.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TVM.storyboard; sourceTree = "<group>"; };
 		FCFAADA1256D8F36004A2FD0 /* CompoundInt.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CompoundInt.storyboard; sourceTree = "<group>"; };
 		FCFAADA6256D8F82004A2FD0 /* SimpleInt.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SimpleInt.storyboard; sourceTree = "<group>"; };
@@ -177,6 +185,9 @@
 				FCFAADAB256D8F97004A2FD0 /* Amortization.storyboard */,
 				FCFAADA1256D8F36004A2FD0 /* CompoundInt.storyboard */,
 				FCFAADF22575D2F7004A2FD0 /* InterestOnlyLoan.storyboard */,
+				FC44284D257AE59A00F04818 /* AnnuityDue.storyboard */,
+				FC442855257AE5AE00F04818 /* OrdinaryAnnuity.storyboard */,
+				FC44285D257B04FF00F04818 /* Help.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -213,6 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				FC224FBE2569FE2400BC12CC /* MainMenu.swift */,
+				FC442865257B051B00F04818 /* Help.swift */,
 				FCFAADB8256D939F004A2FD0 /* Settings.swift */,
 			);
 			path = Other;
@@ -322,11 +334,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				FCFAADA7256D8F82004A2FD0 /* SimpleInt.storyboard in Resources */,
+				FC442856257AE5AE00F04818 /* OrdinaryAnnuity.storyboard in Resources */,
 				FCFAADA2256D8F36004A2FD0 /* CompoundInt.storyboard in Resources */,
 				FCFAAD96256D8E39004A2FD0 /* TVM.storyboard in Resources */,
 				FCFAADB4256D9385004A2FD0 /* Settings.storyboard in Resources */,
 				FCFAADF32575D2F8004A2FD0 /* InterestOnlyLoan.storyboard in Resources */,
 				FCFAADAC256D8F97004A2FD0 /* Amortization.storyboard in Resources */,
+				FC44285E257B04FF00F04818 /* Help.storyboard in Resources */,
+				FC44284E257AE59A00F04818 /* AnnuityDue.storyboard in Resources */,
 				FC224F7F2569FD9E00BC12CC /* LaunchScreen.storyboard in Resources */,
 				FC224F7C2569FD9E00BC12CC /* Assets.xcassets in Resources */,
 				FC224F7A2569FD9D00BC12CC /* Main.storyboard in Resources */,
@@ -356,6 +371,7 @@
 			files = (
 				FC224FAF2569FDE300BC12CC /* Simple Interest.swift in Sources */,
 				FCFAADD72575C9CC004A2FD0 /* AnnuityDue.swift in Sources */,
+				FC442866257B051B00F04818 /* Help.swift in Sources */,
 				FC224F732569FD9D00BC12CC /* AppDelegate.swift in Sources */,
 				FCFAADB9256D939F004A2FD0 /* Settings.swift in Sources */,
 				FC224F752569FD9D00BC12CC /* SceneDelegate.swift in Sources */,

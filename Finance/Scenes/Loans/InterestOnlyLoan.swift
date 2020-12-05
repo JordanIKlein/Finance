@@ -111,7 +111,7 @@ class InterestOnlyLoan: UIViewController, UITextFieldDelegate {
         //Principal Label
         let principalLbl = UILabel()
         principalLbl.frame = CGRect(x: 35, y: 200, width: 300, height: 40)
-        principalLbl.text = "Principal"
+        principalLbl.text = "Loan Amount"
         principalLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
         principalLbl.textColor = UIColor.white
         principalLbl.layer.zPosition = 2
@@ -119,7 +119,7 @@ class InterestOnlyLoan: UIViewController, UITextFieldDelegate {
         //Rate Label
         let rateLbl = UILabel()
         rateLbl.frame = CGRect(x: 35, y: 280, width: 300, height: 40)
-        rateLbl.text = "Annual Rate %"
+        rateLbl.text = "Rate %"
         rateLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
         rateLbl.textColor = UIColor.white
         rateLbl.layer.zPosition = 2
@@ -127,7 +127,7 @@ class InterestOnlyLoan: UIViewController, UITextFieldDelegate {
         //Time Label
         let timeLbl = UILabel()
         timeLbl.frame = CGRect(x: 35, y: 360, width: 300, height: 40)
-        timeLbl.text = "Payments per year (N)"
+        timeLbl.text = "Time (Years)"
         timeLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
         timeLbl.textColor = UIColor.white
         timeLbl.layer.zPosition = 2
@@ -213,26 +213,13 @@ class InterestOnlyLoan: UIViewController, UITextFieldDelegate {
             let r = (Double(IOLratetxtbox.text!)! / 100) //amortized so rate monthly
             let n = Double(IOLtimetxtbox.text!)! // in months
             
-            // Amortizing loans
-            // Find the right formula
-            // n = years
-            // Discount formula D = {[(1+r)^n] - 1} / [r(1+r)^n]
-            // Interest-only loans are Loan Payment = Loan Balance * (annual interest/12)
-            
-            
-            let formula = a * (r/n)
+            let formula = a * r * n
             // Monthly Payment
-            //let endCalc = principal/discountFactor
-            
-            
-        
-            
-            
             
             // Create Monthly Payment Label
             let totalmonthlyAMTLbl = UILabel()
             totalmonthlyAMTLbl.frame = CGRect(x: 35, y: 440, width: 300, height: 40)
-            totalmonthlyAMTLbl.text = "Monthly Payments:"
+            totalmonthlyAMTLbl.text = "Interest:"
             totalmonthlyAMTLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
             totalmonthlyAMTLbl.textColor = UIColor.white
             totalmonthlyAMTLbl.layer.zPosition = 2
@@ -249,7 +236,7 @@ class InterestOnlyLoan: UIViewController, UITextFieldDelegate {
             // Create Monthly Interest Amount Label
             let monthlyIntAMTLbl = UILabel()
             monthlyIntAMTLbl.frame = CGRect(x: 35, y: 520, width: 300, height: 40)
-            monthlyIntAMTLbl.text = "Annual Payment:"
+            monthlyIntAMTLbl.text = "Total Loan:"
             monthlyIntAMTLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
             monthlyIntAMTLbl.textColor = UIColor.white
             monthlyIntAMTLbl.layer.zPosition = 2
@@ -257,47 +244,12 @@ class InterestOnlyLoan: UIViewController, UITextFieldDelegate {
 
             // Returns Monthly Interest
             intlbl.frame = CGRect(x: 35, y: 560, width: 300, height: 40)
-            intlbl.text = "\(currencyDefault)\(round(100.0 * (formula*12)) / 100.0)"
+            intlbl.text = "\(currencyDefault)\(round(100.0 * (formula + a)) / 100.0)"
             intlbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
             intlbl.textColor = UIColor.white
             intlbl.layer.zPosition = 2
             self.ContentView.addSubview(intlbl)
-            
-            // Total Interest
-//            let totalIntAMTLbl = UILabel()
-//            totalIntAMTLbl.frame = CGRect(x: 35, y: 600, width: 300, height: 40)
-//            totalIntAMTLbl.text = "Total Interest:"
-//            totalIntAMTLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-//            totalIntAMTLbl.textColor = UIColor.white
-//            totalIntAMTLbl.layer.zPosition = 2
-//            self.view.addSubview(totalIntAMTLbl)
-            
-            //Total Interest
-//            loanTotalInt.frame = CGRect(x: 35, y: 640, width: 300, height: 40)
-//            loanTotalInt.text = "\(currencyDefault)\(round(100.0 * (totalLoanInterest)) / 100.0)"
-//            loanTotalInt.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-//            loanTotalInt.textColor = UIColor.white
-//            loanTotalInt.layer.zPosition = 2
-//            self.view.addSubview(loanTotalInt)
-                
-            // Total Amount of Loan
-//            let totalAMTLbl = UILabel()
-//            totalAMTLbl.frame = CGRect(x: 35, y: 680, width: 300, height: 40)
-//            totalAMTLbl.text = "Total Amount:"
-//            totalAMTLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-//            totalAMTLbl.textColor = UIColor.white
-//            totalAMTLbl.layer.zPosition = 2
-//            self.view.addSubview(totalAMTLbl)
-            
-            //Total Amount
-//            loanTotalAmt.frame = CGRect(x: 35, y: 720, width: 300, height: 40)
-//            loanTotalAmt.text = "\(currencyDefault)\(round(100.0 * (withInt)) / 100.0)"
-//            loanTotalAmt.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-//            loanTotalAmt.textColor = UIColor.white
-//            loanTotalAmt.layer.zPosition = 2
-//            self.view.addSubview(loanTotalAmt)
-            
-            
+
         }
 
     }

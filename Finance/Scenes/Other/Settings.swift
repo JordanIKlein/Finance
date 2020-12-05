@@ -155,25 +155,29 @@ class Settings: UIViewController{
             UIApplication.shared.open(url)
         }
     }
-    @objc func dollarSet(){
+    @objc func dollarSet(_ sender: UIButton){
+        sender.shake()
         //Change Default here
         currencyDefault = "$"
         UserDefaults.standard.setValue("$", forKey: "currency")
         preferences()
     }
-    @objc func euroSet(){
+    @objc func euroSet(_ sender: UIButton){
         //Change Default here
+        sender.shake()
         currencyDefault = "€"
         UserDefaults.standard.setValue("€", forKey: "currency")
         preferences()
     }
-    @objc func yenSet(){
+    @objc func yenSet(_ sender: UIButton){
+        sender.shake()
         //Change Default here
         currencyDefault = "¥"
         UserDefaults.standard.setValue("¥", forKey: "currency")
         preferences()
     }
-    @objc func poundSet(){
+    @objc func poundSet(_ sender: UIButton){
+        sender.shake()
         //Change Default here
         currencyDefault = "£"
         UserDefaults.standard.setValue("£", forKey: "currency")
@@ -229,3 +233,4 @@ class Settings: UIViewController{
         self.ContentView.addSubview(lineView)
     }
 }
+
