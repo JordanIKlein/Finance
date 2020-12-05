@@ -57,6 +57,11 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
     func fvifa(rate : Double, nper : Double) -> Double {
         return (rate == 0) ? nper : pow1pm1(x: rate, y: nper) / rate
     }
+    
+    //Content View
+    @IBOutlet weak var ContentView: UIView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addingBackgroundShapes() // adding black background and top shape
@@ -81,7 +86,6 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
         
     }
     
-    @IBOutlet weak var ContentView: UIView!
     func header(){
         //Creating Label
         let questionLbl = UILabel()

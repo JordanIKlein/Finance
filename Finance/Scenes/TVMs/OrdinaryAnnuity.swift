@@ -36,6 +36,7 @@ let ODNumcalc = UIButton()
 
 class OrdinaryAnnuity: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
     
+    @IBOutlet weak var ContentView: UIView!
     var pickerView = UIPickerView()
     let choices = ["","Present Value","Future Value","Number of Periods","Rate"]
     func pmt(rate : Double, nper : Double, pv : Double, fv : Double = 0, type : Double = 0) -> Double {
@@ -57,6 +58,9 @@ class OrdinaryAnnuity: UIViewController, UIGestureRecognizerDelegate, UITextFiel
     func fvifa(rate : Double, nper : Double) -> Double {
         return (rate == 0) ? nper : pow1pm1(x: rate, y: nper) / rate
     }
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addingBackgroundShapes() // adding black background and top shape
@@ -81,7 +85,7 @@ class OrdinaryAnnuity: UIViewController, UIGestureRecognizerDelegate, UITextFiel
         
     }
     
-    @IBOutlet weak var ContentView: UIView!
+    
     func header(){
         //Creating Label
         let questionLbl = UILabel()
