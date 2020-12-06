@@ -36,6 +36,7 @@ class MainMenu: UIViewController {
         addingAnnuities()// annuities
         addingLoans()// loans
         addingInterest()// interest
+        print(view.frame.size.width)
     }
     override func viewWillAppear(_ animated: Bool) {
         self.view.addSubview(settingsbtn)
@@ -45,8 +46,6 @@ class MainMenu: UIViewController {
         addingLoans()// loans
         addingInterest()// interest
     }
-    
-
     
     //Creating a timer which will spawn in multiple shapes
     func addingBackgroundShapes(){
@@ -99,7 +98,7 @@ class MainMenu: UIViewController {
     
     func buttons(){
         //Help Button
-        help.frame = CGRect(x: view.bounds.size.width/2 - 125, y: view.bounds.size.height/2 + 625, width: 250, height: 52)
+        help.frame = CGRect(x: view.bounds.size.width/2 - 125, y: 910, width: 250, height: 52)
         help.setTitle("Help", for: .normal)
         help.backgroundColor = UIColor(named: "SpecialGreen")
         help.layer.borderColor = UIColor.darkGray.cgColor
@@ -107,7 +106,7 @@ class MainMenu: UIViewController {
         help.layer.cornerRadius = 5.0
         help.layer.zPosition = 3
         help.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        help.addTarget(self, action: #selector(IOPressed), for: .touchUpInside)
+        help.addTarget(self, action: #selector(helpPressed), for: .touchUpInside)
         help.pulsate()
         self.ContentView.addSubview(help)
         // Creating Icon
@@ -127,7 +126,7 @@ class MainMenu: UIViewController {
     func addingAnnuities(){
         // Adding the subviews after declaration
         //Annuity Due Button
-        annuityDue.frame = CGRect(x: view.bounds.size.width/2 - 125, y: help.frame.origin.y - 125, width: 250, height: 52)
+        annuityDue.frame = CGRect(x: view.bounds.size.width/2 - 125, y: help.frame.origin.y - 110, width: 250, height: 52)
         annuityDue.setTitle("Annuity Due", for: .normal)
         annuityDue.backgroundColor = UIColor(named: "SpecialGreen")
         annuityDue.layer.borderColor = UIColor.darkGray.cgColor
@@ -140,7 +139,7 @@ class MainMenu: UIViewController {
         annuityDue.pulsate()
         self.ContentView.addSubview(annuityDue)
         //Annuity Due Button
-        ordinaryAnnuity.frame = CGRect(x: view.bounds.size.width/2 - 125, y: annuityDue.frame.origin.y - 125, width: 250, height: 52)
+        ordinaryAnnuity.frame = CGRect(x: view.bounds.size.width/2 - 125, y: annuityDue.frame.origin.y - 110, width: 250, height: 52)
         ordinaryAnnuity.setTitle("Ordinary Annuity", for: .normal)
         ordinaryAnnuity.backgroundColor = UIColor(named: "SpecialGreen")
         ordinaryAnnuity.layer.borderColor = UIColor.darkGray.cgColor
@@ -154,7 +153,7 @@ class MainMenu: UIViewController {
         self.ContentView.addSubview(ordinaryAnnuity)
         
         //TVM Button
-        tvmbtn.frame = CGRect(x: view.bounds.size.width/2 - 125, y: ordinaryAnnuity.frame.origin.y - 125, width: 250, height: 52)
+        tvmbtn.frame = CGRect(x: view.bounds.size.width/2 - 125, y: ordinaryAnnuity.frame.origin.y - 110, width: 250, height: 52)
         tvmbtn.setTitle("Lump Sum Annuity", for: .normal)
         tvmbtn.backgroundColor = UIColor(named: "SpecialGreen")
         tvmbtn.layer.borderColor = UIColor.darkGray.cgColor
@@ -170,7 +169,7 @@ class MainMenu: UIViewController {
     }
     func addingLoans(){
         // Interest-Only Loans
-        intOnlyLoan.frame = CGRect(x: view.bounds.size.width/2 - 125, y: amortbtn.frame.origin.y - 125, width: 250, height: 52)
+        intOnlyLoan.frame = CGRect(x: view.bounds.size.width/2 - 125, y: amortbtn.frame.origin.y - 110, width: 250, height: 52)
         intOnlyLoan.setTitle("Interest-Only Loan", for: .normal)
         intOnlyLoan.backgroundColor = UIColor(named: "SpecialGreen")
         intOnlyLoan.layer.borderColor = UIColor.darkGray.cgColor
@@ -184,7 +183,7 @@ class MainMenu: UIViewController {
         self.ContentView.addSubview(intOnlyLoan)
         
         //Amortization Button
-        amortbtn.frame = CGRect(x: view.bounds.size.width/2 - 125, y: tvmbtn.frame.origin.y - 125, width: 250, height: 52)
+        amortbtn.frame = CGRect(x: view.bounds.size.width/2 - 125, y: tvmbtn.frame.origin.y - 110, width: 250, height: 52)
         amortbtn.setTitle("Amortized Loan", for: .normal)
         
         amortbtn.backgroundColor = UIColor(named: "SpecialGreen")
@@ -199,7 +198,7 @@ class MainMenu: UIViewController {
     }
     func addingInterest(){ // run after adding loans
         //Compound Interest Button
-        compoundIntbtn.frame = CGRect(x: view.bounds.size.width/2 - 125, y: intOnlyLoan.frame.origin.y - 125, width: 250, height: 52)
+        compoundIntbtn.frame = CGRect(x: view.bounds.size.width/2 - 125, y: intOnlyLoan.frame.origin.y - 110, width: 250, height: 52)
         compoundIntbtn.setTitle("Compound Interest", for: .normal)
         compoundIntbtn.backgroundColor = UIColor(named: "SpecialGreen")
         compoundIntbtn.layer.borderColor = UIColor.darkGray.cgColor
@@ -212,7 +211,7 @@ class MainMenu: UIViewController {
         
         self.ContentView.addSubview(compoundIntbtn)
         //Simple Interest Button
-        simpleIntbtn.frame = CGRect(x: view.bounds.size.width/2 - 125, y: compoundIntbtn.frame.origin.y - 125, width: 250, height: 52)
+        simpleIntbtn.frame = CGRect(x: view.bounds.size.width/2 - 125, y: compoundIntbtn.frame.origin.y - 110, width: 250, height: 52)
         simpleIntbtn.setTitle("Simple Interest", for: .normal)
         simpleIntbtn.backgroundColor = UIColor(named: "SpecialGreen")
         simpleIntbtn.layer.borderColor = UIColor.darkGray.cgColor
@@ -224,6 +223,20 @@ class MainMenu: UIViewController {
         simpleIntbtn.pulsate()
         self.ContentView.addSubview(simpleIntbtn)
     }
+    @objc func helpPressed(_ sender: UIButton){
+        sender.shake()
+        let newStoryBoard : UIStoryboard = UIStoryboard(name: "Help", bundle:nil)
+        let VC = newStoryBoard.instantiateViewController(withIdentifier: "Help")
+        VC.modalPresentationStyle = .fullScreen
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromRight
+        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+        self.view.window?.layer.add(transition, forKey: kCATransition)
+        self.present(VC, animated: false, completion: nil)
+    }
+
     @objc func IOPressed(_ sender: UIButton){
         sender.shake()
         let newStoryBoard : UIStoryboard = UIStoryboard(name: "InterestOnlyLoan", bundle:nil)

@@ -11,6 +11,8 @@ import UIKit
 var currencyDefault = UserDefaults.standard.string(forKey: "currency") ?? "$"
 
 class Settings: UIViewController{
+    let reviewService = ReviewService.shared
+    
     let dollar = UIButton()
     let euro = UIButton()
     let yen = UIButton()
@@ -82,6 +84,11 @@ class Settings: UIViewController{
             pound.backgroundColor = UIColor.red
         }
     }
+    func review(){
+        let deadline = DispatchTime.now() + .seconds(2)
+        DispatchQueue.main.asyncAfter(deadline: deadline) {[weak self] in self?.reviewService.requestReview()
+        }
+    }
     func gestures(){
         let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
             edgePan.edges = .left
@@ -137,7 +144,7 @@ class Settings: UIViewController{
         self.ContentView.addSubview(Currency)
         
         let legal = UIButton()
-        legal.frame = CGRect(x: view.frame.size.width/2 - 75, y: 400, width: 155, height: 40)
+        legal.frame = CGRect(x: view.frame.size.width/2 - 75, y: 475, width: 155, height: 40)
         legal.setTitle("Legal", for: .normal)
         legal.backgroundColor = UIColor(named: "SpecialGreen")
         legal.layer.borderColor = UIColor.darkGray.cgColor
@@ -185,49 +192,47 @@ class Settings: UIViewController{
     }
     func buttons(){ // adding buttons for currency
         
-        dollar.frame = CGRect(x: view.frame.size.width/3 - 50, y: 210, width: 100, height: 40)
+        dollar.frame = CGRect(x: view.frame.size.width/3 - 50, y: 210, width: 100, height: 100)
         dollar.setTitle("$", for: .normal)
-        
-        dollar.layer.borderColor = UIColor.darkGray.cgColor
+        dollar.layer.cornerRadius = 0.5 * dollar.bounds.size.width
         dollar.layer.borderWidth = 1
-        dollar.layer.cornerRadius = 5.0
         dollar.layer.zPosition = 2
-        dollar.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        dollar.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 30)
         dollar.addTarget(self, action: #selector(dollarSet), for: .touchUpInside)
         self.ContentView.addSubview(dollar)
 
-        euro.frame = CGRect(x: (view.frame.size.width * 0.66) - 50, y: 210, width: 100, height: 40)
+        euro.frame = CGRect(x: (view.frame.size.width * 0.66) - 50, y: 210, width: 100, height: 100)
         euro.setTitle("€", for: .normal)
         euro.layer.borderColor = UIColor.darkGray.cgColor
         euro.layer.borderWidth = 1
-        euro.layer.cornerRadius = 5.0
+        euro.layer.cornerRadius = 0.5 * euro.bounds.size.width
         euro.layer.zPosition = 2
-        euro.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        euro.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 30)
         euro.addTarget(self, action: #selector(euroSet), for: .touchUpInside)
         self.ContentView.addSubview(euro)
         
-        yen.frame = CGRect(x: view.frame.size.width/3 - 50, y: 280, width: 100, height: 40)
+        yen.frame = CGRect(x: view.frame.size.width/3 - 50, y: 330, width: 100, height: 100)
         yen.setTitle("¥", for: .normal)
         yen.layer.borderColor = UIColor.darkGray.cgColor
         yen.layer.borderWidth = 1
-        yen.layer.cornerRadius = 5.0
+        yen.layer.cornerRadius = 0.5 * yen.bounds.size.width
         yen.layer.zPosition = 2
-        yen.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        yen.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 30)
         yen.addTarget(self, action: #selector(yenSet), for: .touchUpInside)
         self.ContentView.addSubview(yen)
         
-        pound.frame = CGRect(x: (view.frame.size.width * 0.66) - 50, y: 280, width: 100, height: 40)
+        pound.frame = CGRect(x: (view.frame.size.width * 0.66) - 50, y: 330, width: 100, height: 100)
         pound.setTitle("£", for: .normal)
         pound.layer.borderColor = UIColor.darkGray.cgColor
         pound.layer.borderWidth = 1
-        pound.layer.cornerRadius = 5.0
+        pound.layer.cornerRadius = 0.5 * pound.bounds.size.width
         pound.layer.zPosition = 2
-        pound.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        pound.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 30)
         pound.addTarget(self, action: #selector(poundSet), for: .touchUpInside)
         self.ContentView.addSubview(pound)
         
         // Line to seperate Currency and Other
-        let lineView = UIView(frame: CGRect(x: 0, y: 350, width: view.frame.size.width, height: 2.0))
+        let lineView = UIView(frame: CGRect(x: 0, y: 450, width: view.frame.size.width, height: 2.0))
         lineView.layer.borderWidth = 1.0
         lineView.layer.borderColor = UIColor(named: "SpecialGreen")?.cgColor
         self.ContentView.addSubview(lineView)

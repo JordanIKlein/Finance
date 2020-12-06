@@ -8,20 +8,51 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Help-->
         <scene sceneID="eAZ-Kr-kJE">
             <objects>
-                <viewController id="Pne-pa-Pay" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Help" id="Pne-pa-Pay" customClass="Help" customModule="Finance" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3SJ-PA-4fB">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="900"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="enU-L0-pSj">
+                                <rect key="frame" x="0.0" y="44" width="414" height="856"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bsK-eT-V3a" userLabel="ContentView">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1400"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1400" id="ev8-re-oRO"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="bsK-eT-V3a" firstAttribute="top" secondItem="enU-L0-pSj" secondAttribute="top" id="NaK-Qo-iQR"/>
+                                    <constraint firstItem="bsK-eT-V3a" firstAttribute="leading" secondItem="enU-L0-pSj" secondAttribute="leading" id="bNZ-ho-fzH"/>
+                                    <constraint firstAttribute="trailing" secondItem="bsK-eT-V3a" secondAttribute="trailing" id="qUB-RQ-fFt"/>
+                                    <constraint firstAttribute="bottom" secondItem="bsK-eT-V3a" secondAttribute="bottom" id="wXb-SN-Oxx"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="sQh-SL-GBh"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="enU-L0-pSj" firstAttribute="top" secondItem="sQh-SL-GBh" secondAttribute="top" id="0Zs-2x-4Mk"/>
+                            <constraint firstAttribute="bottom" secondItem="enU-L0-pSj" secondAttribute="bottom" id="AK7-cu-uYg"/>
+                            <constraint firstItem="enU-L0-pSj" firstAttribute="leading" secondItem="sQh-SL-GBh" secondAttribute="leading" id="CcY-j4-qr1"/>
+                            <constraint firstItem="enU-L0-pSj" firstAttribute="trailing" secondItem="sQh-SL-GBh" secondAttribute="trailing" id="fHt-vu-wPo"/>
+                            <constraint firstItem="bsK-eT-V3a" firstAttribute="width" secondItem="3SJ-PA-4fB" secondAttribute="width" id="xto-A7-QzW"/>
+                        </constraints>
                     </view>
+                    <size key="freeformSize" width="414" height="900"/>
+                    <connections>
+                        <outlet property="ContentView" destination="bsK-eT-V3a" id="Zwq-1h-tLv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="82q-vL-fFG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="130" y="125"/>
+            <point key="canvasLocation" x="128.98550724637681" y="124.55357142857142"/>
         </scene>
     </scenes>
     <resources>

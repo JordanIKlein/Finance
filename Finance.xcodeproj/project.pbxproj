@@ -23,6 +23,7 @@
 		FC442856257AE5AE00F04818 /* OrdinaryAnnuity.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC442855257AE5AE00F04818 /* OrdinaryAnnuity.storyboard */; };
 		FC44285E257B04FF00F04818 /* Help.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC44285D257B04FF00F04818 /* Help.storyboard */; };
 		FC442866257B051B00F04818 /* Help.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC442865257B051B00F04818 /* Help.swift */; };
+		FC44286B257C88A700F04818 /* ReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC44286A257C88A700F04818 /* ReviewService.swift */; };
 		FCFAAD96256D8E39004A2FD0 /* TVM.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCFAAD95256D8E39004A2FD0 /* TVM.storyboard */; };
 		FCFAADA2256D8F36004A2FD0 /* CompoundInt.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCFAADA1256D8F36004A2FD0 /* CompoundInt.storyboard */; };
 		FCFAADA7256D8F82004A2FD0 /* SimpleInt.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCFAADA6256D8F82004A2FD0 /* SimpleInt.storyboard */; };
@@ -75,6 +76,7 @@
 		FC442855257AE5AE00F04818 /* OrdinaryAnnuity.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OrdinaryAnnuity.storyboard; sourceTree = "<group>"; };
 		FC44285D257B04FF00F04818 /* Help.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Help.storyboard; sourceTree = "<group>"; };
 		FC442865257B051B00F04818 /* Help.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Help.swift; sourceTree = "<group>"; };
+		FC44286A257C88A700F04818 /* ReviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewService.swift; sourceTree = "<group>"; };
 		FCFAAD95256D8E39004A2FD0 /* TVM.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TVM.storyboard; sourceTree = "<group>"; };
 		FCFAADA1256D8F36004A2FD0 /* CompoundInt.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CompoundInt.storyboard; sourceTree = "<group>"; };
 		FCFAADA6256D8F82004A2FD0 /* SimpleInt.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SimpleInt.storyboard; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 				FC224FBE2569FE2400BC12CC /* MainMenu.swift */,
 				FC442865257B051B00F04818 /* Help.swift */,
 				FCFAADB8256D939F004A2FD0 /* Settings.swift */,
+				FC44286A257C88A700F04818 /* ReviewService.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -370,6 +373,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC224FAF2569FDE300BC12CC /* Simple Interest.swift in Sources */,
+				FC44286B257C88A700F04818 /* ReviewService.swift in Sources */,
 				FCFAADD72575C9CC004A2FD0 /* AnnuityDue.swift in Sources */,
 				FC442866257B051B00F04818 /* Help.swift in Sources */,
 				FC224F732569FD9D00BC12CC /* AppDelegate.swift in Sources */,

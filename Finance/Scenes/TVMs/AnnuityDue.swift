@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+
 // UI Fields for TVM
 let ADlookingFor = UITextField()
 
@@ -44,7 +45,7 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
     @IBOutlet weak var ContentView: UIView!
     
     var ADpickerView = UIPickerView()
-    let ADchoices = ["","Future Value","Present Value","PeriADic Payment, PV known","PeriADic Payment, FV known","Number of PeriADs, PV known","Number of PeriADs, FV known"]
+    let ADchoices = ["","Future Value","Present Value","Periodic Payment, PV known","Periodic Payment, FV known","Number of Periods, PV known","Number of Periods, FV known"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +54,6 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
         header() // Time Value Money Header
         Labels() // adding labels
         fields() // what are you searching for?
-        
         
         //UI-Fields Delegates
         ADnumbertxtbox.delegate = self
@@ -75,7 +75,7 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
         //Creating Label
         let questionLbl = UILabel()
         questionLbl.frame = CGRect(x: 35, y: 70, width: 250, height: 40)
-        questionLbl.text = "Ordinary Annuity"
+        questionLbl.text = "Annuity Due"
         questionLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
         questionLbl.textColor = UIColor.black
         questionLbl.layer.zPosition = 2
@@ -166,7 +166,7 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
         doneToolbar.sizeToFit()
         
         // textbox for number of periADs
-        ADlookingFor.frame = CGRect(x: 35, y: 200, width: 325, height: 40)
+        ADlookingFor.frame = CGRect(x: 35, y: 200, width: 305, height: 40)
         ADlookingFor.borderStyle = UITextField.BorderStyle.bezel
         ADlookingFor.backgroundColor = UIColor.white
         ADlookingFor.textColor = UIColor.black
@@ -199,7 +199,6 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
         ADpresentValueLbl.removeFromSuperview()
         ADfutureValueLbl.removeFromSuperview()
         ADpmtlbl.removeFromSuperview()
-        
         ADfutureValueAnswer.removeFromSuperview()
         ADpresentValueAnswer.removeFromSuperview()
         ADrateValue.removeFromSuperview()
@@ -326,12 +325,14 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
             print("Rate: \(rate)")
             print("Number: \(number)")
             
-            // Lump sum formula is FV = PMT * (((1+r)^n) - 1/ r)
+            // Formula Annuity Due Pmt[(1+i)N−1i](1+i)
+            
+            
             let firstCalc = pow((1 + rate), number)
             print(firstCalc)
             let secondCalc = (firstCalc - 1)/rate
             print(secondCalc)
-            let finalCalc = payments * secondCalc
+            let finalCalc = payments * secondCalc * (1+rate)
             print(finalCalc)
             
             //Add Future Value Label
@@ -464,13 +465,13 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
             print("Rate: \(rate)")
             print("Number: \(number)")
             
-            //Formula is PV = PMT (1- (1/(1+i)^n)/i)
+            //Formula is PV = PMT (1- (1/(1+i)^n)/i) + pt
             
-            let firstCalc = pow((1 + rate), number)
+            let firstCalc = pow((1 + rate), number-1)
             print(firstCalc)
             let secondCalc = (1 - (1/firstCalc))/rate
             print(secondCalc)
-            let finalCalc = payments * secondCalc
+            let finalCalc = (payments * secondCalc) + payments
             print(finalCalc)
             
             //Add present Value Label
@@ -593,11 +594,11 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
         } else {
             
             // Calculation passes through validation
-            let PeriADFV = Double(ADFVtxtbox.text!)!
+            let PeriodFV = Double(ADFVtxtbox.text!)!
             let rate = Double(ADratetxtbox.text!)! / 100
             let number = Double(ADnumbertxtbox.text!)!
             
-            print("Present Value: \(PeriADFV)")
+            print("Present Value: \(PeriodFV)")
             print("Rate: \(rate)")
             print("Number: \(number)")
             
@@ -606,9 +607,9 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
             
             let firstCalc = pow((1 + rate), number)
             print(firstCalc)
-            let secondCalc = (firstCalc - 1) / rate
+            let secondCalc = ((firstCalc - 1) / rate) * (1 + rate)
             print(secondCalc)
-            let finalCalc = PeriADFV/secondCalc
+            let finalCalc = PeriodFV/secondCalc
             print(finalCalc)
             
             //Add Payment Label
@@ -745,9 +746,9 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
             //Formula is PeriADs with PV --> Pmt= PV / [(1 − (1/(1+i)^N))/i]
             
             
-            let firstCalc = 1 / (pow((1 + rate), number))
+            let firstCalc = 1 / (pow((1 + rate), number-1))
             print(firstCalc)
-            let secondCalc = (1 - firstCalc) / rate
+            let secondCalc = ((1 - firstCalc) / rate) + 1
             print(secondCalc)
             let finalCalc = PeriADFV/secondCalc
             print(finalCalc)
@@ -878,16 +879,17 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
             
             //Formula is PeriADs with PV --> N= −ln(1−PVA/Pmti)ln(1+i)
             // 1 / (1 - (PV(r)/Pmt))      /  ln (1+r)
+            
             let firstCalc = log(1+rate)
             print(firstCalc)
-            let secondCalc = log(pow((1 - ((PV*rate)/payment)),-1))
+            let secondCalc = log(pow(1+rate*(1 - ((PV*rate)/payment)),-1))
             print(secondCalc)
-            let finalCalc = secondCalc/firstCalc
+            let finalCalc = (secondCalc/firstCalc) + 1
             print(finalCalc)
             
             //Add Payment Label
             ADnumberLbl.frame = CGRect(x: 35, y: 530, width: 300, height: 40)
-            ADnumberLbl.text = "Number of PeriADs"
+            ADnumberLbl.text = "Number of Periods:"
             ADnumberLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
             ADnumberLbl.textColor = UIColor.white
             ADnumberLbl.layer.zPosition = 2
@@ -1010,14 +1012,14 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
             
             let firstCalc = log(1+rate)
             print(firstCalc)
-            let secondCalc = log(1 + (FV*rate/payment))
+            let secondCalc = log(1 + (FV*rate/payment*(1+rate)))
             print(secondCalc)
             let finalCalc = secondCalc/firstCalc
             print(finalCalc)
             
             //Add Payment Label
             ADnumberLbl.frame = CGRect(x: 35, y: 530, width: 300, height: 40)
-            ADnumberLbl.text = "Number of PeriADs"
+            ADnumberLbl.text = "Number of Periods:"
             ADnumberLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
             ADnumberLbl.textColor = UIColor.white
             ADnumberLbl.layer.zPosition = 2
@@ -1056,44 +1058,23 @@ extension AnnuityDue: UIPickerViewDelegate, UIPickerViewDataSource{
             print("Present Value Selected")
             // Presnt Value Stuff
             PresentValue()
-        } else if selectedValue == "PeriADic Payment, FV known" {
-            print("PeriADic Payment, FV known")
+        } else if selectedValue == "Periodic Payment, FV known" {
+            print("Periodic Payment, FV known")
             // # of periAD stuff FV KNOWN
             PeriADicPaymentFV()
-        } else if selectedValue == "PeriADic Payment, PV known" {
-            print("PeriADic Payment, PV known")
+        } else if selectedValue == "Periodic Payment, PV known" {
+            print("Periodic Payment, PV known")
             // # of periAD stuff PV KNOWN
             PeriADicPaymentPV()
-        } else if selectedValue == "Number of PeriADs, FV known" {
-            print("Number of PeriADs, FV known")
+        } else if selectedValue == "Number of Periods, FV known" {
+            print("Number of Periods, FV known")
             NumberwithFV()
-        } else if selectedValue == "Number of PeriADs, PV known" {
-            print("Number of PeriADs, PV known")
+        } else if selectedValue == "Number of Periods, PV known" {
+            print("Number of Periods, PV known")
             NumberwithPV()
         } else {
             print("Remove Everything")
-            // Nothing selected so remove views
-            ADPVcalc.removeFromSuperview()
-            ADFVcalc.removeFromSuperview()
-            ADPMTFVcalc.removeFromSuperview()
-            ADPMTPVcalc.removeFromSuperview()
-            ADNumFVcalc.removeFromSuperview()
-            ADNumPVcalc.removeFromSuperview()
-            
-            ADnumbertxtbox.removeFromSuperview()
-            ADratetxtbox.removeFromSuperview()
-            ADFVtxtbox.removeFromSuperview()
-            ADPVtxtbox.removeFromSuperview()
-            
-            ADrateLbl.removeFromSuperview()
-            ADnumberLbl.removeFromSuperview()
-            ADpresentValueLbl.removeFromSuperview()
-            ADfutureValueLbl.removeFromSuperview()
-            
-            ADfutureValueAnswer.removeFromSuperview()
-            ADpresentValueAnswer.removeFromSuperview()
-            ADrateValue.removeFromSuperview()
-            ADnumberValue.removeFromSuperview()
+            removeEverything()
         }
     } // end of picker view change
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

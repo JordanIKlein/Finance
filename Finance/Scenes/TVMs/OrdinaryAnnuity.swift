@@ -54,7 +54,6 @@ class OrdinaryAnnuity: UIViewController, UIGestureRecognizerDelegate, UITextFiel
         Labels() // adding labels
         fields() // what are you searching for?
         
-        
         //UI-Fields Delegates
         ODnumbertxtbox.delegate = self
         ODratetxtbox.delegate = self
@@ -166,7 +165,7 @@ class OrdinaryAnnuity: UIViewController, UIGestureRecognizerDelegate, UITextFiel
         doneToolbar.sizeToFit()
         
         // textbox for number of periods
-        ODlookingFor.frame = CGRect(x: 35, y: 200, width: 325, height: 40)
+        ODlookingFor.frame = CGRect(x: 35, y: 200, width: 305, height: 40)
         ODlookingFor.borderStyle = UITextField.BorderStyle.bezel
         ODlookingFor.backgroundColor = UIColor.white
         ODlookingFor.textColor = UIColor.black
@@ -787,7 +786,7 @@ class OrdinaryAnnuity: UIViewController, UIGestureRecognizerDelegate, UITextFiel
         
         //Payment Label
         ODpmtlbl.frame = CGRect(x: 35, y: 240, width: 250, height: 40)
-        ODpmtlbl.text = "Payments"
+        ODpmtlbl.text = "Payment Value"
         ODpmtlbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
         ODpmtlbl.textColor = UIColor.white
         ODpmtlbl.layer.zPosition = 2
@@ -915,7 +914,7 @@ class OrdinaryAnnuity: UIViewController, UIGestureRecognizerDelegate, UITextFiel
         doneToolbar.sizeToFit()
         //Payment Label
         ODpmtlbl.frame = CGRect(x: 35, y: 240, width: 250, height: 40)
-        ODpmtlbl.text = "Payments"
+        ODpmtlbl.text = "Payment Value"
         ODpmtlbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
         ODpmtlbl.textColor = UIColor.white
         ODpmtlbl.layer.zPosition = 2
@@ -1072,28 +1071,7 @@ extension OrdinaryAnnuity: UIPickerViewDelegate, UIPickerViewDataSource{
             NumberwithPV()
         } else {
             print("Remove Everything")
-            // Nothing selected so remove views
-            ODPVcalc.removeFromSuperview()
-            ODFVcalc.removeFromSuperview()
-            ODPMTFVcalc.removeFromSuperview()
-            ODPMTPVcalc.removeFromSuperview()
-            ODNumFVcalc.removeFromSuperview()
-            ODNumPVcalc.removeFromSuperview()
-            
-            ODnumbertxtbox.removeFromSuperview()
-            ODratetxtbox.removeFromSuperview()
-            ODFVtxtbox.removeFromSuperview()
-            ODPVtxtbox.removeFromSuperview()
-            
-            ODrateLbl.removeFromSuperview()
-            ODnumberLbl.removeFromSuperview()
-            ODpresentValueLbl.removeFromSuperview()
-            ODfutureValueLbl.removeFromSuperview()
-            
-            ODfutureValueAnswer.removeFromSuperview()
-            ODpresentValueAnswer.removeFromSuperview()
-            ODrateValue.removeFromSuperview()
-            ODnumberValue.removeFromSuperview()
+            removeEverything()
         }
     } // end of picker view change
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
