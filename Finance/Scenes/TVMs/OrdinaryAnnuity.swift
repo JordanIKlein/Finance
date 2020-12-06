@@ -1106,4 +1106,4 @@ extension OrdinaryAnnuity: UIPickerViewDelegate, UIPickerViewDataSource{
         }
         return true
     }
-} // of TVM Class
+} // of Annuity Class

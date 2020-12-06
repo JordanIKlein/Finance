@@ -11,86 +11,71 @@ import UIKit
 let ADlookingFor = UITextField()
 
 // UI Text Fields
-let ADnumbertxtbox = UITextField() // Number of compounding periods
+let ADnumbertxtbox = UITextField() // Number of periADs
 let ADratetxtbox = UITextField() // interest rates
 let ADPVtxtbox = UITextField() // Present Value
 let ADFVtxtbox = UITextField() // Future Value
-
+let ADpmttxtbox = UITextField() // Payment
 //UI Labels
 let ADrateLbl = UILabel()
-let ADLbl = UILabel()
+let ADnumberLbl = UILabel()
 let ADpresentValueLbl = UILabel()
-let ADfinalValueLbl = UILabel()
+let ADfutureValueLbl = UILabel()
+let ADpmtlbl = UILabel()
 
 // Final Totals
 let ADfutureValueAnswer = UILabel()
 let ADpresentValueAnswer = UILabel()
 let ADrateValue = UILabel()
 let ADnumberValue = UILabel()
+let ADpaymentValue = UILabel()
 
 //calc buttons
 let ADPVcalc = UIButton()
 let ADFVcalc = UIButton()
-let ADRatecalc = UIButton()
-let ADNumcalc = UIButton()
+let ADPMTFVcalc = UIButton()
+let ADPMTPVcalc = UIButton()
+let ADNumFVcalc = UIButton()
+let ADNumPVcalc = UIButton()
+
 
 class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
     
-    var pickerView = UIPickerView()
-    let choices = ["","Present Value","Future Value","Number of Periods","Rate"]
-    func pmt(rate : Double, nper : Double, pv : Double, fv : Double = 0, type : Double = 0) -> Double {
-        return ((-pv * pvif(rate: rate, nper: nper) - fv) / ((1.0 + rate * type) * fvifa(rate: rate, nper: nper)))
-    }
-
-    func pow1pm1(x : Double, y : Double) -> Double {
-        return (x <= -1) ? pow((1 + x), y) - 1 : exp(y * log(1.0 + x)) - 1
-    }
-
-    func pow1p(x : Double, y : Double) -> Double {
-        return (abs(x) > 0.5) ? pow((1 + x), y) : exp(y * log(1.0 + x))
-    }
-
-    func pvif(rate : Double, nper : Double) -> Double {
-        return pow1p(x: rate, y: nper)
-    }
-
-    func fvifa(rate : Double, nper : Double) -> Double {
-        return (rate == 0) ? nper : pow1pm1(x: rate, y: nper) / rate
-    }
-    
-    //Content View
     @IBOutlet weak var ContentView: UIView!
     
+    var ADpickerView = UIPickerView()
+    let ADchoices = ["","Future Value","Present Value","PeriADic Payment, PV known","PeriADic Payment, FV known","Number of PeriADs, PV known","Number of PeriADs, FV known"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         addingBackgroundShapes() // adding black background and top shape
-        gestures()//Gestures
+        gestures() //Gestures
         header() // Time Value Money Header
         Labels() // adding labels
         fields() // what are you searching for?
         
         
         //UI-Fields Delegates
-        TVMnumbertxtbox.delegate = self
-        TVMratetxtbox.delegate = self
-        TVMPVtxtbox.delegate = self
-        TVMFVtxtbox.delegate = self
+        ADnumbertxtbox.delegate = self
+        ADratetxtbox.delegate = self
+        ADPVtxtbox.delegate = self
+        ADFVtxtbox.delegate = self
         
         //PickerView Delegates
-        pickerView.delegate = self
-        pickerView.dataSource = self
+        ADpickerView.delegate = self
+        ADpickerView.dataSource = self
         
-        lookingFor.delegate = self
-        lookingFor.inputView = pickerView
+        ADlookingFor.delegate = self
+        ADlookingFor.inputView = ADpickerView
         
     }
+    
     
     func header(){
         //Creating Label
         let questionLbl = UILabel()
         questionLbl.frame = CGRect(x: 35, y: 70, width: 250, height: 40)
-        questionLbl.text = "Annuity Due"
+        questionLbl.text = "Ordinary Annuity"
         questionLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
         questionLbl.textColor = UIColor.black
         questionLbl.layer.zPosition = 2
@@ -164,6 +149,7 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
         questionLbl.layer.zPosition = 2
         self.ContentView.addSubview(questionLbl)
     }
+    
     func fields() {
         // Creating Done within the tool keyboard
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
@@ -179,47 +165,57 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
         doneToolbar.items = items as? [UIBarButtonItem]
         doneToolbar.sizeToFit()
         
-        // textbox for number of periods
-        lookingFor.frame = CGRect(x: 35, y: 200, width: 250, height: 40)
-        lookingFor.borderStyle = UITextField.BorderStyle.bezel
-        lookingFor.backgroundColor = UIColor.white
-        lookingFor.textColor = UIColor.black
-        lookingFor.keyboardType = .decimalPad
-        lookingFor.inputAccessoryView = doneToolbar
-        lookingFor.textAlignment = .center
-        lookingFor.tintColor = UIColor.clear
-        lookingFor.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        self.ContentView.addSubview(lookingFor)
+        // textbox for number of periADs
+        ADlookingFor.frame = CGRect(x: 35, y: 200, width: 325, height: 40)
+        ADlookingFor.borderStyle = UITextField.BorderStyle.bezel
+        ADlookingFor.backgroundColor = UIColor.white
+        ADlookingFor.textColor = UIColor.black
+        ADlookingFor.inputAccessoryView = doneToolbar
+        ADlookingFor.textAlignment = .center
+        ADlookingFor.tintColor = UIColor.clear
+        ADlookingFor.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        self.ContentView.addSubview(ADlookingFor)
     }
+    
+    
     @objc func firstRes(){
-        lookingFor.resignFirstResponder()
-        TVMnumbertxtbox.resignFirstResponder()
-        TVMratetxtbox.resignFirstResponder()
-        TVMPVtxtbox.resignFirstResponder()
-        TVMFVtxtbox.resignFirstResponder()
+        ADlookingFor.resignFirstResponder()
+        ADnumbertxtbox.resignFirstResponder()
+        ADratetxtbox.resignFirstResponder()
+        ADPVtxtbox.resignFirstResponder()
+        ADFVtxtbox.resignFirstResponder()
+        ADpmttxtbox.resignFirstResponder()
     }
+    
     func removeEverything(){
-        TVMnumbertxtbox.removeFromSuperview()
-        TVMratetxtbox.removeFromSuperview()
-        TVMPVtxtbox.removeFromSuperview()
-        TVMFVtxtbox.removeFromSuperview()
+        ADnumbertxtbox.removeFromSuperview()
+        ADratetxtbox.removeFromSuperview()
+        ADPVtxtbox.removeFromSuperview()
+        ADFVtxtbox.removeFromSuperview()
+        ADpmttxtbox.removeFromSuperview()
         
-        rateLbl.removeFromSuperview()
-        numberLbl.removeFromSuperview()
-        presentValueLbl.removeFromSuperview()
-        finalValueLbl.removeFromSuperview()
+        ADrateLbl.removeFromSuperview()
+        ADnumberLbl.removeFromSuperview()
+        ADpresentValueLbl.removeFromSuperview()
+        ADfutureValueLbl.removeFromSuperview()
+        ADpmtlbl.removeFromSuperview()
         
-        futureValueAnswer.removeFromSuperview()
-        presentValueAnswer.removeFromSuperview()
-        rateValue.removeFromSuperview()
-        numberValue.removeFromSuperview()
+        ADfutureValueAnswer.removeFromSuperview()
+        ADpresentValueAnswer.removeFromSuperview()
+        ADrateValue.removeFromSuperview()
+        ADnumberValue.removeFromSuperview()
+        ADpaymentValue.removeFromSuperview()
         
-        PVcalc.removeFromSuperview()
-        FVcalc.removeFromSuperview()
-        Ratecalc.removeFromSuperview()
-        Numcalc.removeFromSuperview()
+        ADPVcalc.removeFromSuperview()
+        ADFVcalc.removeFromSuperview()
+        ADPMTFVcalc.removeFromSuperview()
+        ADPMTPVcalc.removeFromSuperview()
+        ADNumFVcalc.removeFromSuperview()
+        ADNumPVcalc.removeFromSuperview()
+        print("Removing Everything...")
+        
     }
-    func PresentValue(){
+    func FutureValue(){
         //TVM Fields remove
         removeEverything()
         //Looking for PV
@@ -236,128 +232,268 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
         doneToolbar.items = items as? [UIBarButtonItem]
         doneToolbar.sizeToFit()
         
-        //Rate Label
-        rateLbl.frame = CGRect(x: 35, y: 240, width: 250, height: 40)
-        rateLbl.text = "Rate %"
-        rateLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-        rateLbl.textColor = UIColor.white
-        rateLbl.layer.zPosition = 2
-        self.ContentView.addSubview(rateLbl)
+        //Payment Label
+        ADpmtlbl.frame = CGRect(x: 35, y: 240, width: 250, height: 40)
+        ADpmtlbl.text = "Payment Value"
+        ADpmtlbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+        ADpmtlbl.textColor = UIColor.white
+        ADpmtlbl.layer.zPosition = 2
+        self.ContentView.addSubview(ADpmtlbl)
+        //Payment Field
+        ADpmttxtbox.frame = CGRect(x: 35, y: 280, width: 250, height: 40)
+        ADpmttxtbox.borderStyle = UITextField.BorderStyle.bezel
+        ADpmttxtbox.backgroundColor = UIColor.white
+        ADpmttxtbox.textColor = UIColor.black
+        ADpmttxtbox.keyboardType = .decimalPad
+        ADpmttxtbox.inputAccessoryView = doneToolbar
+        ADpmttxtbox.textAlignment = .center
+        ADpmttxtbox.tintColor = UIColor.clear
+        ADpmttxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        self.ContentView.addSubview(ADpmttxtbox)
         
-        //Rate Field
-        TVMratetxtbox.frame = CGRect(x: 35, y: 280, width: 250, height: 40)
-        TVMratetxtbox.borderStyle = UITextField.BorderStyle.bezel
-        TVMratetxtbox.backgroundColor = UIColor.white
-        TVMratetxtbox.textColor = UIColor.black
-        TVMratetxtbox.keyboardType = .decimalPad
-        TVMratetxtbox.inputAccessoryView = doneToolbar
-        TVMratetxtbox.textAlignment = .center
-        TVMratetxtbox.tintColor = UIColor.clear
-        TVMratetxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        self.ContentView.addSubview(TVMratetxtbox)
         //Number Label
+        ADnumberLbl.frame = CGRect(x: 35, y: 320, width: 300, height: 40)
+        ADnumberLbl.text = "Number of Payments"
+        ADnumberLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+        ADnumberLbl.textColor = UIColor.white
+        ADnumberLbl.layer.zPosition = 2
+        self.ContentView.addSubview(ADnumberLbl)
+        //Number of PeriADs Field
+        ADnumbertxtbox.frame = CGRect(x: 35, y: 360, width: 250, height: 40)
+        ADnumbertxtbox.borderStyle = UITextField.BorderStyle.bezel
+        ADnumbertxtbox.backgroundColor = UIColor.white
+        ADnumbertxtbox.textColor = UIColor.black
+        ADnumbertxtbox.keyboardType = .decimalPad
+        ADnumbertxtbox.inputAccessoryView = doneToolbar
+        ADnumbertxtbox.textAlignment = .center
+        ADnumbertxtbox.tintColor = UIColor.clear
+        ADnumbertxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        self.ContentView.addSubview(ADnumbertxtbox)
         
-        numberLbl.frame = CGRect(x: 35, y: 320, width: 250, height: 40)
-        numberLbl.text = "Number"
-        numberLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-        numberLbl.textColor = UIColor.white
-        numberLbl.layer.zPosition = 2
-        self.ContentView.addSubview(numberLbl)
-        //Number of Periods Field
-        TVMnumbertxtbox.frame = CGRect(x: 35, y: 360, width: 250, height: 40)
-        TVMnumbertxtbox.borderStyle = UITextField.BorderStyle.bezel
-        TVMnumbertxtbox.backgroundColor = UIColor.white
-        TVMnumbertxtbox.textColor = UIColor.black
-        TVMnumbertxtbox.keyboardType = .decimalPad
-        TVMnumbertxtbox.inputAccessoryView = doneToolbar
-        TVMnumbertxtbox.textAlignment = .center
-        TVMnumbertxtbox.tintColor = UIColor.clear
-        TVMnumbertxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        self.ContentView.addSubview(TVMnumbertxtbox)
-        //FV Label
-        
-        finalValueLbl.frame = CGRect(x: 35, y: 400, width: 250, height: 40)
-        finalValueLbl.text = "Future Value"
-        finalValueLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-        finalValueLbl.textColor = UIColor.white
-        finalValueLbl.layer.zPosition = 2
-        self.ContentView.addSubview(finalValueLbl)
-        //Future Value Field
-        TVMFVtxtbox.frame = CGRect(x: 35, y: 440, width: 250, height: 40)
-        TVMFVtxtbox.borderStyle = UITextField.BorderStyle.bezel
-        TVMFVtxtbox.backgroundColor = UIColor.white
-        TVMFVtxtbox.textColor = UIColor.black
-        TVMFVtxtbox.keyboardType = .decimalPad
-        TVMFVtxtbox.inputAccessoryView = doneToolbar
-        TVMFVtxtbox.textAlignment = .center
-        TVMFVtxtbox.tintColor = UIColor.clear
-        TVMFVtxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        self.ContentView.addSubview(TVMFVtxtbox)
+        //Rate Label
+        ADrateLbl.frame = CGRect(x: 35, y: 400, width: 250, height: 40)
+        ADrateLbl.text = "Rate %"
+        ADrateLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+        ADrateLbl.textColor = UIColor.white
+        ADrateLbl.layer.zPosition = 2
+        self.ContentView.addSubview(ADrateLbl)
+        //Rate Value Field
+        ADratetxtbox.frame = CGRect(x: 35, y: 440, width: 250, height: 40)
+        ADratetxtbox.borderStyle = UITextField.BorderStyle.bezel
+        ADratetxtbox.backgroundColor = UIColor.white
+        ADratetxtbox.textColor = UIColor.black
+        ADratetxtbox.keyboardType = .decimalPad
+        ADratetxtbox.inputAccessoryView = doneToolbar
+        ADratetxtbox.textAlignment = .center
+        ADratetxtbox.tintColor = UIColor.clear
+        ADratetxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        self.ContentView.addSubview(ADratetxtbox)
         // PV Label
         
         // Calculation Button
-        PVcalc.frame = CGRect(x: 35, y: 490, width: 250, height: 40)
-        PVcalc.setTitle("Calculate", for: .normal)
-        PVcalc.backgroundColor = UIColor(named: "SpecialGreen")
-        PVcalc.layer.borderColor = UIColor.darkGray.cgColor
-        PVcalc.layer.borderWidth = 1
-        PVcalc.layer.cornerRadius = 5.0
-        PVcalc.layer.zPosition = 2
-        PVcalc.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        PVcalc.addTarget(self, action: #selector(PVcalculation), for: .touchUpInside)
-        self.ContentView.addSubview(PVcalc)
+        ADFVcalc.frame = CGRect(x: 35, y: 490, width: 250, height: 40)
+        ADFVcalc.setTitle("Calculate", for: .normal)
+        ADFVcalc.backgroundColor = UIColor(named: "SpecialGreen")
+        ADFVcalc.layer.borderColor = UIColor.darkGray.cgColor
+        ADFVcalc.layer.borderWidth = 1
+        ADFVcalc.layer.cornerRadius = 5.0
+        ADFVcalc.layer.zPosition = 2
+        ADFVcalc.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        ADFVcalc.addTarget(self, action: #selector(ADFVcalculation), for:  .touchUpInside)
+        self.ContentView.addSubview(ADFVcalc)
     }
-    @objc func PVcalculation(){
+    @objc func ADFVcalculation(){
+        //Calculating PV
+        print("Calculating Ordinary Annuity Present Value...")
+        //Resign first responder
+        ADlookingFor.resignFirstResponder()
+        ADnumbertxtbox.resignFirstResponder()
+        ADratetxtbox.resignFirstResponder()
+        ADpmttxtbox.resignFirstResponder()
+        
+        if ADnumbertxtbox.hasText == false || ADratetxtbox.hasText == false || ADpmttxtbox.hasText == false {
+            // Alert. you need to input all fields
+            let alert = UIAlertController(title: "Missing Fields", message: "Remember to fill in all the fields!", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            // Calculation passes through validation
+            let payments = Double(ADpmttxtbox.text!)!
+            let rate = Double(ADratetxtbox.text!)! / 100
+            let number = Double(ADnumbertxtbox.text!)!
+            
+            print("Payment Value: \(payments)")
+            print("Rate: \(rate)")
+            print("Number: \(number)")
+            
+            // Lump sum formula is FV = PMT * (((1+r)^n) - 1/ r)
+            let firstCalc = pow((1 + rate), number)
+            print(firstCalc)
+            let secondCalc = (firstCalc - 1)/rate
+            print(secondCalc)
+            let finalCalc = payments * secondCalc
+            print(finalCalc)
+            
+            //Add Future Value Label
+            ADfutureValueLbl.frame = CGRect(x: 35, y: 530, width: 250, height: 40)
+            ADfutureValueLbl.text = "Future Value"
+            ADfutureValueLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+            ADfutureValueLbl.textColor = UIColor.white
+            ADfutureValueLbl.layer.zPosition = 2
+            self.ContentView.addSubview(ADfutureValueLbl)
+            
+            //Add Future Value Label Amount
+            ADfutureValueAnswer.frame = CGRect(x: 35, y: 570, width: 250, height: 40)
+            ADfutureValueAnswer.text = "\(currencyDefault)\(round(100.0 * finalCalc) / 100.0)"
+            ADfutureValueAnswer.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+            ADfutureValueAnswer.textColor = UIColor.white
+            ADfutureValueAnswer.layer.zPosition = 2
+            self.ContentView.addSubview(ADfutureValueAnswer)
+        }
+    }
+    
+    
+    func PresentValue(){
+        removeEverything()
+        // Looking for PV
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        doneToolbar.barStyle = UIBarStyle.black
+
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(firstRes))
+
+        let items = NSMutableArray()
+        items.add(flexSpace)
+        items.add(done)
+
+        doneToolbar.items = items as? [UIBarButtonItem]
+        doneToolbar.sizeToFit()
+        
+        //Payment Label
+        ADpmtlbl.frame = CGRect(x: 35, y: 240, width: 250, height: 40)
+        ADpmtlbl.text = "Payment Value"
+        ADpmtlbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+        ADpmtlbl.textColor = UIColor.white
+        ADpmtlbl.layer.zPosition = 2
+        self.ContentView.addSubview(ADpmtlbl)
+        //Payment Field
+        ADpmttxtbox.frame = CGRect(x: 35, y: 280, width: 250, height: 40)
+        ADpmttxtbox.borderStyle = UITextField.BorderStyle.bezel
+        ADpmttxtbox.backgroundColor = UIColor.white
+        ADpmttxtbox.textColor = UIColor.black
+        ADpmttxtbox.keyboardType = .decimalPad
+        ADpmttxtbox.inputAccessoryView = doneToolbar
+        ADpmttxtbox.textAlignment = .center
+        ADpmttxtbox.tintColor = UIColor.clear
+        ADpmttxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        self.ContentView.addSubview(ADpmttxtbox)
+        
+        //Number Label
+        ADnumberLbl.frame = CGRect(x: 35, y: 320, width: 300, height: 40)
+        ADnumberLbl.text = "Number of Payments"
+        ADnumberLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+        ADnumberLbl.textColor = UIColor.white
+        ADnumberLbl.layer.zPosition = 2
+        self.ContentView.addSubview(ADnumberLbl)
+        //Number of PeriADs Field
+        ADnumbertxtbox.frame = CGRect(x: 35, y: 360, width: 250, height: 40)
+        ADnumbertxtbox.borderStyle = UITextField.BorderStyle.bezel
+        ADnumbertxtbox.backgroundColor = UIColor.white
+        ADnumbertxtbox.textColor = UIColor.black
+        ADnumbertxtbox.keyboardType = .decimalPad
+        ADnumbertxtbox.inputAccessoryView = doneToolbar
+        ADnumbertxtbox.textAlignment = .center
+        ADnumbertxtbox.tintColor = UIColor.clear
+        ADnumbertxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        self.ContentView.addSubview(ADnumbertxtbox)
+        
+        //Rate Label
+        ADrateLbl.frame = CGRect(x: 35, y: 400, width: 250, height: 40)
+        ADrateLbl.text = "Rate %"
+        ADrateLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+        ADrateLbl.textColor = UIColor.white
+        ADrateLbl.layer.zPosition = 2
+        self.ContentView.addSubview(ADrateLbl)
+        //Rate Value Field
+        ADratetxtbox.frame = CGRect(x: 35, y: 440, width: 250, height: 40)
+        ADratetxtbox.borderStyle = UITextField.BorderStyle.bezel
+        ADratetxtbox.backgroundColor = UIColor.white
+        ADratetxtbox.textColor = UIColor.black
+        ADratetxtbox.keyboardType = .decimalPad
+        ADratetxtbox.inputAccessoryView = doneToolbar
+        ADratetxtbox.textAlignment = .center
+        ADratetxtbox.tintColor = UIColor.clear
+        ADratetxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        self.ContentView.addSubview(ADratetxtbox)
+        // PV Label
+        
+        // Calculation Button
+        ADPVcalc.frame = CGRect(x: 35, y: 490, width: 250, height: 40)
+        ADPVcalc.setTitle("Calculate", for: .normal)
+        ADPVcalc.backgroundColor = UIColor(named: "SpecialGreen")
+        ADPVcalc.layer.borderColor = UIColor.darkGray.cgColor
+        ADPVcalc.layer.borderWidth = 1
+        ADPVcalc.layer.cornerRadius = 5.0
+        ADPVcalc.layer.zPosition = 2
+        ADPVcalc.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        ADPVcalc.addTarget(self, action: #selector(ADPVcalculation), for:  .touchUpInside)
+        self.ContentView.addSubview(ADPVcalc)
+    }
+    @objc func ADPVcalculation(){
         //Calculating PV
         
         //Resign first responder
-        lookingFor.resignFirstResponder()
-        TVMnumbertxtbox.resignFirstResponder()
-        TVMratetxtbox.resignFirstResponder()
-        TVMPVtxtbox.resignFirstResponder()
-        TVMFVtxtbox.resignFirstResponder()
+        ADlookingFor.resignFirstResponder()
+        ADnumbertxtbox.resignFirstResponder()
+        ADratetxtbox.resignFirstResponder()
+        ADpmttxtbox.resignFirstResponder()
         
-        if TVMFVtxtbox.hasText == false || TVMratetxtbox.hasText == false || TVMnumbertxtbox.hasText == false {
+        //if statement to check through each field (ensuring they are not negative)
+        if ADnumbertxtbox.hasText == false || ADratetxtbox.hasText == false || ADpmttxtbox.hasText == false {
             // Alert. you need to input all fields
             let alert = UIAlertController(title: "Missing Fields", message: "Remember to fill in all the fields!", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else {
             // Calculation passes through validation
-            let finalValue = Double(TVMFVtxtbox.text!)!
-            let rate = Double(TVMratetxtbox.text!)! / 100
-            let number = Double(TVMnumbertxtbox.text!)!
-            print("Present Value: \(finalValue)")
+            let payments = Double(ADpmttxtbox.text!)!
+            let rate = Double(ADratetxtbox.text!)! / 100
+            let number = Double(ADnumbertxtbox.text!)!
+            
+            print("Present Value: \(payments)")
             print("Rate: \(rate)")
             print("Number: \(number)")
-            // Lump sum formula is PV  =  FV / (1 + i)^n
-            let firstCalc = (1 + rate)
+            
+            //Formula is PV = PMT (1- (1/(1+i)^n)/i)
+            
+            let firstCalc = pow((1 + rate), number)
             print(firstCalc)
-            let secondCalc = pow(firstCalc, number)
+            let secondCalc = (1 - (1/firstCalc))/rate
             print(secondCalc)
-            let finalCalc = finalValue / secondCalc
+            let finalCalc = payments * secondCalc
             print(finalCalc)
             
-            //Add Future Value Label
-            presentValueLbl.frame = CGRect(x: 35, y: 530, width: 250, height: 40)
-            presentValueLbl.text = "Present Value"
-            presentValueLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-            presentValueLbl.textColor = UIColor.white
-            presentValueLbl.layer.zPosition = 2
-            self.ContentView.addSubview(presentValueLbl)
-            //Add Future Value Label Amount
+            //Add present Value Label
+            ADpresentValueLbl.frame = CGRect(x: 35, y: 530, width: 250, height: 40)
+            ADpresentValueLbl.text = "Present Value"
+            ADpresentValueLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+            ADpresentValueLbl.textColor = UIColor.white
+            ADpresentValueLbl.layer.zPosition = 2
+            self.ContentView.addSubview(ADpresentValueLbl)
             
-            presentValueAnswer.frame = CGRect(x: 35, y: 570, width: 250, height: 40)
-            presentValueAnswer.text = "\(currencyDefault)\(round(100.0 * finalCalc) / 100.0)"
-            presentValueAnswer.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-            presentValueAnswer.textColor = UIColor.white
-            presentValueAnswer.layer.zPosition = 2
-            self.ContentView.addSubview(presentValueAnswer)
+            //Add Future Value Label Amount
+            ADpresentValueAnswer.frame = CGRect(x: 35, y: 570, width: 250, height: 40)
+            ADpresentValueAnswer.text = "\(currencyDefault)\(round(100.0 * finalCalc) / 100.0)"
+            ADpresentValueAnswer.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+            ADpresentValueAnswer.textColor = UIColor.white
+            ADpresentValueAnswer.layer.zPosition = 2
+            self.ContentView.addSubview(ADpresentValueAnswer)
         }
     }
-    func FutureValue(){
+    
+    func PeriADicPaymentFV(){
         removeEverything()
-        // Looking for FV
+        // Know for FV
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
         doneToolbar.barStyle = UIBarStyle.black
 
@@ -370,126 +506,135 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
 
         doneToolbar.items = items as? [UIBarButtonItem]
         doneToolbar.sizeToFit()
+        
+        //Payment Label
+        ADfutureValueLbl.frame = CGRect(x: 35, y: 240, width: 250, height: 40)
+        ADfutureValueLbl.text = "Future Value"
+        ADfutureValueLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+        ADfutureValueLbl.textColor = UIColor.white
+        ADfutureValueLbl.layer.zPosition = 2
+        self.ContentView.addSubview(ADfutureValueLbl)
+        //Payment Field
+        ADFVtxtbox.frame = CGRect(x: 35, y: 280, width: 250, height: 40)
+        ADFVtxtbox.borderStyle = UITextField.BorderStyle.bezel
+        ADFVtxtbox.backgroundColor = UIColor.white
+        ADFVtxtbox.textColor = UIColor.black
+        ADFVtxtbox.keyboardType = .decimalPad
+        ADFVtxtbox.inputAccessoryView = doneToolbar
+        ADFVtxtbox.textAlignment = .center
+        ADFVtxtbox.tintColor = UIColor.clear
+        ADFVtxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        self.ContentView.addSubview(ADFVtxtbox)
+        
+        //Number Label
+        ADnumberLbl.frame = CGRect(x: 35, y: 320, width: 300, height: 40)
+        ADnumberLbl.text = "Number of Payments"
+        ADnumberLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+        ADnumberLbl.textColor = UIColor.white
+        ADnumberLbl.layer.zPosition = 2
+        self.ContentView.addSubview(ADnumberLbl)
+        //Number of PeriADs Field
+        ADnumbertxtbox.frame = CGRect(x: 35, y: 360, width: 250, height: 40)
+        ADnumbertxtbox.borderStyle = UITextField.BorderStyle.bezel
+        ADnumbertxtbox.backgroundColor = UIColor.white
+        ADnumbertxtbox.textColor = UIColor.black
+        ADnumbertxtbox.keyboardType = .decimalPad
+        ADnumbertxtbox.inputAccessoryView = doneToolbar
+        ADnumbertxtbox.textAlignment = .center
+        ADnumbertxtbox.tintColor = UIColor.clear
+        ADnumbertxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        self.ContentView.addSubview(ADnumbertxtbox)
         
         //Rate Label
-        rateLbl.frame = CGRect(x: 35, y: 240, width: 250, height: 40)
-        rateLbl.text = "Rate %"
-        rateLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-        rateLbl.textColor = UIColor.white
-        rateLbl.layer.zPosition = 2
-        self.ContentView.addSubview(rateLbl)
-        //Rate Field
-        TVMratetxtbox.frame = CGRect(x: 35, y: 280, width: 250, height: 40)
-        TVMratetxtbox.borderStyle = UITextField.BorderStyle.bezel
-        TVMratetxtbox.backgroundColor = UIColor.white
-        TVMratetxtbox.textColor = UIColor.black
-        TVMratetxtbox.keyboardType = .decimalPad
-        TVMratetxtbox.inputAccessoryView = doneToolbar
-        TVMratetxtbox.textAlignment = .center
-        TVMratetxtbox.tintColor = UIColor.clear
-        TVMratetxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        self.ContentView.addSubview(TVMratetxtbox)
-        //Number Label
-        numberLbl.frame = CGRect(x: 35, y: 320, width: 250, height: 40)
-        numberLbl.text = "Number"
-        numberLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-        numberLbl.textColor = UIColor.white
-        numberLbl.layer.zPosition = 2
-        self.ContentView.addSubview(numberLbl)
-        //Number of Periods Field
-        TVMnumbertxtbox.frame = CGRect(x: 35, y: 360, width: 250, height: 40)
-        TVMnumbertxtbox.borderStyle = UITextField.BorderStyle.bezel
-        TVMnumbertxtbox.backgroundColor = UIColor.white
-        TVMnumbertxtbox.textColor = UIColor.black
-        TVMnumbertxtbox.keyboardType = .decimalPad
-        TVMnumbertxtbox.inputAccessoryView = doneToolbar
-        TVMnumbertxtbox.textAlignment = .center
-        TVMnumbertxtbox.tintColor = UIColor.clear
-        TVMnumbertxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        self.ContentView.addSubview(TVMnumbertxtbox)
-
-        //PV Label
-        presentValueLbl.frame = CGRect(x: 35, y: 400, width: 250, height: 40)
-        presentValueLbl.text = "Present Value"
-        presentValueLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-        presentValueLbl.textColor = UIColor.white
-        presentValueLbl.layer.zPosition = 2
-        self.ContentView.addSubview(presentValueLbl)
-        
-        //Present Value Field
-        TVMPVtxtbox.frame = CGRect(x: 35, y: 440, width: 250, height: 40)
-        TVMPVtxtbox.borderStyle = UITextField.BorderStyle.bezel
-        TVMPVtxtbox.backgroundColor = UIColor.white
-        TVMPVtxtbox.textColor = UIColor.black
-        TVMPVtxtbox.keyboardType = .decimalPad
-        TVMPVtxtbox.inputAccessoryView = doneToolbar
-        TVMPVtxtbox.textAlignment = .center
-        TVMPVtxtbox.tintColor = UIColor.clear
-        TVMPVtxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        self.ContentView.addSubview(TVMPVtxtbox)
+        ADrateLbl.frame = CGRect(x: 35, y: 400, width: 250, height: 40)
+        ADrateLbl.text = "Rate %"
+        ADrateLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+        ADrateLbl.textColor = UIColor.white
+        ADrateLbl.layer.zPosition = 2
+        self.ContentView.addSubview(ADrateLbl)
+        //Rate Value Field
+        ADratetxtbox.frame = CGRect(x: 35, y: 440, width: 250, height: 40)
+        ADratetxtbox.borderStyle = UITextField.BorderStyle.bezel
+        ADratetxtbox.backgroundColor = UIColor.white
+        ADratetxtbox.textColor = UIColor.black
+        ADratetxtbox.keyboardType = .decimalPad
+        ADratetxtbox.inputAccessoryView = doneToolbar
+        ADratetxtbox.textAlignment = .center
+        ADratetxtbox.tintColor = UIColor.clear
+        ADratetxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        self.ContentView.addSubview(ADratetxtbox)
+        // PV Label
         
         // Calculation Button
-        FVcalc.frame = CGRect(x: 35, y: 490, width: 250, height: 40)
-        FVcalc.setTitle("Calculate", for: .normal)
-        FVcalc.backgroundColor = UIColor(named: "SpecialGreen")
-        FVcalc.layer.borderColor = UIColor.darkGray.cgColor
-        FVcalc.layer.borderWidth = 1
-        FVcalc.layer.cornerRadius = 5.0
-        FVcalc.layer.zPosition = 2
-        FVcalc.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        FVcalc.addTarget(self, action: #selector(FVcalculation), for: .touchUpInside)
-        self.ContentView.addSubview(FVcalc)
+        ADPMTFVcalc.frame = CGRect(x: 35, y: 490, width: 250, height: 40)
+        ADPMTFVcalc.setTitle("Calculate", for: .normal)
+        ADPMTFVcalc.backgroundColor = UIColor(named: "SpecialGreen")
+        ADPMTFVcalc.layer.borderColor = UIColor.darkGray.cgColor
+        ADPMTFVcalc.layer.borderWidth = 1
+        ADPMTFVcalc.layer.cornerRadius = 5.0
+        ADPMTFVcalc.layer.zPosition = 2
+        ADPMTFVcalc.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        ADPMTFVcalc.addTarget(self, action: #selector(ADPeriADicFVcalculation), for:  .touchUpInside)
+        self.ContentView.addSubview(ADPMTFVcalc)
     }
-    @objc func FVcalculation(){
-        //Calculating FV
+    @objc func ADPeriADicFVcalculation(){
         //Resign first responder
-        lookingFor.resignFirstResponder()
-        TVMnumbertxtbox.resignFirstResponder()
-        TVMratetxtbox.resignFirstResponder()
-        TVMPVtxtbox.resignFirstResponder()
-        TVMFVtxtbox.resignFirstResponder()
+        ADlookingFor.resignFirstResponder()
+        ADnumbertxtbox.resignFirstResponder()
+        ADratetxtbox.resignFirstResponder()
+        ADFVtxtbox.resignFirstResponder()
+        
         //if statement to check through each field (ensuring they are not negative)
-        if TVMPVtxtbox.hasText == false || TVMratetxtbox.hasText == false || TVMnumbertxtbox.hasText == false {
+        if ADnumbertxtbox.hasText == false || ADratetxtbox.hasText == false || ADFVtxtbox.hasText == false {
             // Alert. you need to input all fields
             let alert = UIAlertController(title: "Missing Fields", message: "Remember to fill in all the fields!", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else {
-            // Calculation passes through validation
-            let presentValue = Double(TVMPVtxtbox.text!)!
-            let rate = Double(TVMratetxtbox.text!)! / 100
-            let number = Double(TVMnumbertxtbox.text!)!
             
-            print("Present Value: \(presentValue)")
+            // Calculation passes through validation
+            let PeriADFV = Double(ADFVtxtbox.text!)!
+            let rate = Double(ADratetxtbox.text!)! / 100
+            let number = Double(ADnumbertxtbox.text!)!
+            
+            print("Present Value: \(PeriADFV)")
             print("Rate: \(rate)")
             print("Number: \(number)")
-            //Formula is FV  =  PV x (1 + i)^n
-            let firstCalc = (1 + rate)
+            
+            //Formula is PeriADs with FV --> Pmt=FVA/[((1+i)^N−1)/i]
+            
+            
+            let firstCalc = pow((1 + rate), number)
             print(firstCalc)
-            let secondCalc = pow(firstCalc, number)
+            let secondCalc = (firstCalc - 1) / rate
             print(secondCalc)
-            let finalCalc = presentValue * secondCalc
+            let finalCalc = PeriADFV/secondCalc
             print(finalCalc)
             
-            //Add Future Value Label
-            finalValueLbl.frame = CGRect(x: 35, y: 530, width: 250, height: 40)
-            finalValueLbl.text = "Future Value"
-            finalValueLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-            finalValueLbl.textColor = UIColor.white
-            finalValueLbl.layer.zPosition = 2
-            self.ContentView.addSubview(finalValueLbl)
+            //Add Payment Label
+            
+            
+            
+            ADpmtlbl.frame = CGRect(x: 35, y: 530, width: 250, height: 40)
+            ADpmtlbl.text = "Payments:"
+            ADpmtlbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+            ADpmtlbl.textColor = UIColor.white
+            ADpmtlbl.layer.zPosition = 2
+            self.ContentView.addSubview(ADpmtlbl)
+            
             //Add Future Value Label Amount
-            futureValueAnswer.frame = CGRect(x: 35, y: 570, width: 250, height: 40)
-            futureValueAnswer.text = "\(currencyDefault)\(round(100.0 * finalCalc) / 100.0)"
-            futureValueAnswer.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-            futureValueAnswer.textColor = UIColor.white
-            futureValueAnswer.layer.zPosition = 2
-            self.ContentView.addSubview(futureValueAnswer)
+            ADpaymentValue.frame = CGRect(x: 35, y: 570, width: 250, height: 40)
+            ADpaymentValue.text = "\(currencyDefault)\(round(100.0 * finalCalc) / 100.0)"
+            ADpaymentValue.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+            ADpaymentValue.textColor = UIColor.white
+            ADpaymentValue.layer.zPosition = 2
+            self.ContentView.addSubview(ADpaymentValue)
         }
     }
-    func RateValue(){
+    
+    func PeriADicPaymentPV(){
         removeEverything()
-        // Looking for Rate
+        // Know for FV
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
         doneToolbar.barStyle = UIBarStyle.black
 
@@ -503,125 +648,130 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
         doneToolbar.items = items as? [UIBarButtonItem]
         doneToolbar.sizeToFit()
         
+        //Payment Label
+        ADpresentValueLbl.frame = CGRect(x: 35, y: 240, width: 250, height: 40)
+        ADpresentValueLbl.text = "Present Value"
+        ADpresentValueLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+        ADpresentValueLbl.textColor = UIColor.white
+        ADpresentValueLbl.layer.zPosition = 2
+        self.ContentView.addSubview(ADpresentValueLbl)
+        //Payment Field
+        ADPVtxtbox.frame = CGRect(x: 35, y: 280, width: 250, height: 40)
+        ADPVtxtbox.borderStyle = UITextField.BorderStyle.bezel
+        ADPVtxtbox.backgroundColor = UIColor.white
+        ADPVtxtbox.textColor = UIColor.black
+        ADPVtxtbox.keyboardType = .decimalPad
+        ADPVtxtbox.inputAccessoryView = doneToolbar
+        ADPVtxtbox.textAlignment = .center
+        ADPVtxtbox.tintColor = UIColor.clear
+        ADPVtxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        self.ContentView.addSubview(ADPVtxtbox)
+        
         //Number Label
-        numberLbl.frame = CGRect(x: 35, y: 240, width: 250, height: 40)
-        numberLbl.text = "Number"
-        numberLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-        numberLbl.textColor = UIColor.white
-        numberLbl.layer.zPosition = 2
-        self.ContentView.addSubview(numberLbl)
-        //Number of Periods Field
-        TVMnumbertxtbox.frame = CGRect(x: 35, y: 280, width: 250, height: 40)
-        TVMnumbertxtbox.borderStyle = UITextField.BorderStyle.bezel
-        TVMnumbertxtbox.backgroundColor = UIColor.white
-        TVMnumbertxtbox.textColor = UIColor.black
-        TVMnumbertxtbox.keyboardType = .decimalPad
-        TVMnumbertxtbox.inputAccessoryView = doneToolbar
-        TVMnumbertxtbox.textAlignment = .center
-        TVMnumbertxtbox.tintColor = UIColor.clear
-        TVMnumbertxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        self.ContentView.addSubview(TVMnumbertxtbox)
-        //FV Label
-        presentValueLbl.frame = CGRect(x: 35, y: 320, width: 250, height: 40)
-        presentValueLbl.text = "Present Value"
-        presentValueLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-        presentValueLbl.textColor = UIColor.white
-        presentValueLbl.layer.zPosition = 2
-        self.ContentView.addSubview(presentValueLbl)
+        ADnumberLbl.frame = CGRect(x: 35, y: 320, width: 300, height: 40)
+        ADnumberLbl.text = "Number of Payments"
+        ADnumberLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+        ADnumberLbl.textColor = UIColor.white
+        ADnumberLbl.layer.zPosition = 2
+        self.ContentView.addSubview(ADnumberLbl)
+        //Number of PeriADs Field
+        ADnumbertxtbox.frame = CGRect(x: 35, y: 360, width: 250, height: 40)
+        ADnumbertxtbox.borderStyle = UITextField.BorderStyle.bezel
+        ADnumbertxtbox.backgroundColor = UIColor.white
+        ADnumbertxtbox.textColor = UIColor.black
+        ADnumbertxtbox.keyboardType = .decimalPad
+        ADnumbertxtbox.inputAccessoryView = doneToolbar
+        ADnumbertxtbox.textAlignment = .center
+        ADnumbertxtbox.tintColor = UIColor.clear
+        ADnumbertxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        self.ContentView.addSubview(ADnumbertxtbox)
         
-        //Present Value Field
-        TVMPVtxtbox.frame = CGRect(x: 35, y: 360, width: 250, height: 40)
-        TVMPVtxtbox.borderStyle = UITextField.BorderStyle.bezel
-        TVMPVtxtbox.backgroundColor = UIColor.white
-        TVMPVtxtbox.textColor = UIColor.black
-        TVMPVtxtbox.keyboardType = .decimalPad
-        TVMPVtxtbox.inputAccessoryView = doneToolbar
-        TVMPVtxtbox.textAlignment = .center
-        TVMPVtxtbox.tintColor = UIColor.clear
-        TVMPVtxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        self.ContentView.addSubview(TVMPVtxtbox)
-        //FV Label
-        
-        finalValueLbl.frame = CGRect(x: 35, y: 400, width: 250, height: 40)
-        finalValueLbl.text = "Future Value"
-        finalValueLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-        finalValueLbl.textColor = UIColor.white
-        finalValueLbl.layer.zPosition = 2
-        self.ContentView.addSubview(finalValueLbl)
-        //Future Value Field
-        TVMFVtxtbox.frame = CGRect(x: 35, y: 440, width: 250, height: 40)
-        TVMFVtxtbox.borderStyle = UITextField.BorderStyle.bezel
-        TVMFVtxtbox.backgroundColor = UIColor.white
-        TVMFVtxtbox.textColor = UIColor.black
-        TVMFVtxtbox.keyboardType = .decimalPad
-        TVMFVtxtbox.inputAccessoryView = doneToolbar
-        TVMFVtxtbox.textAlignment = .center
-        TVMFVtxtbox.tintColor = UIColor.clear
-        TVMFVtxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        self.ContentView.addSubview(TVMFVtxtbox)
+        //Rate Label
+        ADrateLbl.frame = CGRect(x: 35, y: 400, width: 250, height: 40)
+        ADrateLbl.text = "Rate %"
+        ADrateLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+        ADrateLbl.textColor = UIColor.white
+        ADrateLbl.layer.zPosition = 2
+        self.ContentView.addSubview(ADrateLbl)
+        //Rate Value Field
+        ADratetxtbox.frame = CGRect(x: 35, y: 440, width: 250, height: 40)
+        ADratetxtbox.borderStyle = UITextField.BorderStyle.bezel
+        ADratetxtbox.backgroundColor = UIColor.white
+        ADratetxtbox.textColor = UIColor.black
+        ADratetxtbox.keyboardType = .decimalPad
+        ADratetxtbox.inputAccessoryView = doneToolbar
+        ADratetxtbox.textAlignment = .center
+        ADratetxtbox.tintColor = UIColor.clear
+        ADratetxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        self.ContentView.addSubview(ADratetxtbox)
+        // PV Label
         
         // Calculation Button
-        Ratecalc.frame = CGRect(x: 35, y: 490, width: 250, height: 40)
-        Ratecalc.setTitle("Calculate", for: .normal)
-        Ratecalc.backgroundColor = UIColor(named: "SpecialGreen")
-        Ratecalc.layer.borderColor = UIColor.darkGray.cgColor
-        Ratecalc.layer.borderWidth = 1
-        Ratecalc.layer.cornerRadius = 5.0
-        Ratecalc.layer.zPosition = 2
-        Ratecalc.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        Ratecalc.addTarget(self, action: #selector(Ratecalculation), for: .touchUpInside)
-        self.ContentView.addSubview(Ratecalc)
+        ADPMTPVcalc.frame = CGRect(x: 35, y: 490, width: 250, height: 40)
+        ADPMTPVcalc.setTitle("Calculate", for: .normal)
+        ADPMTPVcalc.backgroundColor = UIColor(named: "SpecialGreen")
+        ADPMTPVcalc.layer.borderColor = UIColor.darkGray.cgColor
+        ADPMTPVcalc.layer.borderWidth = 1
+        ADPMTPVcalc.layer.cornerRadius = 5.0
+        ADPMTPVcalc.layer.zPosition = 2
+        ADPMTPVcalc.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        ADPMTPVcalc.addTarget(self, action: #selector(ADPeriADicPVcalculation), for:  .touchUpInside)
+        self.ContentView.addSubview(ADPMTPVcalc)
     }
-    @objc func Ratecalculation(){
-        //Calculating Rate
+    @objc func ADPeriADicPVcalculation(){
         //Resign first responder
-        lookingFor.resignFirstResponder()
-        TVMnumbertxtbox.resignFirstResponder()
-        TVMratetxtbox.resignFirstResponder()
-        TVMPVtxtbox.resignFirstResponder()
-        TVMFVtxtbox.resignFirstResponder()
+        ADlookingFor.resignFirstResponder()
+        ADnumbertxtbox.resignFirstResponder()
+        ADratetxtbox.resignFirstResponder()
+        ADPVtxtbox.resignFirstResponder()
+        
         //if statement to check through each field (ensuring they are not negative)
-        if TVMPVtxtbox.hasText == false || TVMFVtxtbox.hasText == false ||  TVMnumbertxtbox.hasText == false {
+        if ADnumbertxtbox.hasText == false || ADratetxtbox.hasText == false || ADPVtxtbox.hasText == false {
             // Alert. you need to input all fields
             let alert = UIAlertController(title: "Missing Fields", message: "Remember to fill in all the fields!", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else {
-            // Calculation passes through validation
-            let presentValue = Double(TVMPVtxtbox.text!)!
-            let finalValue = Double(TVMFVtxtbox.text!)!
-            let number = Double(TVMnumbertxtbox.text!)!
             
-            print("Present Value: \(presentValue)")
-            print("Final Value: \(finalValue)")
+            // Calculation passes through validation
+            let PeriADFV = Double(ADPVtxtbox.text!)!
+            let rate = Double(ADratetxtbox.text!)! / 100
+            let number = Double(ADnumbertxtbox.text!)!
+            
+            print("Present Value: \(PeriADFV)")
+            print("Rate: \(rate)")
             print("Number: \(number)")
-            // Formula  i = (FV/ PV)^(1 / N) -1
-            let firstCalc = (finalValue/presentValue)
+            
+            //Formula is PeriADs with PV --> Pmt= PV / [(1 − (1/(1+i)^N))/i]
+            
+            
+            let firstCalc = 1 / (pow((1 + rate), number))
             print(firstCalc)
-            let secondCalc = pow(firstCalc, 1/number)
+            let secondCalc = (1 - firstCalc) / rate
             print(secondCalc)
-            let finalCalc = (secondCalc - 1) * 100
+            let finalCalc = PeriADFV/secondCalc
             print(finalCalc)
             
-            //Add Future Value Label
-            futureValueAnswer.frame = CGRect(x: 35, y: 540, width: 250, height: 40)
-            futureValueAnswer.text = "Rate:"
-            futureValueAnswer.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-            futureValueAnswer.textColor = UIColor.white
-            futureValueAnswer.layer.zPosition = 2
-            self.ContentView.addSubview(futureValueAnswer)
+            //Add Payment Label
+            ADpmtlbl.frame = CGRect(x: 35, y: 530, width: 250, height: 40)
+            ADpmtlbl.text = "Payments:"
+            ADpmtlbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+            ADpmtlbl.textColor = UIColor.white
+            ADpmtlbl.layer.zPosition = 2
+            self.ContentView.addSubview(ADpmtlbl)
+            
             //Add Future Value Label Amount
-            rateValue.frame = CGRect(x: 35, y: 570, width: 250, height: 40)
-            rateValue.text = "\(round(100.0 * finalCalc) / 100.0)%"
-            rateValue.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-            rateValue.textColor = UIColor.white
-            rateValue.layer.zPosition = 2
-            self.ContentView.addSubview(rateValue)
+            ADpaymentValue.frame = CGRect(x: 35, y: 570, width: 250, height: 40)
+            ADpaymentValue.text = "\(currencyDefault)\(round(100.0 * finalCalc) / 100.0)"
+            ADpaymentValue.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+            ADpaymentValue.textColor = UIColor.white
+            ADpaymentValue.layer.zPosition = 2
+            self.ContentView.addSubview(ADpaymentValue)
         }
     }
-    func NumberofPeriodValue(){
+    func NumberwithPV(){
         removeEverything()
-        // Looking for Number of Periods
+        // Know for FV
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
         doneToolbar.barStyle = UIBarStyle.black
 
@@ -635,123 +785,251 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
         doneToolbar.items = items as? [UIBarButtonItem]
         doneToolbar.sizeToFit()
         
-        // Should have 3 fields
+        //Payment Label
+        ADpmtlbl.frame = CGRect(x: 35, y: 240, width: 250, height: 40)
+        ADpmtlbl.text = "Payments"
+        ADpmtlbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+        ADpmtlbl.textColor = UIColor.white
+        ADpmtlbl.layer.zPosition = 2
+        self.ContentView.addSubview(ADpmtlbl)
+        //Payment Field
+        ADpmttxtbox.frame = CGRect(x: 35, y: 280, width: 250, height: 40)
+        ADpmttxtbox.borderStyle = UITextField.BorderStyle.bezel
+        ADpmttxtbox.backgroundColor = UIColor.white
+        ADpmttxtbox.textColor = UIColor.black
+        ADpmttxtbox.keyboardType = .decimalPad
+        ADpmttxtbox.inputAccessoryView = doneToolbar
+        ADpmttxtbox.textAlignment = .center
+        ADpmttxtbox.tintColor = UIColor.clear
+        ADpmttxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        self.ContentView.addSubview(ADpmttxtbox)
         
-        //FV Label
-        rateLbl.frame = CGRect(x: 35, y: 240, width: 250, height: 40)
-        rateLbl.text = "Rate %"
-        rateLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-        rateLbl.textColor = UIColor.white
-        rateLbl.layer.zPosition = 2
-        self.ContentView.addSubview(rateLbl)
-        //Future Value Field
-        TVMratetxtbox.frame = CGRect(x: 35, y: 280, width: 250, height: 40)
-        TVMratetxtbox.borderStyle = UITextField.BorderStyle.bezel
-        TVMratetxtbox.backgroundColor = UIColor.white
-        TVMratetxtbox.textColor = UIColor.black
-        TVMratetxtbox.keyboardType = .decimalPad
-        TVMratetxtbox.inputAccessoryView = doneToolbar
-        TVMratetxtbox.textAlignment = .center
-        TVMratetxtbox.tintColor = UIColor.clear
-        TVMratetxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        self.ContentView.addSubview(TVMratetxtbox)
-
-        //PV Label
-        presentValueLbl.frame = CGRect(x: 35, y: 320, width: 250, height: 40)
-        presentValueLbl.text = "Present Value"
-        presentValueLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-        presentValueLbl.textColor = UIColor.white
-        presentValueLbl.layer.zPosition = 2
-        self.ContentView.addSubview(presentValueLbl)
-        
+        //Present Value
+        ADpresentValueLbl.frame = CGRect(x: 35, y: 320, width: 250, height: 40)
+        ADpresentValueLbl.text = "Present Value"
+        ADpresentValueLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+        ADpresentValueLbl.textColor = UIColor.white
+        ADpresentValueLbl.layer.zPosition = 2
+        self.ContentView.addSubview(ADpresentValueLbl)
         //Present Value Field
-        TVMPVtxtbox.frame = CGRect(x: 35, y: 360, width: 250, height: 40)
-        TVMPVtxtbox.borderStyle = UITextField.BorderStyle.bezel
-        TVMPVtxtbox.backgroundColor = UIColor.white
-        TVMPVtxtbox.textColor = UIColor.black
-        TVMPVtxtbox.keyboardType = .decimalPad
-        TVMPVtxtbox.inputAccessoryView = doneToolbar
-        TVMPVtxtbox.textAlignment = .center
-        TVMPVtxtbox.tintColor = UIColor.clear
-        TVMPVtxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        self.ContentView.addSubview(TVMPVtxtbox)
+        ADPVtxtbox.frame = CGRect(x: 35, y: 360, width: 250, height: 40)
+        ADPVtxtbox.borderStyle = UITextField.BorderStyle.bezel
+        ADPVtxtbox.backgroundColor = UIColor.white
+        ADPVtxtbox.textColor = UIColor.black
+        ADPVtxtbox.keyboardType = .decimalPad
+        ADPVtxtbox.inputAccessoryView = doneToolbar
+        ADPVtxtbox.textAlignment = .center
+        ADPVtxtbox.tintColor = UIColor.clear
+        ADPVtxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        self.ContentView.addSubview(ADPVtxtbox)
         
-        //FV Label
-        finalValueLbl.frame = CGRect(x: 35, y: 400, width: 250, height: 40)
-        finalValueLbl.text = "Future Value"
-        finalValueLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-        finalValueLbl.textColor = UIColor.white
-        finalValueLbl.layer.zPosition = 2
-        self.ContentView.addSubview(finalValueLbl)
-        
-        //Present Value Field
-        TVMFVtxtbox.frame = CGRect(x: 35, y: 440, width: 250, height: 40)
-        TVMFVtxtbox.borderStyle = UITextField.BorderStyle.bezel
-        TVMFVtxtbox.backgroundColor = UIColor.white
-        TVMFVtxtbox.textColor = UIColor.black
-        TVMFVtxtbox.keyboardType = .decimalPad
-        TVMFVtxtbox.inputAccessoryView = doneToolbar
-        TVMFVtxtbox.textAlignment = .center
-        TVMFVtxtbox.tintColor = UIColor.clear
-        TVMFVtxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        self.ContentView.addSubview(TVMFVtxtbox)
+        //Rate Label
+        ADrateLbl.frame = CGRect(x: 35, y: 400, width: 250, height: 40)
+        ADrateLbl.text = "Rate %"
+        ADrateLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+        ADrateLbl.textColor = UIColor.white
+        ADrateLbl.layer.zPosition = 2
+        self.ContentView.addSubview(ADrateLbl)
+        //Rate Value Field
+        ADratetxtbox.frame = CGRect(x: 35, y: 440, width: 250, height: 40)
+        ADratetxtbox.borderStyle = UITextField.BorderStyle.bezel
+        ADratetxtbox.backgroundColor = UIColor.white
+        ADratetxtbox.textColor = UIColor.black
+        ADratetxtbox.keyboardType = .decimalPad
+        ADratetxtbox.inputAccessoryView = doneToolbar
+        ADratetxtbox.textAlignment = .center
+        ADratetxtbox.tintColor = UIColor.clear
+        ADratetxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        self.ContentView.addSubview(ADratetxtbox)
+        // PV Label
         
         // Calculation Button
-        Numcalc.frame = CGRect(x: 35, y: 490, width: 250, height: 40) // hieght extra 10
-        Numcalc.setTitle("Calculate", for: .normal)
-        Numcalc.backgroundColor = UIColor(named: "SpecialGreen")
-        Numcalc.layer.borderColor = UIColor.darkGray.cgColor
-        Numcalc.layer.borderWidth = 1
-        Numcalc.layer.cornerRadius = 5.0
-        Numcalc.layer.zPosition = 2
-        Numcalc.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        Numcalc.addTarget(self, action: #selector(Periodcalculation), for: .touchUpInside)
-        self.ContentView.addSubview(Numcalc)
+        ADNumPVcalc.frame = CGRect(x: 35, y: 490, width: 250, height: 40)
+        ADNumPVcalc.setTitle("Calculate", for: .normal)
+        ADNumPVcalc.backgroundColor = UIColor(named: "SpecialGreen")
+        ADNumPVcalc.layer.borderColor = UIColor.darkGray.cgColor
+        ADNumPVcalc.layer.borderWidth = 1
+        ADNumPVcalc.layer.cornerRadius = 5.0
+        ADNumPVcalc.layer.zPosition = 2
+        ADNumPVcalc.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        ADNumPVcalc.addTarget(self, action: #selector(ADNumPVcalculation), for:  .touchUpInside)
+        self.ContentView.addSubview(ADNumPVcalc)
     }
-    @objc func Periodcalculation(){
-        //Calculating Periods
+    @objc func ADNumPVcalculation(){
         //Resign first responder
-        lookingFor.resignFirstResponder()
-        TVMnumbertxtbox.resignFirstResponder()
-        TVMratetxtbox.resignFirstResponder()
-        TVMPVtxtbox.resignFirstResponder()
-        TVMFVtxtbox.resignFirstResponder()
-        if TVMPVtxtbox.hasText == false || TVMFVtxtbox.hasText == false ||  TVMratetxtbox.hasText == false {
+        ADlookingFor.resignFirstResponder()
+        ADpmttxtbox.resignFirstResponder()
+        ADratetxtbox.resignFirstResponder()
+        ADPVtxtbox.resignFirstResponder()
+        
+        //if statement to check through each field (ensuring they are not negative)
+        if ADpmttxtbox.hasText == false || ADratetxtbox.hasText == false || ADPVtxtbox.hasText == false {
             // Alert. you need to input all fields
             let alert = UIAlertController(title: "Missing Fields", message: "Remember to fill in all the fields!", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else {
-            // Calculation passes through validation
-            let presentValue = Double(TVMPVtxtbox.text!)!
-            let finalValue = Double(TVMFVtxtbox.text!)!
-            let rate = Double(TVMratetxtbox.text!)! / 100
             
-            print("Present Value: \(presentValue)")
-            print("Final Value: \(finalValue)")
-            print("Rate: \(rate)")
-            // Formula  Number = LN(FV / PV) / LN(1 + i)
-            let firstCalc = log((presentValue/finalValue))
+            // Calculation passes through validation
+            let PV = Double(ADPVtxtbox.text!)!
+            let rate = Double(ADratetxtbox.text!)! / 100
+            let payment = Double(ADpmttxtbox.text!)!
+            
+            
+            //Formula is PeriADs with PV --> N= −ln(1−PVA/Pmti)ln(1+i)
+            // 1 / (1 - (PV(r)/Pmt))      /  ln (1+r)
+            let firstCalc = log(1+rate)
             print(firstCalc)
-            let secondCalc = log(1+rate)
+            let secondCalc = log(pow((1 - ((PV*rate)/payment)),-1))
             print(secondCalc)
-            let finalCalc = firstCalc/secondCalc
+            let finalCalc = secondCalc/firstCalc
             print(finalCalc)
             
-            //Add Future Value Label
-            futureValueAnswer.frame = CGRect(x: 35, y: 540, width: 250, height: 40)
-            futureValueAnswer.text = "Number of Periods:"
-            futureValueAnswer.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-            futureValueAnswer.textColor = UIColor.white
-            futureValueAnswer.layer.zPosition = 2
-            self.ContentView.addSubview(futureValueAnswer)
+            //Add Payment Label
+            ADnumberLbl.frame = CGRect(x: 35, y: 530, width: 300, height: 40)
+            ADnumberLbl.text = "Number of PeriADs"
+            ADnumberLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+            ADnumberLbl.textColor = UIColor.white
+            ADnumberLbl.layer.zPosition = 2
+            self.ContentView.addSubview(ADnumberLbl)
+            
             //Add Future Value Label Amount
-            numberValue.frame = CGRect(x: 35, y: 570, width: 250, height: 40)
-            numberValue.text = "\(round(100.0 * abs(finalCalc)) / 100.0)"
-            numberValue.font = UIFont(name: "PingFangSC-Semibold", size: 25)
-            numberValue.textColor = UIColor.white
-            numberValue.layer.zPosition = 2
-            self.ContentView.addSubview(numberValue)
+            ADnumberValue.frame = CGRect(x: 35, y: 570, width: 250, height: 40)
+            ADnumberValue.text = "\(round(100.0 * finalCalc) / 100.0)"
+            ADnumberValue.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+            ADnumberValue.textColor = UIColor.white
+            ADnumberValue.layer.zPosition = 2
+            self.ContentView.addSubview(ADnumberValue)
+        }
+    }
+    func NumberwithFV(){
+        removeEverything()
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        doneToolbar.barStyle = UIBarStyle.black
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(firstRes))
+        let items = NSMutableArray()
+        items.add(flexSpace)
+        items.add(done)
+        doneToolbar.items = items as? [UIBarButtonItem]
+        doneToolbar.sizeToFit()
+        //Payment Label
+        ADpmtlbl.frame = CGRect(x: 35, y: 240, width: 250, height: 40)
+        ADpmtlbl.text = "Payments"
+        ADpmtlbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+        ADpmtlbl.textColor = UIColor.white
+        ADpmtlbl.layer.zPosition = 2
+        self.ContentView.addSubview(ADpmtlbl)
+        //Payment Field
+        ADpmttxtbox.frame = CGRect(x: 35, y: 280, width: 250, height: 40)
+        ADpmttxtbox.borderStyle = UITextField.BorderStyle.bezel
+        ADpmttxtbox.backgroundColor = UIColor.white
+        ADpmttxtbox.textColor = UIColor.black
+        ADpmttxtbox.keyboardType = .decimalPad
+        ADpmttxtbox.inputAccessoryView = doneToolbar
+        ADpmttxtbox.textAlignment = .center
+        ADpmttxtbox.tintColor = UIColor.clear
+        ADpmttxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        self.ContentView.addSubview(ADpmttxtbox)
+        
+        //Future Value
+        ADfutureValueLbl.frame = CGRect(x: 35, y: 320, width: 250, height: 40)
+        ADfutureValueLbl.text = "Future Value"
+        ADfutureValueLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+        ADfutureValueLbl.textColor = UIColor.white
+        ADfutureValueLbl.layer.zPosition = 2
+        self.ContentView.addSubview(ADfutureValueLbl)
+        //Present Value Field
+        ADFVtxtbox.frame = CGRect(x: 35, y: 360, width: 250, height: 40)
+        ADFVtxtbox.borderStyle = UITextField.BorderStyle.bezel
+        ADFVtxtbox.backgroundColor = UIColor.white
+        ADFVtxtbox.textColor = UIColor.black
+        ADFVtxtbox.keyboardType = .decimalPad
+        ADFVtxtbox.inputAccessoryView = doneToolbar
+        ADFVtxtbox.textAlignment = .center
+        ADFVtxtbox.tintColor = UIColor.clear
+        ADFVtxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        self.ContentView.addSubview(ADFVtxtbox)
+        
+        //Rate Label
+        ADrateLbl.frame = CGRect(x: 35, y: 400, width: 250, height: 40)
+        ADrateLbl.text = "Rate %"
+        ADrateLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+        ADrateLbl.textColor = UIColor.white
+        ADrateLbl.layer.zPosition = 2
+        self.ContentView.addSubview(ADrateLbl)
+        //Rate Value Field
+        ADratetxtbox.frame = CGRect(x: 35, y: 440, width: 250, height: 40)
+        ADratetxtbox.borderStyle = UITextField.BorderStyle.bezel
+        ADratetxtbox.backgroundColor = UIColor.white
+        ADratetxtbox.textColor = UIColor.black
+        ADratetxtbox.keyboardType = .decimalPad
+        ADratetxtbox.inputAccessoryView = doneToolbar
+        ADratetxtbox.textAlignment = .center
+        ADratetxtbox.tintColor = UIColor.clear
+        ADratetxtbox.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        self.ContentView.addSubview(ADratetxtbox)
+        // PV Label
+        
+        // Calculation Button
+        ADNumFVcalc.frame = CGRect(x: 35, y: 490, width: 250, height: 40)
+        ADNumFVcalc.setTitle("Calculate", for: .normal)
+        ADNumFVcalc.backgroundColor = UIColor(named: "SpecialGreen")
+        ADNumFVcalc.layer.borderColor = UIColor.darkGray.cgColor
+        ADNumFVcalc.layer.borderWidth = 1
+        ADNumFVcalc.layer.cornerRadius = 5.0
+        ADNumFVcalc.layer.zPosition = 2
+        ADNumFVcalc.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        ADNumFVcalc.addTarget(self, action: #selector(ADNumFVcalculation), for:  .touchUpInside)
+        self.ContentView.addSubview(ADNumFVcalc)
+    }
+    @objc func ADNumFVcalculation(){
+        //Resign first responder
+        ADlookingFor.resignFirstResponder()
+        ADpmttxtbox.resignFirstResponder()
+        ADratetxtbox.resignFirstResponder()
+        ADFVtxtbox.resignFirstResponder()
+        
+        //if statement to check through each field (ensuring they are not negative)
+        if ADpmttxtbox.hasText == false || ADratetxtbox.hasText == false || ADFVtxtbox.hasText == false {
+            // Alert. you need to input all fields
+            let alert = UIAlertController(title: "Missing Fields", message: "Remember to fill in all the fields!", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            
+            // Calculation passes through validation
+            let FV = Double(ADFVtxtbox.text!)!
+            let rate = Double(ADratetxtbox.text!)! / 100
+            let payment = Double(ADpmttxtbox.text!)!
+            
+            
+            //Formula is Number PV
+            // log(1 + (FV(r)/PMT)) / log(1+r)
+            
+            
+            let firstCalc = log(1+rate)
+            print(firstCalc)
+            let secondCalc = log(1 + (FV*rate/payment))
+            print(secondCalc)
+            let finalCalc = secondCalc/firstCalc
+            print(finalCalc)
+            
+            //Add Payment Label
+            ADnumberLbl.frame = CGRect(x: 35, y: 530, width: 300, height: 40)
+            ADnumberLbl.text = "Number of PeriADs"
+            ADnumberLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+            ADnumberLbl.textColor = UIColor.white
+            ADnumberLbl.layer.zPosition = 2
+            self.ContentView.addSubview(ADnumberLbl)
+            
+            //Add Future Value Label Amount
+            ADnumberValue.frame = CGRect(x: 35, y: 570, width: 250, height: 40)
+            ADnumberValue.text = "\(round(100.0 * finalCalc) / 100.0)"
+            ADnumberValue.font = UIFont(name: "PingFangSC-Semibold", size: 25)
+            ADnumberValue.textColor = UIColor.white
+            ADnumberValue.layer.zPosition = 2
+            self.ContentView.addSubview(ADnumberValue)
         }
     }
 }
@@ -762,50 +1040,60 @@ extension AnnuityDue: UIPickerViewDelegate, UIPickerViewDataSource{
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        choices.count
+        ADchoices.count
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return choices[row]
+        return ADchoices[row]
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        lookingFor.text = choices[row]
-        let selectedValue = choices[pickerView.selectedRow(inComponent: 0)]
-        if selectedValue == "Present Value" {
-            print("Present Value Selected")
-            // Present Value Stuff
-            PresentValue()
-        } else if selectedValue == "Future Value" {
+        ADlookingFor.text = ADchoices[row]
+        let selectedValue = ADchoices[pickerView.selectedRow(inComponent: 0)]
+        if selectedValue == "Future Value" {
             print("Future Value Selected")
             // Future Value Stuff
             FutureValue()
-        } else if selectedValue == "Number of Periods" {
-            print("Number of Periods Selected")
-            // # of period stuff
-            NumberofPeriodValue()
-        } else if selectedValue == "Rate" {
-            print("Rate Selected")
-            RateValue()
-            // Rate Stuff
+        } else if selectedValue == "Present Value" {
+            print("Present Value Selected")
+            // Presnt Value Stuff
+            PresentValue()
+        } else if selectedValue == "PeriADic Payment, FV known" {
+            print("PeriADic Payment, FV known")
+            // # of periAD stuff FV KNOWN
+            PeriADicPaymentFV()
+        } else if selectedValue == "PeriADic Payment, PV known" {
+            print("PeriADic Payment, PV known")
+            // # of periAD stuff PV KNOWN
+            PeriADicPaymentPV()
+        } else if selectedValue == "Number of PeriADs, FV known" {
+            print("Number of PeriADs, FV known")
+            NumberwithFV()
+        } else if selectedValue == "Number of PeriADs, PV known" {
+            print("Number of PeriADs, PV known")
+            NumberwithPV()
         } else {
             print("Remove Everything")
             // Nothing selected so remove views
-            PVcalc.removeFromSuperview()
-            FVcalc.removeFromSuperview()
-            Ratecalc.removeFromSuperview()
-            Numcalc.removeFromSuperview()
-            TVMnumbertxtbox.removeFromSuperview()
-            TVMratetxtbox.removeFromSuperview()
-            TVMFVtxtbox.removeFromSuperview()
-            TVMPVtxtbox.removeFromSuperview()
-            rateLbl.removeFromSuperview()
-            numberLbl.removeFromSuperview()
-            presentValueLbl.removeFromSuperview()
-            finalValueLbl.removeFromSuperview()
-            calc.removeFromSuperview()
-            futureValueAnswer.removeFromSuperview()
-            presentValueAnswer.removeFromSuperview()
-            rateValue.removeFromSuperview()
-            numberValue.removeFromSuperview()
+            ADPVcalc.removeFromSuperview()
+            ADFVcalc.removeFromSuperview()
+            ADPMTFVcalc.removeFromSuperview()
+            ADPMTPVcalc.removeFromSuperview()
+            ADNumFVcalc.removeFromSuperview()
+            ADNumPVcalc.removeFromSuperview()
+            
+            ADnumbertxtbox.removeFromSuperview()
+            ADratetxtbox.removeFromSuperview()
+            ADFVtxtbox.removeFromSuperview()
+            ADPVtxtbox.removeFromSuperview()
+            
+            ADrateLbl.removeFromSuperview()
+            ADnumberLbl.removeFromSuperview()
+            ADpresentValueLbl.removeFromSuperview()
+            ADfutureValueLbl.removeFromSuperview()
+            
+            ADfutureValueAnswer.removeFromSuperview()
+            ADpresentValueAnswer.removeFromSuperview()
+            ADrateValue.removeFromSuperview()
+            ADnumberValue.removeFromSuperview()
         }
     } // end of picker view change
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -818,4 +1106,4 @@ extension AnnuityDue: UIPickerViewDelegate, UIPickerViewDataSource{
         }
         return true
     }
-} // of TVM Class
+} // of Annuity Class
