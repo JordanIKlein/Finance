@@ -26,7 +26,7 @@ class Settings: UIViewController{
         labels() // Adding Labels
         buttons() // Adding buttons
         preferences() // User Default selected for currency
-        
+        review()
     }
     
     @IBOutlet weak var ContentView: UIView!
@@ -157,7 +157,6 @@ class Settings: UIViewController{
     }
     @objc func legalPush(){
         // Sends user out of app to my legal information
-        // Which you need to update :)
         if let url = URL(string: "http://jordaniklein.com/index.php/privacy-policy/") {
             UIApplication.shared.open(url)
         }
