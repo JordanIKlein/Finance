@@ -1,41 +1,49 @@
 {
   "images" : [
     {
+      "filename" : "FinanceCalcLogoiPhoneNotifications2.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "20x20"
     },
     {
+      "filename" : "FinanceCalcLogoiPhoneNotifications.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "20x20"
     },
     {
+      "filename" : "FinanceCalcLogo58.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "29x29"
     },
     {
+      "filename" : "FinanceCalcLogoSettings.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "29x29"
     },
     {
+      "filename" : "FinanceCalcLogo80.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "40x40"
     },
     {
+      "filename" : "FinanceCalcLogo120.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "40x40"
     },
     {
+      "filename" : "FinanceCalcLogoiPhone2.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "60x60"
     },
     {
+      "filename" : "FinanceCalcLogoiPhone.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "60x60"
@@ -71,16 +79,19 @@
       "size" : "40x40"
     },
     {
+      "filename" : "FinanceCalcLogo76.png",
       "idiom" : "ipad",
       "scale" : "1x",
       "size" : "76x76"
     },
     {
+      "filename" : "FinanceCalciPad.png",
       "idiom" : "ipad",
       "scale" : "2x",
       "size" : "76x76"
     },
     {
+      "filename" : "FinanceCalcLogo copy.png",
       "idiom" : "ipad",
       "scale" : "2x",
       "size" : "83.5x83.5"

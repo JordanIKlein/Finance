@@ -85,7 +85,7 @@ class Settings: UIViewController{
         }
     }
     func review(){
-        let deadline = DispatchTime.now() + .seconds(2)
+        let deadline = DispatchTime.now() + .seconds(5)
         DispatchQueue.main.asyncAfter(deadline: deadline) {[weak self] in self?.reviewService.requestReview()
         }
     }

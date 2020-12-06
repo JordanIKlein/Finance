@@ -36,7 +36,6 @@ class MainMenu: UIViewController {
         addingAnnuities()// annuities
         addingLoans()// loans
         addingInterest()// interest
-        print(view.frame.size.width)
     }
     override func viewWillAppear(_ animated: Bool) {
         self.view.addSubview(settingsbtn)
@@ -98,7 +97,7 @@ class MainMenu: UIViewController {
     
     func buttons(){
         //Help Button
-        help.frame = CGRect(x: view.bounds.size.width/2 - 125, y: 910, width: 250, height: 52)
+        help.frame = CGRect(x: view.bounds.size.width/2 - 125, y: 920, width: 250, height: 52)
         help.setTitle("Help", for: .normal)
         help.backgroundColor = UIColor(named: "SpecialGreen")
         help.layer.borderColor = UIColor.darkGray.cgColor
