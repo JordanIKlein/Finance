@@ -318,8 +318,8 @@ class MainMenu: UIViewController {
     }
     @objc func AnnuityDuePressed(_ sender: UIButton){
         sender.shake()
-        let newStoryBoard : UIStoryboard = UIStoryboard(name: "OrdinaryAnnuity", bundle:nil)
-        let VC = newStoryBoard.instantiateViewController(withIdentifier: "OrdinaryAnnuity")
+        let newStoryBoard : UIStoryboard = UIStoryboard(name: "AnnuityDue", bundle:nil)
+        let VC = newStoryBoard.instantiateViewController(withIdentifier: "AnnuityDue")
         VC.modalPresentationStyle = .fullScreen
         let transition = CATransition()
         transition.duration = 0.5

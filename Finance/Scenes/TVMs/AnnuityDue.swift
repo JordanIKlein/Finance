@@ -90,7 +90,7 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
         //Creating Label
         let questionLbl = UILabel()
         questionLbl.frame = CGRect(x: 35, y: 70, width: 250, height: 40)
-        questionLbl.text = "Lump Sum TVM"
+        questionLbl.text = "Annuity Due"
         questionLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
         questionLbl.textColor = UIColor.black
         questionLbl.layer.zPosition = 2
