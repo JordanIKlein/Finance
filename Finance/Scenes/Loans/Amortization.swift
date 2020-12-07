@@ -7,7 +7,8 @@
 
 import Foundation
 import UIKit
-
+// Amortization Calc
+let AmortCalc = UIButton()
 //Labels
 let loanTotalInt = UILabel()
 let loanTotalAmt = UILabel()
@@ -182,16 +183,16 @@ class Amortization: UIViewController, UITextFieldDelegate {
     }
     
     func calculateButton() {
-        calc.frame = CGRect(x: 150, y: 400, width: 175, height: 40)
-        calc.setTitle("Calculate", for: .normal)
-        calc.backgroundColor = UIColor(named: "SpecialGreen")
-        calc.layer.borderColor = UIColor.darkGray.cgColor
-        calc.layer.borderWidth = 1
-        calc.layer.cornerRadius = 5.0
-        calc.layer.zPosition = 2
-        calc.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        calc.addTarget(self, action: #selector(calculation), for: .touchUpInside)
-        self.ContentView.addSubview(calc)
+        AmortCalc.frame = CGRect(x: 150, y: 400, width: 175, height: 40)
+        AmortCalc.setTitle("Calculate", for: .normal)
+        AmortCalc.backgroundColor = UIColor(named: "SpecialGreen")
+        AmortCalc.layer.borderColor = UIColor.darkGray.cgColor
+        AmortCalc.layer.borderWidth = 1
+        AmortCalc.layer.cornerRadius = 5.0
+        AmortCalc.layer.zPosition = 2
+        AmortCalc.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        AmortCalc.addTarget(self, action: #selector(calculation), for: .touchUpInside)
+        self.ContentView.addSubview(AmortCalc)
     }
     
     //Calculation objc

@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+let compoundCalc = UIButton()
 // Arrows
 let backConfiguration = UIImage.SymbolConfiguration(pointSize: 55, weight: .black)
 let backImage = UIImage(systemName: "arrow.left", withConfiguration: backConfiguration)
@@ -209,16 +210,16 @@ class CompoundInt: UIViewController, UITextFieldDelegate{
     
     func calculateButton() {
         
-        calc.frame = CGRect(x: 150, y: 400, width: 175, height: 40)
-        calc.setTitle("Calculate", for: .normal)
-        calc.backgroundColor = UIColor(named: "SpecialGreen")
-        calc.layer.borderColor = UIColor.darkGray.cgColor
-        calc.layer.borderWidth = 1
-        calc.layer.cornerRadius = 5.0
-        calc.layer.zPosition = 2
-        calc.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
-        calc.addTarget(self, action: #selector(calculation), for: .touchUpInside)
-        self.ContentView.addSubview(calc)
+        compoundCalc.frame = CGRect(x: 150, y: 400, width: 175, height: 40)
+        compoundCalc.setTitle("Calculate", for: .normal)
+        compoundCalc.backgroundColor = UIColor(named: "SpecialGreen")
+        compoundCalc.layer.borderColor = UIColor.darkGray.cgColor
+        compoundCalc.layer.borderWidth = 1
+        compoundCalc.layer.cornerRadius = 5.0
+        compoundCalc.layer.zPosition = 2
+        compoundCalc.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
+        compoundCalc.addTarget(self, action: #selector(calculation), for: .touchUpInside)
+        self.ContentView.addSubview(compoundCalc)
     }
     func dropdown(){
         // add dropdown

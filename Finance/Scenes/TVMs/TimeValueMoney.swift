@@ -782,7 +782,6 @@ extension TVM: UIPickerViewDelegate, UIPickerViewDataSource{
             numberLbl.removeFromSuperview()
             presentValueLbl.removeFromSuperview()
             finalValueLbl.removeFromSuperview()
-            calc.removeFromSuperview()
             futureValueAnswer.removeFromSuperview()
             presentValueAnswer.removeFromSuperview()
             rateValue.removeFromSuperview()
