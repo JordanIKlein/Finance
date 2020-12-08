@@ -130,7 +130,7 @@ class MainMenu: UIViewController {
         
         //TVM Button
         tvmbtn.frame = CGRect(x: view.bounds.size.width/2 - 125, y: ordinaryAnnuity.frame.origin.y - 110, width: 250, height: 52)
-        tvmbtn.setTitle("Lump Sum Annuity", for: .normal)
+        tvmbtn.setTitle("Lump Sum Payment", for: .normal)
         tvmbtn.backgroundColor = UIColor(named: "SpecialGreen")
         tvmbtn.layer.borderColor = UIColor.darkGray.cgColor
         tvmbtn.layer.borderWidth = 1

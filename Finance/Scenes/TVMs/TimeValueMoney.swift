@@ -71,7 +71,7 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
         //Creating Label
         let questionLbl = UILabel()
         questionLbl.frame = CGRect(x: 35, y: 70, width: 250, height: 40)
-        questionLbl.text = "Lump Sum Annuity"
+        questionLbl.text = "Lump Sum Payment"
         questionLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
         questionLbl.textColor = UIColor.black
         questionLbl.layer.zPosition = 2
