@@ -161,7 +161,7 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
         doneToolbar.sizeToFit()
         
         // textbox for number of periods
-        lookingFor.frame = CGRect(x: 35, y: 200, width: 250, height: 40)
+        lookingFor.frame = CGRect(x: 35, y: 200, width: 305, height: 40)
         lookingFor.borderStyle = UITextField.BorderStyle.bezel
         lookingFor.backgroundColor = UIColor.white
         lookingFor.textColor = UIColor.black

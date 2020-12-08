@@ -61,29 +61,7 @@ class MainMenu: UIViewController {
         topTri.fillColor = UIColor(named: "SpecialGreen")?.cgColor
         self.view.layer.addSublayer(topTri)
     }
-//    @objc func spawnShape(){
-//
-//        let ovalPositionX = arc4random_uniform(270)
-//        let ovalPositionY = view.bounds.size.height/100
-//
-//        oval.path = UIBezierPath(roundedRect: CGRect(x: CGFloat(ovalPositionX), y: ovalPositionY, width: 35, height: 80), cornerRadius: 25).cgPath
-//
-//        oval.fillColor = UIColor(named: "SpecialGreen")?.cgColor
-//
-//        let animation = CABasicAnimation(keyPath: "position")
-//        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-//        animation.fromValue = oval.position
-//        animation.toValue = CGPoint(x: oval.position.x, y: ContentView.bounds.size.height + 100 )
-//        oval.opacity = 0.35
-//
-//        animation.duration = 2.5
-//        oval.add(animation, forKey: "basic animation")
-//        oval.zPosition = 0
-//        self.view.layer.addSublayer(oval)
-//    }
-    //        spawnShape() // Need to have the rect spawn before 4 seconds occur
-    //        shapeTimer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(spawnShape), userInfo: nil, repeats: true) // Timer to continue the shapes forever
-           // createLabel() // Adding the 'Calculate'
+
     func createLabel(){
         //Creating Label
         let questionLbl = UILabel()
@@ -119,7 +97,6 @@ class MainMenu: UIViewController {
         settingsbtn.setImage(settingsImage, for: .normal)
         settingsbtn.layer.zPosition = 3
         settingsbtn.addTarget(self, action: #selector(settingsPressed), for: .touchUpInside)
-        settingsbtn.rotate()
     }
     
     func addingAnnuities(){
@@ -347,12 +324,12 @@ class MainMenu: UIViewController {
 extension UIButton{
     func pulsate() {
         let pulse = CASpringAnimation(keyPath: "transform.scale")
-        pulse.duration = 0.4
-        pulse.fromValue = 0.98
+        pulse.duration = 1.0
+        pulse.fromValue = 0.99
         pulse.toValue = 1.0
         pulse.autoreverses = true
         pulse.repeatCount = .infinity
-        pulse.initialVelocity = 0.5
+        pulse.initialVelocity = 0.15
         pulse.damping = 1.0
         layer.add(pulse, forKey: nil)
     }
@@ -364,15 +341,6 @@ extension UIButton{
         let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .heavy)
         impactFeedbackgenerator.prepare()
         impactFeedbackgenerator.impactOccurred()
-    }
-    func rotate(){
-        let spring = CASpringAnimation(keyPath: "transform.rotation")
-        spring.damping = 10.0
-        spring.fromValue = 3.0 * CGFloat(Double.pi)
-        spring.toValue = 4.0 * CGFloat(Double.pi)
-        spring.repeatCount = .infinity
-        spring.autoreverses = true
-        layer.add(spring, forKey: "rotation")
     }
 
 }

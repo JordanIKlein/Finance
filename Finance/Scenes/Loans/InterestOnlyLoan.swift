@@ -127,7 +127,7 @@ class InterestOnlyLoan: UIViewController, UITextFieldDelegate {
         //Time Label
         let timeLbl = UILabel()
         timeLbl.frame = CGRect(x: 35, y: 360, width: 300, height: 40)
-        timeLbl.text = "Time (Years)"
+        timeLbl.text = "Time (T)"
         timeLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
         timeLbl.textColor = UIColor.white
         timeLbl.layer.zPosition = 2
