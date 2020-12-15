@@ -7,6 +7,7 @@ target 'Finance' do
 
   # Pods for Finance
   pod 'Firebase/Analytics'
+  pod 'Google-Mobile-Ads-SDK'
 
   target 'FinanceTests' do
     inherit! :search_paths

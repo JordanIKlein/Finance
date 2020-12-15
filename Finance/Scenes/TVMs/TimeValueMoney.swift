@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import GoogleMobileAds
 
 let backbtn = UIButton()
 
@@ -37,13 +38,26 @@ let FVcalc = UIButton()
 let Ratecalc = UIButton()
 let Numcalc = UIButton()
 
-class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
-    
+class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate, GADRewardedAdDelegate {
+    func rewardedAd(_ rewardedAd: GADRewardedAd, userDidEarn reward: GADAdReward) {
+        print("Reward :)")
+    }
     var pickerView = UIPickerView()
     let choices = ["","Present Value","Future Value","Number of Periods","Rate"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        gadRewardedAd = GADRewardedAd(adUnitID: "ca-app-pub-4042774315695176/1995708416")
+        gadRewardedAd?.load(GADRequest()) { error in
+            if let error = error {
+              // Handle ad failed to load case.
+                print("error, failed to load ad")
+            } else {
+              // Ad successfully loaded.
+                print("Ad loaded")
+            }
+          }
+        runningNotifications()
         addingBackgroundShapes() // adding black background and top shape
         gestures()//Gestures
         header() // Time Value Money Header
@@ -71,7 +85,7 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
         //Creating Label
         let questionLbl = UILabel()
         questionLbl.frame = CGRect(x: 35, y: 70, width: 250, height: 40)
-        questionLbl.text = "Lump Sum Payment"
+        questionLbl.text = "Lump Sum Payment."
         questionLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
         questionLbl.textColor = UIColor.black
         questionLbl.layer.zPosition = 2
@@ -178,6 +192,25 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
         TVMratetxtbox.resignFirstResponder()
         TVMPVtxtbox.resignFirstResponder()
         TVMFVtxtbox.resignFirstResponder()
+    }
+    func runningNotifications(){
+       //Ad Notificaiton
+        NotificationCenter.default.addObserver(self, selector: #selector(loadInterstitial), name: .showInterstitialAd, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadVideo), name: .showVideoRewardAd, object: nil)
+    }
+    @objc func loadInterstitial() {
+        print("Setting up")
+        if gadRewardedAd?.isReady == true {
+            gadRewardedAd?.present(fromRootViewController: self, delegate:self)
+            print("Presented")
+        }
+    }
+    @objc func loadVideo(){
+        print("Setting up")
+        if gadRewardedAd?.isReady == true {
+            gadRewardedAd?.present(fromRootViewController: self, delegate:self)
+            print("Presented")
+        }
     }
     func removeEverything(){
         TVMnumbertxtbox.removeFromSuperview()
@@ -305,6 +338,8 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
             self.present(alert, animated: true, completion: nil)
         } else {
             // Calculation passes through validation
+            NotificationCenter.default.post(name: .showVideoRewardAd, object: nil)
+            reload()
             let finalValue = Double(TVMFVtxtbox.text!)!
             let rate = Double(TVMratetxtbox.text!)! / 100
             let number = Double(TVMnumbertxtbox.text!)!
@@ -437,6 +472,8 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
             self.present(alert, animated: true, completion: nil)
         } else {
             // Calculation passes through validation
+            NotificationCenter.default.post(name: .showVideoRewardAd, object: nil)
+            reload()
             let presentValue = Double(TVMPVtxtbox.text!)!
             let rate = Double(TVMratetxtbox.text!)! / 100
             let number = Double(TVMnumbertxtbox.text!)!
@@ -569,6 +606,8 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
             self.present(alert, animated: true, completion: nil)
         } else {
             // Calculation passes through validation
+            NotificationCenter.default.post(name: .showVideoRewardAd, object: nil)
+            reload()
             let presentValue = Double(TVMPVtxtbox.text!)!
             let finalValue = Double(TVMFVtxtbox.text!)!
             let number = Double(TVMnumbertxtbox.text!)!
@@ -704,6 +743,8 @@ class TVM: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
             self.present(alert, animated: true, completion: nil)
         } else {
             // Calculation passes through validation
+            NotificationCenter.default.post(name: .showVideoRewardAd, object: nil)
+            reload()
             let presentValue = Double(TVMPVtxtbox.text!)!
             let finalValue = Double(TVMFVtxtbox.text!)!
             let rate = Double(TVMratetxtbox.text!)! / 100

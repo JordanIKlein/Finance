@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import GoogleMobileAds
 
 let compoundCalc = UIButton()
 // Arrows
@@ -24,11 +25,23 @@ let COMperiodtxtBox = UITextField()
 let COMtotalcalcLbl = UILabel()
 let COMintcalcLbl = UILabel()
 
-class CompoundInt: UIViewController, UITextFieldDelegate{
-
-    
+class CompoundInt: UIViewController, UITextFieldDelegate, GADRewardedAdDelegate{
+    func rewardedAd(_ rewardedAd: GADRewardedAd, userDidEarn reward: GADAdReward) {
+        print("Reward :)")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        gadRewardedAd = GADRewardedAd(adUnitID: "ca-app-pub-4042774315695176/1995708416")
+        gadRewardedAd?.load(GADRequest()) { error in
+            if let error = error {
+              // Handle ad failed to load case.
+                print("error, failed to load ad")
+            } else {
+              // Ad successfully loaded.
+                print("Ad loaded")
+            }
+          }
+        runningNotifications()
         addingBackgroundShapes() // adding black background and top shape
         gestures()
         createLabel() // Header and Back Button
@@ -45,6 +58,9 @@ class CompoundInt: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var ContentView: UIView!
     func createLabel(){
         //Creating Label
+        
+        //let highscoresection = NSLocalizedString("CompoundInterest", comment: "My comment")
+
         let questionLbl = UILabel()
         questionLbl.frame = CGRect(x: 35, y: 70, width: 250, height: 40)
         questionLbl.text = "Compound Interest."
@@ -67,13 +83,15 @@ class CompoundInt: UIViewController, UITextFieldDelegate{
         backbtn.layer.zPosition = 2
         backbtn.addTarget(self, action: #selector(back), for: .touchUpInside)
         self.view.addSubview(backbtn)
+        
     }
+    
     func gestures(){
         let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
             edgePan.edges = .left
-
             view.addGestureRecognizer(edgePan)
     }
+    
     @objc func back(){
         navigationController?.popViewController(animated: true)
         let transition = CATransition()
@@ -207,7 +225,25 @@ class CompoundInt: UIViewController, UITextFieldDelegate{
         COMtimetxtBox.resignFirstResponder()
         COMperiodtxtBox.resignFirstResponder()
     }
-    
+    func runningNotifications(){
+       //Ad Notificaiton
+        NotificationCenter.default.addObserver(self, selector: #selector(loadInterstitial), name: .showInterstitialAd, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadVideo), name: .showVideoRewardAd, object: nil)
+    }
+    @objc func loadInterstitial() {
+        print("Setting up")
+        if gadRewardedAd?.isReady == true {
+            gadRewardedAd?.present(fromRootViewController: self, delegate:self)
+            print("Presented")
+        }
+    }
+    @objc func loadVideo(){
+        print("Setting up")
+        if gadRewardedAd?.isReady == true {
+            gadRewardedAd?.present(fromRootViewController: self, delegate:self)
+            print("Presented")
+        }
+    }
     func calculateButton() {
         
         compoundCalc.frame = CGRect(x: 150, y: 400, width: 175, height: 40)
@@ -220,10 +256,6 @@ class CompoundInt: UIViewController, UITextFieldDelegate{
         compoundCalc.titleLabel?.font = UIFont(name: "PingFangSC-Semibold", size: 20)
         compoundCalc.addTarget(self, action: #selector(calculation), for: .touchUpInside)
         self.ContentView.addSubview(compoundCalc)
-    }
-    func dropdown(){
-        // add dropdown
-        
     }
     //Calculation objc
     @objc func calculation(){
@@ -239,6 +271,8 @@ class CompoundInt: UIViewController, UITextFieldDelegate{
             self.present(alert, animated: true, completion: nil)
         } else {
             //Continue through
+            NotificationCenter.default.post(name: .showVideoRewardAd, object: nil)
+            reload()
             let principal = Double(COMpritxtBox.text!)!
             let rate = Double(COMratetxtBox.text!)!
             let time = Double(COMtimetxtBox.text!)!

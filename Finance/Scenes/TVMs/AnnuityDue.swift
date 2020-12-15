@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import GoogleMobileAds
 
 // UI Fields for TVM
 let ADlookingFor = UITextField()
@@ -40,15 +41,30 @@ let ADNumFVcalc = UIButton()
 let ADNumPVcalc = UIButton()
 
 
-class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
+class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate, GADRewardedAdDelegate {
     
+    func rewardedAd(_ rewardedAd: GADRewardedAd, userDidEarn reward: GADAdReward) {
+        print("Reward :)")
+    }
     @IBOutlet weak var ContentView: UIView!
     
     var ADpickerView = UIPickerView()
     let ADchoices = ["","Future Value","Present Value","Periodic Payment, PV known","Periodic Payment, FV known","Number of Periods, PV known","Number of Periods, FV known"]
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        gadRewardedAd = GADRewardedAd(adUnitID: "ca-app-pub-4042774315695176/1995708416")
+        gadRewardedAd?.load(GADRequest()) { error in
+            if let error = error {
+              // Handle ad failed to load case.
+                print("error, failed to load ad")
+            } else {
+              // Ad successfully loaded.
+                print("Ad loaded")
+            }
+          }
+        runningNotifications()
         addingBackgroundShapes() // adding black background and top shape
         gestures() //Gestures
         header() // Time Value Money Header
@@ -75,7 +91,7 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
         //Creating Label
         let questionLbl = UILabel()
         questionLbl.frame = CGRect(x: 35, y: 70, width: 250, height: 40)
-        questionLbl.text = "Annuity Due"
+        questionLbl.text = "Annuity Due."
         questionLbl.font = UIFont(name: "PingFangSC-Semibold", size: 25)
         questionLbl.textColor = UIColor.black
         questionLbl.layer.zPosition = 2
@@ -176,8 +192,6 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
         ADlookingFor.font = UIFont(name: "PingFangSC-Semibold", size: 20)
         self.ContentView.addSubview(ADlookingFor)
     }
-    
-    
     @objc func firstRes(){
         ADlookingFor.resignFirstResponder()
         ADnumbertxtbox.resignFirstResponder()
@@ -186,7 +200,25 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
         ADFVtxtbox.resignFirstResponder()
         ADpmttxtbox.resignFirstResponder()
     }
-    
+    func runningNotifications(){
+       //Ad Notificaiton
+        NotificationCenter.default.addObserver(self, selector: #selector(loadInterstitial), name: .showInterstitialAd, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadVideo), name: .showVideoRewardAd, object: nil)
+    }
+    @objc func loadInterstitial() {
+        print("Setting up")
+        if gadRewardedAd?.isReady == true {
+            gadRewardedAd?.present(fromRootViewController: self, delegate:self)
+            print("Presented")
+        }
+    }
+    @objc func loadVideo(){
+        print("Setting up")
+        if gadRewardedAd?.isReady == true {
+            gadRewardedAd?.present(fromRootViewController: self, delegate:self)
+            print("Presented")
+        }
+    }
     func removeEverything(){
         ADnumbertxtbox.removeFromSuperview()
         ADratetxtbox.removeFromSuperview()
@@ -316,6 +348,8 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else {
+            NotificationCenter.default.post(name: .showVideoRewardAd, object: nil)
+            reload()
             // Calculation passes through validation
             let payments = Double(ADpmttxtbox.text!)!
             let rate = Double(ADratetxtbox.text!)! / 100
@@ -456,6 +490,8 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else {
+            NotificationCenter.default.post(name: .showVideoRewardAd, object: nil)
+            reload()
             // Calculation passes through validation
             let payments = Double(ADpmttxtbox.text!)!
             let rate = Double(ADratetxtbox.text!)! / 100
@@ -592,7 +628,8 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else {
-            
+            NotificationCenter.default.post(name: .showVideoRewardAd, object: nil)
+            reload()
             // Calculation passes through validation
             let PeriodFV = Double(ADFVtxtbox.text!)!
             let rate = Double(ADratetxtbox.text!)! / 100
@@ -613,8 +650,6 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
             print(finalCalc)
             
             //Add Payment Label
-            
-            
             
             ADpmtlbl.frame = CGRect(x: 35, y: 530, width: 250, height: 40)
             ADpmtlbl.text = "Payments:"
@@ -733,7 +768,8 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else {
-            
+            NotificationCenter.default.post(name: .showVideoRewardAd, object: nil)
+            reload()
             // Calculation passes through validation
             let PeriADFV = Double(ADPVtxtbox.text!)!
             let rate = Double(ADratetxtbox.text!)! / 100
@@ -870,7 +906,8 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else {
-            
+            NotificationCenter.default.post(name: .showVideoRewardAd, object: nil)
+            reload()
             // Calculation passes through validation
             let PV = Double(ADPVtxtbox.text!)!
             let rate = Double(ADratetxtbox.text!)! / 100
@@ -999,7 +1036,8 @@ class AnnuityDue: UIViewController, UIGestureRecognizerDelegate, UITextFieldDele
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else {
-            
+            NotificationCenter.default.post(name: .showVideoRewardAd, object: nil)
+            reload()
             // Calculation passes through validation
             let FV = Double(ADFVtxtbox.text!)!
             let rate = Double(ADratetxtbox.text!)! / 100

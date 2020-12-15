@@ -1,0 +1,26 @@
+/* 
+  Localizable.strings
+  Finance
+
+  Created by Jordan Klein on 12/11/20.
+  
+*/
+
+"SimpleInterest" = "Simple Interest";
+"CompoundInterest" = "Compound Interest";
+"IntOnlyLoan" = "Interest Only Loan";
+"AmortizedLoan" = "Amortized Loan";
+"LumpSum" = "Lump Sum Payment";
+"OrdinaryAnnuity" = "Ordinary Annuity";
+"AnnuityDue" = "Annuity Due";
+"Help" = "Help";
+"Calculate" = "Calculate";
+
+"Principle" = "Principal";
+"Rate" = "Rate";
+"Time" = "Time";
+
+
+
+
+

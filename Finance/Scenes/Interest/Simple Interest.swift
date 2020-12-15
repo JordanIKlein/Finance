@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import GoogleMobileAds
 
 // UIButton
 let Simplecalc = UIButton() // for simple
@@ -18,10 +19,24 @@ let timetxtBox = UITextField()
 let calcLbl = UILabel()
 let intlbl = UILabel()
 
-class SimpleInt: UIViewController, UITextFieldDelegate {
+class SimpleInt: UIViewController, UITextFieldDelegate, GADRewardedAdDelegate {
+    func rewardedAd(_ rewardedAd: GADRewardedAd, userDidEarn reward: GADAdReward) {
+        print("Reward :)")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        gadRewardedAd = GADRewardedAd(adUnitID: "ca-app-pub-4042774315695176/1995708416")
+        gadRewardedAd?.load(GADRequest()) { error in
+            if let error = error {
+              // Handle ad failed to load case.
+                print("error, failed to load ad")
+            } else {
+              // Ad successfully loaded.
+                print("Ad loaded")
+            }
+          }
+        runningNotifications()
         addingBackgroundShapes() // adding black background and top shape
         gestures()
         createLabel() // Header and Back Button
@@ -183,7 +198,25 @@ class SimpleInt: UIViewController, UITextFieldDelegate {
         ratetxtBox.resignFirstResponder()
         timetxtBox.resignFirstResponder()
     }
-    
+    func runningNotifications(){
+       //Ad Notificaiton
+        NotificationCenter.default.addObserver(self, selector: #selector(loadInterstitial), name: .showInterstitialAd, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadVideo), name: .showVideoRewardAd, object: nil)
+    }
+    @objc func loadInterstitial() {
+        print("Setting up")
+        if gadRewardedAd?.isReady == true {
+            gadRewardedAd?.present(fromRootViewController: self, delegate:self)
+            print("Presented")
+        }
+    }
+    @objc func loadVideo(){
+        print("Setting up")
+        if gadRewardedAd?.isReady == true {
+            gadRewardedAd?.present(fromRootViewController: self, delegate:self)
+            print("Presented")
+        }
+    }
     func calculateButton() {
         
         Simplecalc.frame = CGRect(x: 150, y: 400, width: 175, height: 40)
@@ -213,6 +246,8 @@ class SimpleInt: UIViewController, UITextFieldDelegate {
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else {
+                NotificationCenter.default.post(name: .showVideoRewardAd, object: nil)
+                reload()
                 let principal = Double(pritxtBox.text!)!
                 let rate = Double(ratetxtBox.text!)! / 100
                 let time = Double(timetxtBox.text!)!

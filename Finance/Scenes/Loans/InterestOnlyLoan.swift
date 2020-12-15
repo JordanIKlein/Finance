@@ -4,8 +4,9 @@
 //
 //  Created by Jordan Klein on 11/30/20.
 //
+import Foundation
 import UIKit
-
+import GoogleMobileAds
 //Labels
 let IOloanTotalInt = UILabel()
 let IOloanTotalAmt = UILabel()
@@ -18,9 +19,23 @@ let IOLtimetxtbox = UITextField()
 let IOcalc = UIButton()
 
 
-class InterestOnlyLoan: UIViewController, UITextFieldDelegate {
+class InterestOnlyLoan: UIViewController, UITextFieldDelegate, GADRewardedAdDelegate {
+    func rewardedAd(_ rewardedAd: GADRewardedAd, userDidEarn reward: GADAdReward) {
+        print("Reward :)")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        gadRewardedAd = GADRewardedAd(adUnitID: "ca-app-pub-4042774315695176/1995708416")
+        gadRewardedAd?.load(GADRequest()) { error in
+            if let error = error {
+              // Handle ad failed to load case.
+                print("error, failed to load ad")
+            } else {
+              // Ad successfully loaded.
+                print("Ad loaded")
+            }
+          }
+        runningNotifications()
         addingBackgroundShapes() // adding black background and top shape
         gestures()
         createLabel() // Header and Back Button
@@ -183,7 +198,25 @@ class InterestOnlyLoan: UIViewController, UITextFieldDelegate {
         Lratetxtbox.resignFirstResponder()
         Ltimetxtbox.resignFirstResponder()
     }
-    
+    func runningNotifications(){
+       //Ad Notificaiton
+        NotificationCenter.default.addObserver(self, selector: #selector(loadInterstitial), name: .showInterstitialAd, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadVideo), name: .showVideoRewardAd, object: nil)
+    }
+    @objc func loadInterstitial() {
+        print("Setting up")
+        if gadRewardedAd?.isReady == true {
+            gadRewardedAd?.present(fromRootViewController: self, delegate:self)
+            print("Presented")
+        }
+    }
+    @objc func loadVideo(){
+        print("Setting up")
+        if gadRewardedAd?.isReady == true {
+            gadRewardedAd?.present(fromRootViewController: self, delegate:self)
+            print("Presented")
+        }
+    }
     func calculateButton() {
         IOcalc.frame = CGRect(x: 150, y: 400, width: 175, height: 40)
         IOcalc.setTitle("Calculate", for: .normal)
@@ -209,6 +242,8 @@ class InterestOnlyLoan: UIViewController, UITextFieldDelegate {
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else {
+            NotificationCenter.default.post(name: .showVideoRewardAd, object: nil)
+            reload()
             let a = Double(IOLpritxtbox.text!)!
             let r = (Double(IOLratetxtbox.text!)! / 100) //amortized so rate monthly
             let n = Double(IOLtimetxtbox.text!)! // in months

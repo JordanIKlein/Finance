@@ -27,6 +27,8 @@
 		FC44285E257B04FF00F04818 /* Help.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC44285D257B04FF00F04818 /* Help.storyboard */; };
 		FC442866257B051B00F04818 /* Help.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC442865257B051B00F04818 /* Help.swift */; };
 		FC44286B257C88A700F04818 /* ReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC44286A257C88A700F04818 /* ReviewService.swift */; };
+		FC7D579B2583FBF4007E4BAB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FC7D579D2583FBF4007E4BAB /* Localizable.strings */; };
+		FC90E04E25881353000103D7 /* Advertisements.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC90E04D25881353000103D7 /* Advertisements.swift */; };
 		FCE74402257D4664008E338C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FCE74401257D4664008E338C /* GoogleService-Info.plist */; };
 		FCFAAD96256D8E39004A2FD0 /* TVM.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCFAAD95256D8E39004A2FD0 /* TVM.storyboard */; };
 		FCFAADA2256D8F36004A2FD0 /* CompoundInt.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCFAADA1256D8F36004A2FD0 /* CompoundInt.storyboard */; };
@@ -69,9 +71,7 @@
 		FC224F6F2569FD9D00BC12CC /* Finance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Finance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC224F722569FD9D00BC12CC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC224F742569FD9D00BC12CC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		FC224F792569FD9D00BC12CC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FC224F7B2569FD9E00BC12CC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		FC224F7E2569FD9E00BC12CC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FC224F802569FD9E00BC12CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FC224F852569FD9F00BC12CC /* FinanceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FinanceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC224F892569FD9F00BC12CC /* FinanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinanceTests.swift; sourceTree = "<group>"; };
@@ -89,6 +89,13 @@
 		FC44285D257B04FF00F04818 /* Help.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Help.storyboard; sourceTree = "<group>"; };
 		FC442865257B051B00F04818 /* Help.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Help.swift; sourceTree = "<group>"; };
 		FC44286A257C88A700F04818 /* ReviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewService.swift; sourceTree = "<group>"; };
+		FC7D575A2583F936007E4BAB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FC7D575B2583F936007E4BAB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		FC7D579C2583FBF4007E4BAB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FC7D57A12583FC0E007E4BAB /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		FC7D57A22583FC0E007E4BAB /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		FC7D57A32583FC0E007E4BAB /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FC90E04D25881353000103D7 /* Advertisements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertisements.swift; sourceTree = "<group>"; };
 		FCE74401257D4664008E338C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FCFAAD95256D8E39004A2FD0 /* TVM.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TVM.storyboard; sourceTree = "<group>"; };
 		FCFAADA1256D8F36004A2FD0 /* CompoundInt.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CompoundInt.storyboard; sourceTree = "<group>"; };
@@ -179,12 +186,12 @@
 		FC224F712569FD9D00BC12CC /* Finance */ = {
 			isa = PBXGroup;
 			children = (
+				FC7D579D2583FBF4007E4BAB /* Localizable.strings */,
 				FCFAAD9A256D8E3F004A2FD0 /* Storyboards */,
 				FC224F722569FD9D00BC12CC /* AppDelegate.swift */,
 				FC224F742569FD9D00BC12CC /* SceneDelegate.swift */,
 				FC224FA52569FDAE00BC12CC /* Scenes */,
 				FC224F7B2569FD9E00BC12CC /* Assets.xcassets */,
-				FC224F7D2569FD9E00BC12CC /* LaunchScreen.storyboard */,
 				FC224F802569FD9E00BC12CC /* Info.plist */,
 				FCE74401257D4664008E338C /* GoogleService-Info.plist */,
 			);
@@ -223,6 +230,7 @@
 		FCFAAD9A256D8E3F004A2FD0 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				FC224F7D2569FD9E00BC12CC /* LaunchScreen.storyboard */,
 				FC224F782569FD9D00BC12CC /* Main.storyboard */,
 				FCFAADB3256D9385004A2FD0 /* Settings.storyboard */,
 				FCFAAD95256D8E39004A2FD0 /* TVM.storyboard */,
@@ -272,6 +280,7 @@
 				FC442865257B051B00F04818 /* Help.swift */,
 				FCFAADB8256D939F004A2FD0 /* Settings.swift */,
 				FC44286A257C88A700F04818 /* ReviewService.swift */,
+				FC90E04D25881353000103D7 /* Advertisements.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -284,6 +293,7 @@
 			buildConfigurationList = FC224F992569FD9F00BC12CC /* Build configuration list for PBXNativeTarget "Finance" */;
 			buildPhases = (
 				974FED5BABB0F303A839EBEE /* [CP] Check Pods Manifest.lock */,
+				33F152F247F3FD6CD033CD12 /* [CP] Prepare Artifacts */,
 				FC224F6B2569FD9D00BC12CC /* Sources */,
 				FC224F6C2569FD9D00BC12CC /* Frameworks */,
 				FC224F6D2569FD9D00BC12CC /* Resources */,
@@ -322,6 +332,7 @@
 			buildConfigurationList = FC224F9F2569FD9F00BC12CC /* Build configuration list for PBXNativeTarget "FinanceUITests" */;
 			buildPhases = (
 				30461E330E173761CC336CC5 /* [CP] Check Pods Manifest.lock */,
+				ED08AFCF7A1AD68C65296B17 /* [CP] Prepare Artifacts */,
 				FC224F8C2569FD9F00BC12CC /* Sources */,
 				FC224F8D2569FD9F00BC12CC /* Frameworks */,
 				FC224F8E2569FD9F00BC12CC /* Resources */,
@@ -366,6 +377,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ja,
 			);
 			mainGroup = FC224F662569FD9D00BC12CC;
 			productRefGroup = FC224F702569FD9D00BC12CC /* Products */;
@@ -387,6 +399,7 @@
 				FCFAADA7256D8F82004A2FD0 /* SimpleInt.storyboard in Resources */,
 				FC442856257AE5AE00F04818 /* OrdinaryAnnuity.storyboard in Resources */,
 				FCFAADA2256D8F36004A2FD0 /* CompoundInt.storyboard in Resources */,
+				FC7D579B2583FBF4007E4BAB /* Localizable.strings in Resources */,
 				FCFAAD96256D8E39004A2FD0 /* TVM.storyboard in Resources */,
 				FCE74402257D4664008E338C /* GoogleService-Info.plist in Resources */,
 				FCFAADB4256D9385004A2FD0 /* Settings.storyboard in Resources */,
@@ -456,6 +469,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		33F152F247F3FD6CD033CD12 /* [CP] Prepare Artifacts */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Finance/Pods-Finance-artifacts-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Prepare Artifacts";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Finance/Pods-Finance-artifacts-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Finance/Pods-Finance-artifacts.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		79FF3F0237D2D704C7569525 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -500,6 +530,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		ED08AFCF7A1AD68C65296B17 /* [CP] Prepare Artifacts */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Finance-FinanceUITests/Pods-Finance-FinanceUITests-artifacts-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Prepare Artifacts";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Finance-FinanceUITests/Pods-Finance-FinanceUITests-artifacts-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Finance-FinanceUITests/Pods-Finance-FinanceUITests-artifacts.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		EF2198E5D9EAE8127DCF9F22 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -535,6 +582,7 @@
 				FC224FBF2569FE2400BC12CC /* MainMenu.swift in Sources */,
 				FC224FA72569FDCA00BC12CC /* TimeValueMoney.swift in Sources */,
 				FC224FBA2569FE0D00BC12CC /* Amortization.swift in Sources */,
+				FC90E04E25881353000103D7 /* Advertisements.swift in Sources */,
 				FCFAADE12575CBF5004A2FD0 /* OrdinaryAnnuity.swift in Sources */,
 				FC224FB42569FDF800BC12CC /* Compound Interest.swift in Sources */,
 			);
@@ -575,7 +623,8 @@
 		FC224F782569FD9D00BC12CC /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				FC224F792569FD9D00BC12CC /* Base */,
+				FC7D575A2583F936007E4BAB /* Base */,
+				FC7D57A12583FC0E007E4BAB /* ja */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -583,9 +632,19 @@
 		FC224F7D2569FD9E00BC12CC /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				FC224F7E2569FD9E00BC12CC /* Base */,
+				FC7D575B2583F936007E4BAB /* Base */,
+				FC7D57A22583FC0E007E4BAB /* ja */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		FC7D579D2583FBF4007E4BAB /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FC7D579C2583FBF4007E4BAB /* en */,
+				FC7D57A32583FC0E007E4BAB /* ja */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -595,6 +654,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -656,6 +716,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -714,7 +775,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = P6XKT9A54H;
 				INFOPLIST_FILE = Finance/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -722,6 +783,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.JordanKlein.Finance;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -736,7 +798,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = P6XKT9A54H;
 				INFOPLIST_FILE = Finance/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -744,6 +806,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.JordanKlein.Finance;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

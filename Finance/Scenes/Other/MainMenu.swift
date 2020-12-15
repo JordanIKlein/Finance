@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-import SpriteKit
+
 
 //Creation of Buttons
 let amortbtn = UIButton()
@@ -22,7 +22,9 @@ let help = UIButton()
 let annuityDue = UIButton()
 let ordinaryAnnuity = UIButton()
 
-class MainMenu: UIViewController {
+
+class MainMenu: UIViewController{
+    
     @IBOutlet weak var ContentView: UIView!
     
     var shapeTimer: Timer?
@@ -140,9 +142,8 @@ class MainMenu: UIViewController {
         tvmbtn.addTarget(self, action: #selector(tvmPressed), for: .touchUpInside)
         tvmbtn.pulsate()
         self.ContentView.addSubview(tvmbtn)
-        
-        
     }
+    
     func addingLoans(){
         // Interest-Only Loans
         intOnlyLoan.frame = CGRect(x: view.bounds.size.width/2 - 125, y: amortbtn.frame.origin.y - 110, width: 250, height: 52)
@@ -200,6 +201,7 @@ class MainMenu: UIViewController {
         self.ContentView.addSubview(simpleIntbtn)
     }
     @objc func helpPressed(_ sender: UIButton){
+        NotificationCenter.default.post(name: .showInterstitialAd, object: nil)
         sender.shake()
         let newStoryBoard : UIStoryboard = UIStoryboard(name: "Help", bundle:nil)
         let VC = newStoryBoard.instantiateViewController(withIdentifier: "Help")

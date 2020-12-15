@@ -12,9 +12,14 @@
 
 import Foundation
 import UIKit
+import GoogleMobileAds
 
 
-class Help: UIViewController, UITextFieldDelegate {
+class Help: UIViewController, UITextFieldDelegate, GADRewardedAdDelegate {
+    func rewardedAd(_ rewardedAd: GADRewardedAd, userDidEarn reward: GADAdReward) {
+        print("Reward")
+    }
+    
     //PickerViewStuff
     var helppickerView = UIPickerView()
     let helpchoices = ["","Simple Interest","Compound Interest","Interest-Only Loan","Amortized Loan","Lump Sum Annuity","Ordinary Annuity","Annuity Due"]
@@ -183,9 +188,25 @@ class Help: UIViewController, UITextFieldDelegate {
         formula.font = UIFont(name: "PingFangSC-Semibold", size: 22)
         formula.textColor = UIColor.white
         formula.layer.zPosition = 2
-        
-        
-        
+    }
+    func runningNotifications(){
+       //Ad Notificaiton
+        NotificationCenter.default.addObserver(self, selector: #selector(loadInterstitial), name: .showInterstitialAd, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadVideo), name: .showVideoRewardAd, object: nil)
+    }
+    @objc func loadInterstitial() {
+        print("Setting up")
+        if gadRewardedAd?.isReady == true {
+            gadRewardedAd?.present(fromRootViewController: self, delegate:self)
+            print("Presented")
+        }
+    }
+    @objc func loadVideo(){
+        print("Setting up")
+        if gadRewardedAd?.isReady == true {
+            gadRewardedAd?.present(fromRootViewController: self, delegate:self)
+            print("Presented")
+        }
     }
     func SimpleInterest(){
         RemoveEverything()
